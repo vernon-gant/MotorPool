@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.UI", "MotorPool.UI\MotorPool.UI.csproj", "{2ECBDFCA-5726-4137-A8C5-2D2674F5712B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Auth", "MotorPool.Auth\MotorPool.Auth.csproj", "{2DE5E531-FB40-49B1-9CEA-3CE91213CD54}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2ECBDFCA-5726-4137-A8C5-2D2674F5712B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ECBDFCA-5726-4137-A8C5-2D2674F5712B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ECBDFCA-5726-4137-A8C5-2D2674F5712B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ECBDFCA-5726-4137-A8C5-2D2674F5712B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DE5E531-FB40-49B1-9CEA-3CE91213CD54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DE5E531-FB40-49B1-9CEA-3CE91213CD54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DE5E531-FB40-49B1-9CEA-3CE91213CD54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DE5E531-FB40-49B1-9CEA-3CE91213CD54}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
