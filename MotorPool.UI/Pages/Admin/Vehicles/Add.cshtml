@@ -1,0 +1,57 @@
+@page
+@model AddVehicleModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1 class="text-center mb-4">Add a new vehicle</h1>
+<div class="row">
+    <div class="col-md-4 mx-auto d-flex flex-column justify-content-between px-0">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-2">
+                <label asp-for="Vehicle.VIN" class="control-label"></label>
+                <input asp-for="Vehicle.VIN" class="form-control"/>
+                <span asp-validation-for="Vehicle.VIN" class="text-danger"></span>
+            </div>
+            <div class="form-group  mb-2">
+                <label asp-for="Vehicle.Manufacturer" class="control-label"></label>
+                <input asp-for="Vehicle.Manufacturer" class="form-control"/>
+                <span asp-validation-for="Vehicle.Manufacturer" class="text-danger"></span>
+            </div>
+            <div class="form-group  mb-2">
+                <label asp-for="Vehicle.Model" class="control-label"></label>
+                <input asp-for="Vehicle.Model" class="form-control"/>
+                <span asp-validation-for="Vehicle.Model" class="text-danger"></span>
+            </div>
+            <div class="form-group  mb-2">
+                <label asp-for="Vehicle.ManufactureYear" class="control-label"></label>
+                <input asp-for="Vehicle.ManufactureYear" class="form-control"/>
+                <span asp-validation-for="Vehicle.ManufactureYear" class="text-danger"></span>
+            </div>
+            <div class="form-group  mb-2">
+                <label asp-for="Vehicle.ManufactureLand" class="control-label"></label>
+                <input asp-for="Vehicle.ManufactureLand" class="form-control"/>
+                <span asp-validation-for="Vehicle.ManufactureLand" class="text-danger"></span>
+            </div>
+            <div class="form-group  mb-2">
+                <label asp-for="Vehicle.Cost" class="control-label"></label>
+                <input asp-for="Vehicle.Cost" class="form-control"/>
+                <span asp-validation-for="Vehicle.Cost" class="text-danger"></span>
+            </div>
+            <div class="form-group  mb-2">
+                <label asp-for="Vehicle.Mileage" class="control-label"></label>
+                <input asp-for="Vehicle.Mileage" class="form-control"/>
+                <span asp-validation-for="Vehicle.Mileage" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Create" class="btn btn-primary mx-auto"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
