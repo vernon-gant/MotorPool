@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MotorPool.Pages;
+namespace MotorPool.UI.Pages;
 
 public class IndexModel : PageModel
 {
@@ -13,9 +13,6 @@ public class IndexModel : PageModel
         _logger = logger;
     }
 
-    public void OnGet(HttpContext context)
-    {
-
-    }
+    public void OnGet() { }
 
 }

@@ -1,4 +1,4 @@
-using MotorPool.Auth;
+using MotorPool.Persistence;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -6,8 +6,16 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddMotorPoolAuthentication(connectionString);
 builder.Services.AddRazorPages();
+
+builder.Services.AddPersistence(connectionString);
+
+IMvcBuilder mvcBuilder = builder.Services.AddRazorPages();
+
+if (builder.Environment.IsDevelopment())
+{
+    mvcBuilder.AddRazorRuntimeCompilation();
+}
 
 WebApplication app = builder.Build();
 
@@ -32,5 +40,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+await app.SetupDatabaseAsync();
 
 app.Run();
