@@ -10,25 +10,20 @@ public class Vehicle
     [MinLength(17)]
     [MaxLength(17)]
     [Required]
-    public string VIN { get; set; }
+    public string MotorVIN { get; set; }
 
-    [MaxLength(100)]
-    [Required]
-    public string Manufacturer { get; set; }
-
-    [MaxLength(100)]
-    [Required]
-    public string Model { get; set; }
+    public decimal Cost { get; set; }
 
     [Required]
     public int ManufactureYear { get; set; }
 
     [MaxLength(100)]
     public string ManufactureLand { get; set; }
-
-    public decimal Cost { get; set; }
-
     [Required]
     public decimal Mileage { get; set; }
+
+    public int VehicleBrandId { get; set; }
+
+    public VehicleBrand VehicleBrand { get; set; }
 
 }

@@ -15,13 +15,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Vehicle[0].VIN)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Vehicle[0].Manufacturer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Vehicle[0].Model)
+                @Html.DisplayNameFor(model => model.Vehicle[0].MotorVIN)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Vehicle[0].ManufactureYear)
@@ -42,13 +36,7 @@
 @foreach (Vehicle item in Model.Vehicle) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.VIN)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Manufacturer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Model)
+                @Html.DisplayFor(modelItem => item.MotorVIN)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ManufactureYear)
