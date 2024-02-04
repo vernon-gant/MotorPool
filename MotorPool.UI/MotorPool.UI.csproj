@@ -85,6 +85,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Include="wwwroot\css\Admin\styles.css" />
       <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
       <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css" />
       <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
@@ -123,6 +124,11 @@
       <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
       <None Include="wwwroot\lib\jquery\dist\jquery.min.js" />
       <None Include="wwwroot\lib\jquery\dist\jquery.min.map" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot\css\Admin\Brands\" />
+      <Folder Include="wwwroot\css\Admin\Vehicles\" />
     </ItemGroup>
 
 </Project>

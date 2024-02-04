@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/MotorPool.UI.styles.css" asp-append-version="true"/>
+    <script src="https://kit.fontawesome.com/55006738dc.js" crossorigin="anonymous"></script>
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body class="h-100 d-flex flex-column">
 <header>
@@ -22,14 +24,17 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-page="/Admin/Index">Admin panel</a>
+                    </li>
                 </ul>
-                <partial name="_LoginPartial" />
+                <partial name="_LoginPartial"/>
             </div>
         </div>
     </nav>
 </header>
 <div class="container-fluid flex-fill" style="overflow-y: auto;">
-    <main role="main" class="p-3">
+    <main role="main" class="p-3 h-100">
         @RenderBody()
     </main>
 </div>

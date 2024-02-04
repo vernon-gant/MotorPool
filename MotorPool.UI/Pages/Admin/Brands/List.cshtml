@@ -1,0 +1,84 @@
+@page
+@model ListModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="header-with-icon mb-4">
+    <h1 class="text-center">Vehicle brands</h1>
+    <a asp-page="./Add">
+        <i class="fa-solid fa-plus icon-plus"></i>
+    </a>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.VehicleBrand[0].CompanyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehicleBrand[0].ModelName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehicleBrand[0].Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehicleBrand[0].FuelTankCapacityLiters)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehicleBrand[0].PayloadCapacityKg)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehicleBrand[0].NumberOfSeats)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehicleBrand[0].ReleaseYear)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.VehicleBrand)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModelName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FuelTankCapacityLiters)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PayloadCapacityKg)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfSeats)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReleaseYear)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.VehicleBrandId">Edit</a> |
+                <a asp-page="../Vehicles/List" asp-route-vehicleBrandId="@item.VehicleBrandId">To vehicles</a> |
+                <a asp-page="./Delete" asp-route-id="@item.VehicleBrandId">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div class="row w-100 py-3">
+    <div class="col-12 d-flex justify-content-center align-items-center">
+        <a asp-page="/Admin/Index" class="text-decoration-none admin-back-link">
+            <i class="fa-solid fa-arrow-left fa-2x me-2"></i>
+            <span class="fw-bold" style="position: relative; bottom: 7px;">Back to admin panel</span>
+        </a>
+    </div>
+</div>

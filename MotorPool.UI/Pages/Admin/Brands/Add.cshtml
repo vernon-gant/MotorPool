@@ -1,0 +1,61 @@
+@page
+@model MotorPool.UI.Pages.Admin.Brands.AddModel
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+<h1>Add</h1>
+
+<h4>VehicleBrand</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="VehicleBrand.CompanyName" class="control-label"></label>
+                <input asp-for="VehicleBrand.CompanyName" class="form-control" />
+                <span asp-validation-for="VehicleBrand.CompanyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VehicleBrand.ModelName" class="control-label"></label>
+                <input asp-for="VehicleBrand.ModelName" class="form-control" />
+                <span asp-validation-for="VehicleBrand.ModelName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VehicleBrand.Type" class="control-label"></label>
+                <select asp-for="VehicleBrand.Type" class="form-control"></select>
+                <span asp-validation-for="VehicleBrand.Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VehicleBrand.FuelTankCapacityLiters" class="control-label"></label>
+                <input asp-for="VehicleBrand.FuelTankCapacityLiters" class="form-control" />
+                <span asp-validation-for="VehicleBrand.FuelTankCapacityLiters" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VehicleBrand.PayloadCapacityKg" class="control-label"></label>
+                <input asp-for="VehicleBrand.PayloadCapacityKg" class="form-control" />
+                <span asp-validation-for="VehicleBrand.PayloadCapacityKg" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VehicleBrand.NumberOfSeats" class="control-label"></label>
+                <input asp-for="VehicleBrand.NumberOfSeats" class="form-control" />
+                <span asp-validation-for="VehicleBrand.NumberOfSeats" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VehicleBrand.ReleaseYear" class="control-label"></label>
+                <input asp-for="VehicleBrand.ReleaseYear" class="form-control" />
+                <span asp-validation-for="VehicleBrand.ReleaseYear" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+

@@ -1,0 +1,80 @@
+@page "{vehicleBrandId:int?}"
+@using MotorPool.Domain
+@model ListModel
+
+@{
+    ViewData["Title"] = "Vehicles Management";
+}
+
+<div class="header-with-icon mb-4">
+    <h1 class="text-center">Vehicles</h1>
+    <a asp-page="./Add">
+        <i class="fa-solid fa-plus icon-plus"></i>
+    </a>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Vehicles[0].MotorVIN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vehicles[0].ManufactureYear)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vehicles[0].ManufactureLand)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vehicles[0].Cost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vehicles[0].Mileage)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (Vehicle item in Model.Vehicles)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MotorVIN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManufactureYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManufactureLand)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mileage)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.VehicleId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.VehicleId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.VehicleId">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div class="row w-100 py-3">
+    <div class="col-12 d-flex flex-column justify-content-center align-items-center">
+        <a asp-page="/Admin/Index" class="text-decoration-none admin-back-link">
+            <i class="fa-solid fa-arrow-left fa-2x me-2"></i>
+            <span class="fw-bold" style="position: relative; bottom: 7px;">Back to admin panel</span>
+        </a>
+        @if (RouteData.Values["vehicleBrandId"] != null)
+        {
+            <a asp-page="../Brands/List" class="text-decoration-none admin-back-link mt-4">
+                <i class="fa-solid fa-arrow-left fa-2x me-2"></i>
+                <span class="fw-bold" style="position: relative; bottom: 7px;">Back to vehicle brands</span>
+            </a>
+        }
+    </div>
+</div>

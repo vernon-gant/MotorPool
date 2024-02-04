@@ -1,0 +1,22 @@
+﻿@page
+@model MotorPool.UI.Pages.Admin.Index
+
+@{
+    ViewData["Title"] = "Admin panel";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Admin/styles.css"/>
+}
+
+<div class="container h-100 d-flex flex-column justify-content-evenly align-items-center">
+    <h1 class="text-center">Admin panel</h1>
+    <div class="w-100 h-25 d-flex justify-content-around shadow rounded">
+        <div class="d-flex align-items-center justify-content-center flex-grow-1">
+            <a class="cool-link h4" asp-page="./Brands/List">Vehicle brands</a>
+        </div>
+        <div class="d-flex align-items-center justify-content-center flex-grow-1">
+            <a class="cool-link h4" asp-page="./Vehicles/List">Vehicles</a>
+        </div>
+    </div>
+</div>
