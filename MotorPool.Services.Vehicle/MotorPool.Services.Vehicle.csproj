@@ -22,4 +22,8 @@
       <ProjectReference Include="..\MotorPool.Domain\MotorPool.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Services\Concrete\" />
+    </ItemGroup>
+
 </Project>

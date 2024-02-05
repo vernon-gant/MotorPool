@@ -1,7 +1,6 @@
 using AutoMapper;
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +10,7 @@ using MotorPool.Services.Vehicles.ViewModels;
 
 namespace MotorPool.UI.Pages.Admin.Vehicles;
 
-public class EditModel : PageModel
+public class EditModel : VehicleBrandsSelectListPageModel
 {
 
     private readonly AppDbContext _context;
@@ -25,18 +24,18 @@ public class EditModel : PageModel
     }
 
     [BindProperty]
-    public VehicleEditViewModel VehicleViewModel { get; set; } = default!;
+    public VehicleFormViewModel VehicleViewModel { get; set; } = default!;
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
+        PopulateVehicleBrandsDropDownList(_context);
         Vehicle? foundVehicle = await _context.Vehicles
                                               .Include(vehicle => vehicle.VehicleBrand)
                                               .FirstOrDefaultAsync(m => m.VehicleId == id);
 
         if (foundVehicle == null) return NotFound();
 
-        VehicleViewModel = _mapper.Map<VehicleEditViewModel>(foundVehicle);
-        ViewData["VehicleBrandId"] = new SelectList(_context.VehicleBrands, "VehicleBrandId", "CompanyName");
+        VehicleViewModel = _mapper.Map<VehicleFormViewModel>(foundVehicle);
 
         return Page();
     }
@@ -46,7 +45,6 @@ public class EditModel : PageModel
         if (!ModelState.IsValid) return Page();
 
         Vehicle oldVehicle = await _context.Vehicles
-                                              .Include(vehicle => vehicle.VehicleBrand)
                                               .FirstAsync(vehicle => vehicle.VehicleId == VehicleViewModel.VehicleId);
 
         _mapper.Map(VehicleViewModel, oldVehicle);

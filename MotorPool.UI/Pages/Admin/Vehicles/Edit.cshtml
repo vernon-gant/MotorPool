@@ -41,6 +41,13 @@
                 <input asp-for="VehicleViewModel.Mileage" class="form-control"/>
                 <span asp-validation-for="VehicleViewModel.Mileage" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="VehicleViewModel.VehicleBrandId" class="control-label">Brand</label>
+                <select asp-for="VehicleViewModel.VehicleBrandId" class="form-control"
+                        asp-items="@Model.VehicleBrandSelectList">
+                    <option value="">-- Select brand --</option>
+                </select>
+            </div>
             <div class="form-group mt-3 row">
                 <input type="submit" value="Save" class="btn btn-primary mx-auto col-md-4"/>
             </div>

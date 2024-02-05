@@ -10,12 +10,12 @@ namespace MotorPool.UI.Pages.Admin.Brands
     {
         private readonly AppDbContext _context;
 
+        public IList<VehicleBrand> VehicleBrand { get;set; } = default!;
+
         public ListModel(AppDbContext context)
         {
             _context = context;
         }
-
-        public IList<VehicleBrand> VehicleBrand { get;set; } = default!;
 
         public async Task OnGetAsync()
         {

@@ -2,7 +2,7 @@
 
 namespace MotorPool.Services.Vehicles.ViewModels;
 
-public class VehicleEditViewModel
+public class VehicleFormViewModel
 {
 
     public int VehicleId { get; set; }
@@ -18,5 +18,7 @@ public class VehicleEditViewModel
     public string ManufactureLand { get; set; }
 
     public decimal Mileage { get; set; }
+
+    public int VehicleBrandId { get; set; }
 
 }

@@ -10,8 +10,8 @@ public class AutoMapperProfile : Profile
 
     public AutoMapperProfile()
     {
-        CreateMap<Vehicle, VehicleEditViewModel>();
-        CreateMap<VehicleEditViewModel, Vehicle>()
+        CreateMap<Vehicle, VehicleFormViewModel>();
+        CreateMap<VehicleFormViewModel, Vehicle>()
             .ForMember(dest => dest.VehicleId, opt => opt.Ignore());
     }
 
