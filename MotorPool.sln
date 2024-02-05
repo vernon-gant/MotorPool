@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.UI", "MotorPool.U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Utils", "MotorPool.Utils\MotorPool.Utils.csproj", "{A55E10DE-2F87-4C17-B8DB-1D3A74683F2A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.Vehicle", "MotorPool.Services.Vehicle\MotorPool.Services.Vehicle.csproj", "{8AB725DD-9910-46A0-A060-E0CC160B2753}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{A55E10DE-2F87-4C17-B8DB-1D3A74683F2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A55E10DE-2F87-4C17-B8DB-1D3A74683F2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A55E10DE-2F87-4C17-B8DB-1D3A74683F2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AB725DD-9910-46A0-A060-E0CC160B2753}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AB725DD-9910-46A0-A060-E0CC160B2753}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AB725DD-9910-46A0-A060-E0CC160B2753}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AB725DD-9910-46A0-A060-E0CC160B2753}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Reflection;
 
 using MotorPool.Persistence;
 
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 
+using MotorPool.Services.Vehicles;
 using MotorPool.UI.Areas.Identity.Data;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -34,12 +36,11 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddPersistence(connectionString);
 
+builder.Services.AddVehicleServices();
+
 IMvcBuilder mvcBuilder = builder.Services.AddRazorPages();
 
-if (builder.Environment.IsDevelopment())
-{
-    mvcBuilder.AddRazorRuntimeCompilation();
-}
+if (builder.Environment.IsDevelopment()) mvcBuilder.AddRazorRuntimeCompilation();
 
 WebApplication app = builder.Build();
 

@@ -65,10 +65,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.ReleaseYear)
                 </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.VehicleBrandId">Edit</a> |
-                    <a asp-page="../Vehicles/List" asp-route-vehicleBrandId="@item.VehicleBrandId">To vehicles</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.VehicleBrandId">Delete</a>
+                <td class="text-nowrap">
+                    @await Html.PartialAsync("_Actions", item.VehicleBrandId)
+                    <a asp-page="../Vehicles/List" asp-route-vehicleBrandId="@item.VehicleBrandId" class="text-decoration-none">
+                        <i class="fas fa-car" title="To vehicles"></i>
+                    </a>
                 </td>
             </tr>
         }

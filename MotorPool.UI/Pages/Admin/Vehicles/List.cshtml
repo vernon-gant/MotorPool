@@ -66,10 +66,8 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Mileage)
                 </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.VehicleId">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.VehicleId">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.VehicleId">Delete</a>
+                <td class="text-nowrap">
+                    @await Html.PartialAsync("_Actions", item.VehicleId)
                 </td>
             </tr>
         }

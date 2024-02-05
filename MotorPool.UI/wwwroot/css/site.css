@@ -62,9 +62,6 @@ body {
     background-color: #f2f2f2; /* Hover effect for table rows */
 }
 
-/* Footer styling */
 footer {
-    background-color: #f8f9fa; /* Light background for the footer */
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    background-color: #f8f9fa;
 }
