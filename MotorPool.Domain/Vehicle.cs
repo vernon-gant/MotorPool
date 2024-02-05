@@ -12,6 +12,7 @@ public class Vehicle
     [Required]
     public string MotorVIN { get; set; }
 
+    [DisplayFormat(DataFormatString = "{0:C}")]
     public decimal Cost { get; set; }
 
     [Required]
@@ -19,6 +20,7 @@ public class Vehicle
 
     [MaxLength(100)]
     public string ManufactureLand { get; set; }
+
     [Required]
     public decimal Mileage { get; set; }
 

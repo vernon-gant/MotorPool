@@ -1,5 +1,9 @@
+using System.Globalization;
+
 using MotorPool.Persistence;
+
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 
 using MotorPool.UI.Areas.Identity.Data;
@@ -10,17 +14,19 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 
 builder.Services.AddDbContext<UserIdentityContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options =>
-{
-    options.SignIn.RequireConfirmedAccount = true;
+builder.Services
+       .AddDefaultIdentity<IdentityUser>(options =>
+       {
+           options.SignIn.RequireConfirmedAccount = true;
 
-    options.Password.RequireDigit = true;
-    options.Password.RequireLowercase = true;
-    options.Password.RequireNonAlphanumeric = true;
-    options.Password.RequireUppercase = true;
-    options.Password.RequiredLength = 8;
-    options.Password.RequiredUniqueChars = 1;
-}).AddEntityFrameworkStores<UserIdentityContext>();
+           options.Password.RequireDigit = true;
+           options.Password.RequireLowercase = true;
+           options.Password.RequireNonAlphanumeric = true;
+           options.Password.RequireUppercase = true;
+           options.Password.RequiredLength = 8;
+           options.Password.RequiredUniqueChars = 1;
+       })
+       .AddEntityFrameworkStores<UserIdentityContext>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -48,7 +54,12 @@ else
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("de-de"),
+    SupportedCultures = new List<CultureInfo> { new ("en-US") },
+    SupportedUICultures = new List<CultureInfo> { new ("en-US") }
+});
 app.UseStaticFiles();
 
 app.UseRouting();
