@@ -20,13 +20,15 @@ public class ListModel : PageModel
 
     public async Task OnGetAsync(int? vehicleBrandId)
     {
+        IQueryable<Vehicle> vehiclesWithBrandQuery = _context.Vehicles.Include(vehicle => vehicle.VehicleBrand);
+
         if (!vehicleBrandId.HasValue)
         {
-            Vehicles = await _context.Vehicles.ToListAsync();
+            Vehicles = await vehiclesWithBrandQuery.ToListAsync();
             return;
         }
 
-        Vehicles = await _context.Vehicles.Where(vehicle => vehicle.VehicleBrandId == vehicleBrandId).ToListAsync();
+        Vehicles = await vehiclesWithBrandQuery.Where(vehicle => vehicle.VehicleBrandId == vehicleBrandId).ToListAsync();
     }
 
 }

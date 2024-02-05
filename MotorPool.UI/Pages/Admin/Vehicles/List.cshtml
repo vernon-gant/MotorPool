@@ -3,7 +3,7 @@
 @model ListModel
 
 @{
-    ViewData["Title"] = "Vehicles Management";
+    ViewData["Title"] = "Vehicles management";
 }
 
 <div class="header-with-icon mb-4">
@@ -13,55 +13,69 @@
     </a>
 </div>
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Vehicles[0].MotorVIN)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Vehicles[0].ManufactureYear)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Vehicles[0].ManufactureLand)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Vehicles[0].Cost)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Vehicles[0].Mileage)
-        </th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (Vehicle item in Model.Vehicles)
-    {
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.MotorVIN)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ManufactureYear)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ManufactureLand)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Mileage)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.VehicleId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.VehicleId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.VehicleId">Delete</a>
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].VehicleBrand.CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].VehicleBrand.ModelName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].MotorVIN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].ManufactureYear)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].ManufactureLand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].Cost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].Mileage)
+            </th>
+            <th></th>
         </tr>
-    }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        @foreach (Vehicle item in Model.Vehicles)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleBrand.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleBrand.ModelName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MotorVIN)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ManufactureYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ManufactureLand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mileage)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.VehicleId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.VehicleId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.VehicleId">Delete</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
 
 <div class="row w-100 py-3">
     <div class="col-12 d-flex flex-column justify-content-center align-items-center">

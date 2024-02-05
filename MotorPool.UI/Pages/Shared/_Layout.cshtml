@@ -10,7 +10,7 @@
     <script src="https://kit.fontawesome.com/55006738dc.js" crossorigin="anonymous"></script>
     @await RenderSectionAsync("Styles", required: false)
 </head>
-<body class="h-100 d-flex flex-column">
+<body class="d-flex flex-column">
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
@@ -33,14 +33,14 @@
         </div>
     </nav>
 </header>
-<div class="container-fluid flex-fill" style="overflow-y: auto;">
+<div class="container-fluid flex-fill">
     <main role="main" class="p-3 h-100">
         @RenderBody()
     </main>
 </div>
 
 <footer class="border-top footer text-muted">
-    <p class="py-2 my-0 text-center">
+    <p class="my-0 text-center">
         2024 - Motor pool
     </p>
 </footer>
