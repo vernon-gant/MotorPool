@@ -1,0 +1,45 @@
+html {
+  font-size: 14px;
+  position: relative;
+  min-height: 100%;
+  height: 100%;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+.header-with-icon {
+  display: flex;
+  justify-content: center; /* Center the content horizontally */
+  align-items: center; /* Align items vertically */
+  gap: 20px; /* Adjust the space between the H1 and the icon */
+}
+
+.header-with-icon .icon-plus {
+  font-size: 2rem; /* Makes the plus icon larger */
+  color: green; /* Sets the icon color to green */
+}
+
+.admin-back-link:hover {
+  text-decoration: none; /* Prevents underlining on hover */
+}
+.admin-back-link, .admin-back-link:hover {
+  color: inherit; /* Keeps text color consistent */
+}
