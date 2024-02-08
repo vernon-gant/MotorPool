@@ -5,6 +5,12 @@ namespace MotorPool.Services.Vehicles.Services;
 public interface VehicleService
 {
 
-    Task EditVehicleAsync(VehicleFormViewModel vehicleViewModel);
+    Task EditVehicleAsync(VehicleDTO vehicleDto);
+
+    ValueTask<List<VehicleViewModel>> GetVehiclesAsync();
+
+    Task CreateVehicleAsync(VehicleDTO vehicleDto);
+
+    ValueTask<VehicleViewModel?> GetVehicleById(int id);
 
 }

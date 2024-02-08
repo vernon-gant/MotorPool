@@ -2,9 +2,8 @@
 
 namespace MotorPool.Services.Vehicles.ViewModels;
 
-public class VehicleFormViewModel
+public class VehicleDTO
 {
-
     public int VehicleId { get; set; }
 
     [MinLength(17)]

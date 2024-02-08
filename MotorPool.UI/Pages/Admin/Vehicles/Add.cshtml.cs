@@ -1,19 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-using MotorPool.Domain;
-using MotorPool.Persistence;
+using MotorPool.Services.Vehicles.Services;
+using MotorPool.Services.Vehicles.ViewModels;
 
 namespace MotorPool.UI.Pages.Admin.Vehicles;
 
-public class AddVehicleModel : PageModel
+public class AddVehicleModel(VehicleService vehicleService) : PageModel
 {
-    private readonly AppDbContext _context;
-
-    public AddVehicleModel(AppDbContext context)
-    {
-        _context = context;
-    }
 
     public IActionResult OnGet()
     {
@@ -21,18 +15,14 @@ public class AddVehicleModel : PageModel
     }
 
     [BindProperty]
-    public Vehicle Vehicle { get; set; } = default!;
+    public VehicleDTO VehicleDto { get; set; } = default!;
 
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!ModelState.IsValid)
-        {
-            return Page();
-        }
+        if (!ModelState.IsValid) return Page();
 
-        _context.Vehicles.Add(Vehicle);
-        await _context.SaveChangesAsync();
+        await vehicleService.CreateVehicleAsync(VehicleDto);
 
         return RedirectToPage("./Index");
     }

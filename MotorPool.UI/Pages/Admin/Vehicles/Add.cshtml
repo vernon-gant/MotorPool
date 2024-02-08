@@ -1,4 +1,5 @@
 @page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model AddVehicleModel
 
 @{
@@ -15,29 +16,29 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group mb-2">
-                <label asp-for="Vehicle.MotorVIN" class="control-label"></label>
-                <input asp-for="Vehicle.MotorVIN" class="form-control"/>
-                <span asp-validation-for="Vehicle.MotorVIN" class="text-danger"></span>
+                <label asp-for="VehicleDto.MotorVIN" class="control-label"></label>
+                <input asp-for="VehicleDto.MotorVIN" class="form-control"/>
+                <span asp-validation-for="VehicleDto.MotorVIN" class="text-danger"></span>
             </div>
             <div class="form-group  mb-2">
-                <label asp-for="Vehicle.ManufactureYear" class="control-label"></label>
-                <input asp-for="Vehicle.ManufactureYear" class="form-control"/>
-                <span asp-validation-for="Vehicle.ManufactureYear" class="text-danger"></span>
+                <label asp-for="VehicleDto.ManufactureYear" class="control-label"></label>
+                <input asp-for="VehicleDto.ManufactureYear" class="form-control"/>
+                <span asp-validation-for="VehicleDto.ManufactureYear" class="text-danger"></span>
             </div>
             <div class="form-group  mb-2">
-                <label asp-for="Vehicle.ManufactureLand" class="control-label"></label>
-                <input asp-for="Vehicle.ManufactureLand" class="form-control"/>
-                <span asp-validation-for="Vehicle.ManufactureLand" class="text-danger"></span>
+                <label asp-for="VehicleDto.ManufactureLand" class="control-label"></label>
+                <input asp-for="VehicleDto.ManufactureLand" class="form-control"/>
+                <span asp-validation-for="VehicleDto.ManufactureLand" class="text-danger"></span>
             </div>
             <div class="form-group  mb-2">
-                <label asp-for="Vehicle.Cost" class="control-label"></label>
-                <input asp-for="Vehicle.Cost" class="form-control"/>
-                <span asp-validation-for="Vehicle.Cost" class="text-danger"></span>
+                <label asp-for="VehicleDto.Cost" class="control-label"></label>
+                <input asp-for="VehicleDto.Cost" class="form-control"/>
+                <span asp-validation-for="VehicleDto.Cost" class="text-danger"></span>
             </div>
             <div class="form-group  mb-2">
-                <label asp-for="Vehicle.Mileage" class="control-label"></label>
-                <input asp-for="Vehicle.Mileage" class="form-control"/>
-                <span asp-validation-for="Vehicle.Mileage" class="text-danger"></span>
+                <label asp-for="VehicleDto.Mileage" class="control-label"></label>
+                <input asp-for="VehicleDto.Mileage" class="form-control"/>
+                <span asp-validation-for="VehicleDto.Mileage" class="text-danger"></span>
             </div>
             <div class="form-group mt-3 row">
                 <input type="submit" value="Create" class="btn btn-primary col-md-4 mx-auto"/>

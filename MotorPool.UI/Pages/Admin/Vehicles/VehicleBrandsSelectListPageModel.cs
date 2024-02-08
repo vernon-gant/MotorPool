@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 using MotorPool.Domain;
 using MotorPool.Persistence;
+using MotorPool.Services.VehicleBrand.Services;
+using MotorPool.Services.VehicleBrand.ViewModels;
 
 namespace MotorPool.UI.Pages.Admin.Vehicles;
 
@@ -12,17 +14,11 @@ public class VehicleBrandsSelectListPageModel : PageModel
 
     public SelectList VehicleBrandSelectList { get; set; }
 
-    public void PopulateVehicleBrandsDropDownList(AppDbContext context, object? selectedVehicleBrand = null)
+    public async void PopulateVehicleBrandsDropDownList(VehicleBrandService vehicleBrandService, object? selectedVehicleBrand = null)
     {
-        var vehicleBrands = context.VehicleBrands
-                                   .OrderBy(vehicleBrand => vehicleBrand.CompanyName)
-                                   .Select(vehicleBrand => new
-                                   {
-                                       vehicleBrand.VehicleBrandId, BrandSignature = $"{vehicleBrand.CompanyName} - {vehicleBrand.ModelName}"
-                                   })
-                                   .AsNoTracking();
+        List<VehicleBrandSignatureWithId> vehicleBrandSignatureWithIds = await vehicleBrandService.GetVehicleBrandsWithId();
 
-        VehicleBrandSelectList = new (vehicleBrands, nameof(VehicleBrand.VehicleBrandId), "BrandSignature", selectedVehicleBrand);
+        VehicleBrandSelectList = new (vehicleBrandSignatureWithIds, nameof(VehicleBrandSignatureWithId.VehicleBrandId), nameof(VehicleBrandSignatureWithId.BrandSignature), selectedVehicleBrand);
     }
 
 }

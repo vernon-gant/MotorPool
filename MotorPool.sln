@@ -10,6 +10,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Utils", "MotorPoo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.Vehicle", "MotorPool.Services.Vehicle\MotorPool.Services.Vehicle.csproj", "{8AB725DD-9910-46A0-A060-E0CC160B2753}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.API", "MotorPool.API\MotorPool.API.csproj", "{D9251B5C-46E7-4662-81A2-2E4BC429424E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.VehicleBrand", "MotorPool.Services.VehicleBrand\MotorPool.Services.VehicleBrand.csproj", "{7106771C-2D2E-4941-BF15-218DCFE1B23F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +40,13 @@ Global
 		{8AB725DD-9910-46A0-A060-E0CC160B2753}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AB725DD-9910-46A0-A060-E0CC160B2753}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AB725DD-9910-46A0-A060-E0CC160B2753}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9251B5C-46E7-4662-81A2-2E4BC429424E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9251B5C-46E7-4662-81A2-2E4BC429424E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9251B5C-46E7-4662-81A2-2E4BC429424E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9251B5C-46E7-4662-81A2-2E4BC429424E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7106771C-2D2E-4941-BF15-218DCFE1B23F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7106771C-2D2E-4941-BF15-218DCFE1B23F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7106771C-2D2E-4941-BF15-218DCFE1B23F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7106771C-2D2E-4941-BF15-218DCFE1B23F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

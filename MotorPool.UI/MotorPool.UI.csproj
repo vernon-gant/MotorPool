@@ -19,6 +19,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\MotorPool.Persistence\MotorPool.Persistence.csproj"/>
+        <ProjectReference Include="..\MotorPool.Services.VehicleBrand\MotorPool.Services.VehicleBrand.csproj" />
         <ProjectReference Include="..\MotorPool.Services.Vehicle\MotorPool.Services.Vehicle.csproj" />
     </ItemGroup>
 

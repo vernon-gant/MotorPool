@@ -1,12 +1,11 @@
 using System.Globalization;
-using System.Reflection;
-
-using MotorPool.Persistence;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 
+using MotorPool.Persistence;
+using MotorPool.Services.VehicleBrand;
 using MotorPool.Services.Vehicles;
 using MotorPool.UI.Areas.Identity.Data;
 
@@ -29,14 +28,12 @@ builder.Services
            options.Password.RequiredUniqueChars = 1;
        })
        .AddEntityFrameworkStores<UserIdentityContext>();
-
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
 builder.Services.AddRazorPages();
 
 builder.Services.AddPersistence(connectionString);
-
 builder.Services.AddVehicleServices();
+builder.Services.AddVehicleBrandServices();
 
 IMvcBuilder mvcBuilder = builder.Services.AddRazorPages();
 
