@@ -28,4 +28,6 @@ public class Vehicle
 
     public VehicleBrand VehicleBrand { get; set; }
 
+    public EnterpriseVehicle? EnterpriseLink { get; set; }
+
 }
