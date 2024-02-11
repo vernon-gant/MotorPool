@@ -13,6 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\MotorPool.Services.Enterprise\MotorPool.Services.Enterprise.csproj" />
       <ProjectReference Include="..\MotorPool.Services.VehicleBrand\MotorPool.Services.VehicleBrand.csproj" />
       <ProjectReference Include="..\MotorPool.Services.Vehicle\MotorPool.Services.Vehicle.csproj" />
     </ItemGroup>
