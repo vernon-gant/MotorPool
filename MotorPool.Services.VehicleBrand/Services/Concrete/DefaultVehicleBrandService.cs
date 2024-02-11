@@ -10,7 +10,7 @@ namespace MotorPool.Services.VehicleBrand.Services.Concrete;
 public class DefaultVehicleBrandService(AppDbContext dbContext, IMapper mapper) : VehicleBrandService
 {
 
-    public async ValueTask<List<VehicleBrandSignatureWithId>> GetVehicleBrandsWithId()
+    public async ValueTask<List<VehicleBrandSignatureWithId>> GetVehicleBrandsWithIdAsync()
     {
         return await dbContext.VehicleBrands
                         .OrderBy(vehicleBrand => vehicleBrand.CompanyName)
@@ -23,7 +23,7 @@ public class DefaultVehicleBrandService(AppDbContext dbContext, IMapper mapper) 
                         .ToListAsync();
     }
 
-    public async ValueTask<List<VehicleBrandViewModel>> GetVehicles()
+    public async ValueTask<List<VehicleBrandViewModel>> GetAllAsync()
     {
         List<Domain.VehicleBrand> vehicleBrands = await dbContext.VehicleBrands.ToListAsync();
 

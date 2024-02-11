@@ -1,6 +1,8 @@
 using System.Text.Json;
 
 using MotorPool.Persistence;
+using MotorPool.Services.Drivers;
+using MotorPool.Services.Drivers.Services;
 using MotorPool.Services.Enterprise;
 using MotorPool.Services.Enterprise.Services;
 using MotorPool.Services.VehicleBrand;
@@ -16,6 +18,7 @@ builder.Services.AddPersistence(connectionString);
 builder.Services.AddVehicleServices();
 builder.Services.AddVehicleBrandServices();
 builder.Services.AddEnterpriseServices();
+builder.Services.AddDriverServices();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -37,12 +40,12 @@ if (app.Environment.IsDevelopment())
 }
 
 
-app.MapGet("vehicles", async (VehicleService vehicleService) => await vehicleService.GetVehiclesAsync());
+app.MapGet("vehicles", async (VehicleService vehicleService) => await vehicleService.GetAllAsync());
 
-app.MapGet("vehicle-brands", async (VehicleBrandService vehicleBrandService) => await vehicleBrandService.GetVehicles());
+app.MapGet("vehicle-brands", async (VehicleBrandService vehicleBrandService) => await vehicleBrandService.GetAllAsync());
 
 app.MapGet("enterprises", async (EnterpriseService enterpriseService) => await enterpriseService.GetAllAsync());
 
-app.MapGet("drivers", async (EnterpriseService enterpriseService) => await enterpriseService.GetAllAsync());
+app.MapGet("drivers", async (DriverService driverService) => await driverService.GetAllAsync());
 
 app.Run();

@@ -23,7 +23,7 @@ public class DefaultVehicleService(AppDbContext dbContext, IMapper mapper) : Veh
         await dbContext.SaveChangesAsync();
     }
 
-    public async ValueTask<List<VehicleViewModel>> GetVehiclesAsync()
+    public async ValueTask<List<VehicleViewModel>> GetAllAsync()
     {
         List<Vehicle> vehicles = await dbContext.Vehicles.Include(vehicle => vehicle.VehicleBrand).ToListAsync();
 

@@ -8,12 +8,12 @@ using MotorPool.Services.Enterprise.Models;
 
 namespace MotorPool.Services.Enterprise.Services.Concrete;
 
-public class DefaultEnterpriseService(IMapper mapper, AppDbContext dbContext) : EnterpriseService
+public class DefaultEnterpriseService(AppDbContext dbContext) : EnterpriseService
 {
 
     public async ValueTask<List<EnterpriseViewModel>> GetAllAsync()
     {
-        return await dbContext.Enterprises
+        return await dbContext.Enterprises.AsNoTracking()
                                                   .Select(enterprise => new EnterpriseViewModel
                                                   {
                                                       EnterpriseId = enterprise.EnterpriseId,

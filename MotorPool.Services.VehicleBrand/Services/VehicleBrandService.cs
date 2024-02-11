@@ -5,8 +5,8 @@ namespace MotorPool.Services.VehicleBrand.Services;
 public interface VehicleBrandService
 {
 
-    ValueTask<List<VehicleBrandSignatureWithId>> GetVehicleBrandsWithId();
+    ValueTask<List<VehicleBrandSignatureWithId>> GetVehicleBrandsWithIdAsync();
 
-    ValueTask<List<VehicleBrandViewModel>> GetVehicles();
+    ValueTask<List<VehicleBrandViewModel>> GetAllAsync();
 
 }

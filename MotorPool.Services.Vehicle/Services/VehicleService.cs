@@ -7,7 +7,7 @@ public interface VehicleService
 
     Task EditVehicleAsync(VehicleDTO vehicleDto);
 
-    ValueTask<List<VehicleViewModel>> GetVehiclesAsync();
+    ValueTask<List<VehicleViewModel>> GetAllAsync();
 
     Task CreateVehicleAsync(VehicleDTO vehicleDto);
 
