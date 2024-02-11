@@ -18,14 +18,16 @@ public class DefaultDriverService(AppDbContext dbContext) : DriverService
                                   FirstName = driver.FirstName,
                                   LastName = driver.LastName,
                                   Salary = driver.Salary,
-                                  EnterpriseLink = driver.EnterpriseLink != null
-                                      ? new EnterpriseSummaryViewModel
+                                  EnterpriseId = driver.EnterpriseLink != null ? driver.EnterpriseLink.EnterpriseId : null,
+                                  DriverEnterpriseSummary = driver.EnterpriseLink != null
+                                      ? new DriverEnterpriseSummary
                                       {
-                                          EnterpriseId = driver.EnterpriseLink.EnterpriseId,
-                                          Name = driver.EnterpriseLink.Enterprise.Name,
-                                          VAT = driver.EnterpriseLink.Enterprise.VAT,
-                                          DriversCount = driver.EnterpriseLink.Enterprise.Drivers.Count,
-                                          VehiclesCount = driver.EnterpriseLink.Enterprise.Vehicles.Count
+                                          AssignedVehiclesCount = driver.EnterpriseLink.EnterpriseVehicleLinks.Count,
+                                          ActiveVehicleId = driver.EnterpriseLink
+                                                                  .EnterpriseVehicleLinks
+                                                                  .Where(enterpriseVehicleDriver => enterpriseVehicleDriver.ActiveDriver != null)
+                                                                  .Select(enterpriseVehicleDriver => (int?)enterpriseVehicleDriver.ActiveDriver.EnterpriseVehicleDriver.EnterpriseVehicle.VehicleId)
+                                                                  .FirstOrDefault()
                                       }
                                       : null
                               })

@@ -11,21 +11,17 @@ public class DriverViewModel
 
     public decimal Salary { get; set; }
 
-    public EnterpriseSummaryViewModel? EnterpriseLink { get; set; }
+    public int? EnterpriseId { get; set; }
+
+    public DriverEnterpriseSummary? DriverEnterpriseSummary { get; set; }
 
 }
 
-public class EnterpriseSummaryViewModel
+public class DriverEnterpriseSummary
 {
 
-    public int EnterpriseId { get; set; }
+    public int AssignedVehiclesCount { get; set; }
 
-    public required string Name { get; set; }
-
-    public required string VAT { get; set; }
-
-    public int DriversCount { get; set; }
-
-    public int VehiclesCount { get; set; }
+    public int? ActiveVehicleId { get; set; }
 
 }
