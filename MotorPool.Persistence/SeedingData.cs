@@ -44,18 +44,61 @@ public static class SeedingData
     ];
     public static List<Vehicle> Vehicles =>
     [
-        new () { VehicleId = 1, MotorVIN = "1HGBH41JXMN109186", ManufactureYear = 2020, ManufactureLand = "Japan", Cost = 20000M, Mileage = 15000M, VehicleBrandId = 1 , EnterpriseId = 1},
-        new () { VehicleId = 2, MotorVIN = "2VOLVOB7R0MN10918", ManufactureYear = 2019, ManufactureLand = "Sweden", Cost = 100000M, Mileage = 50000M, VehicleBrandId = 2, EnterpriseId = 1 },
-        new () { VehicleId = 3, MotorVIN = "3SCANPSE0MN109187", ManufactureYear = 2018, ManufactureLand = "Sweden", Cost = 120000M, Mileage = 20000M, VehicleBrandId = 3, EnterpriseId = 1 },
-        new () { VehicleId = 4, MotorVIN = "4MBNZCTR0MN109186", ManufactureYear = 2021, ManufactureLand = "Germany", Cost = 110000M, Mileage = 30000M, VehicleBrandId = 4, EnterpriseId = 1 },
-        new () { VehicleId = 5, MotorVIN = "5FORDTRN0MN109185", ManufactureYear = 2022, ManufactureLand = "USA", Cost = 30000M, Mileage = 10000M, VehicleBrandId = 5, EnterpriseId = 1 },
-        new () { VehicleId = 6, MotorVIN = "6HGBH41JXMN209186", ManufactureYear = 2020, ManufactureLand = "Japan", Cost = 22000M, Mileage = 12000M, VehicleBrandId = 1, EnterpriseId = 2 },
-        new () { VehicleId = 7, MotorVIN = "7VOLVOB7R1MN20918", ManufactureYear = 2019, ManufactureLand = "Sweden", Cost = 105000M, Mileage = 55000M, VehicleBrandId = 2, EnterpriseId = 2 },
-        new () { VehicleId = 8, MotorVIN = "8SCANPSE1MN209187", ManufactureYear = 2018, ManufactureLand = "Sweden", Cost = 125000M, Mileage = 22000M, VehicleBrandId = 3, EnterpriseId = 2 },
-        new () { VehicleId = 9, MotorVIN = "9MBNZCTR1MN209186", ManufactureYear = 2021, ManufactureLand = "Germany", Cost = 115000M, Mileage = 32000M, VehicleBrandId = 4, EnterpriseId = 2 },
-        new () { VehicleId = 10, MotorVIN = "0FORDTRN1MN209185", ManufactureYear = 2022, ManufactureLand = "USA", Cost = 32000M, Mileage = 11000M, VehicleBrandId = 5, EnterpriseId = 3 },
-        new () { VehicleId = 11, MotorVIN = "1HGBH41JXMN309186", ManufactureYear = 2020, ManufactureLand = "Japan", Cost = 23000M, Mileage = 13000M, VehicleBrandId = 1, EnterpriseId = 3 },
-        new () { VehicleId = 12, MotorVIN = "2VOLVOB7R2MN30918", ManufactureYear = 2019, ManufactureLand = "Sweden", Cost = 110000M, Mileage = 60000M, VehicleBrandId = 2, EnterpriseId = 3 },
+        new ()
+        {
+            VehicleId = 1, MotorVIN = "1HGBH41JXMN109186", ManufactureYear = 2020, ManufactureLand = "Japan", Cost = 20000M, Mileage = 15000M, VehicleBrandId = 1, EnterpriseId = 1
+        },
+        new ()
+        {
+            VehicleId = 2, MotorVIN = "2VOLVOB7R0MN10918", ManufactureYear = 2019, ManufactureLand = "Sweden", Cost = 100000M, Mileage = 50000M, VehicleBrandId = 2,
+            EnterpriseId = 1
+        },
+        new ()
+        {
+            VehicleId = 3, MotorVIN = "3SCANPSE0MN109187", ManufactureYear = 2018, ManufactureLand = "Sweden", Cost = 120000M, Mileage = 20000M, VehicleBrandId = 3,
+            EnterpriseId = 1
+        },
+        new ()
+        {
+            VehicleId = 4, MotorVIN = "4MBNZCTR0MN109186", ManufactureYear = 2021, ManufactureLand = "Germany", Cost = 110000M, Mileage = 30000M, VehicleBrandId = 4,
+            EnterpriseId = 1
+        },
+        new ()
+        {
+            VehicleId = 5, MotorVIN = "5FORDTRN0MN109185", ManufactureYear = 2022, ManufactureLand = "USA", Cost = 30000M, Mileage = 10000M, VehicleBrandId = 5, EnterpriseId = 1
+        },
+        new ()
+        {
+            VehicleId = 6, MotorVIN = "6HGBH41JXMN209186", ManufactureYear = 2020, ManufactureLand = "Japan", Cost = 22000M, Mileage = 12000M, VehicleBrandId = 1, EnterpriseId = 2
+        },
+        new ()
+        {
+            VehicleId = 7, MotorVIN = "7VOLVOB7R1MN20918", ManufactureYear = 2019, ManufactureLand = "Sweden", Cost = 105000M, Mileage = 55000M, VehicleBrandId = 2,
+            EnterpriseId = 2
+        },
+        new ()
+        {
+            VehicleId = 8, MotorVIN = "8SCANPSE1MN209187", ManufactureYear = 2018, ManufactureLand = "Sweden", Cost = 125000M, Mileage = 22000M, VehicleBrandId = 3,
+            EnterpriseId = 2
+        },
+        new ()
+        {
+            VehicleId = 9, MotorVIN = "9MBNZCTR1MN209186", ManufactureYear = 2021, ManufactureLand = "Germany", Cost = 115000M, Mileage = 32000M, VehicleBrandId = 4,
+            EnterpriseId = 2
+        },
+        new ()
+        {
+            VehicleId = 10, MotorVIN = "0FORDTRN1MN209185", ManufactureYear = 2022, ManufactureLand = "USA", Cost = 32000M, Mileage = 11000M, VehicleBrandId = 5, EnterpriseId = 3
+        },
+        new ()
+        {
+            VehicleId = 11, MotorVIN = "1HGBH41JXMN309186", ManufactureYear = 2020, ManufactureLand = "Japan", Cost = 23000M, Mileage = 13000M, VehicleBrandId = 1, EnterpriseId = 3
+        },
+        new ()
+        {
+            VehicleId = 12, MotorVIN = "2VOLVOB7R2MN30918", ManufactureYear = 2019, ManufactureLand = "Sweden", Cost = 110000M, Mileage = 60000M, VehicleBrandId = 2,
+            EnterpriseId = 3
+        },
         new () { VehicleId = 13, MotorVIN = "3SCANPSE2MN309187", ManufactureYear = 2018, ManufactureLand = "Sweden", Cost = 130000M, Mileage = 24000M, VehicleBrandId = 3 },
         new () { VehicleId = 14, MotorVIN = "4MBNZCTR2MN309186", ManufactureYear = 2021, ManufactureLand = "Germany", Cost = 120000M, Mileage = 33000M, VehicleBrandId = 4 },
         new () { VehicleId = 15, MotorVIN = "5FORDTRN2MN309185", ManufactureYear = 2022, ManufactureLand = "USA", Cost = 34000M, Mileage = 12000M, VehicleBrandId = 5 },
@@ -72,7 +115,7 @@ public static class SeedingData
         new Driver { DriverId = 2, FirstName = "Jane", LastName = "Doe", Salary = 2500M, EnterpriseId = 1 },
         new Driver { DriverId = 3, FirstName = "Jack", LastName = "Doe", Salary = 3000M, EnterpriseId = 1 },
         new Driver { DriverId = 4, FirstName = "Jill", LastName = "Doe", Salary = 3500M, EnterpriseId = 1 },
-        new Driver { DriverId = 5, FirstName = "Jim", LastName = "Doe", Salary = 4000M , EnterpriseId = 2},
+        new Driver { DriverId = 5, FirstName = "Jim", LastName = "Doe", Salary = 4000M, EnterpriseId = 2 },
         new Driver { DriverId = 6, FirstName = "Jenny", LastName = "Doe", Salary = 4500M, EnterpriseId = 2 },
         new Driver { DriverId = 7, FirstName = "Jasper", LastName = "Doe", Salary = 5000M, EnterpriseId = 2 },
         new Driver { DriverId = 8, FirstName = "Jasmine", LastName = "Doe", Salary = 5500M, EnterpriseId = 3 },
@@ -82,24 +125,24 @@ public static class SeedingData
 
     public static List<DriverVehicle> GenerateDriverVehicleAssignments()
     {
-        var driverVehicles = new List<DriverVehicle>();
-        var random = new Random();
+        List<DriverVehicle> driverVehicles = new ();
+        Random random = new ();
 
-        foreach (var enterpriseGroup in Vehicles.GroupBy(v => v.EnterpriseId))
+        foreach (IGrouping<int?, Vehicle> enterpriseGroup in Vehicles.GroupBy(v => v.EnterpriseId))
         {
-            var enterpriseDrivers = Drivers.Where(d => d.EnterpriseId == enterpriseGroup.Key).ToList();
-            foreach (var vehicle in enterpriseGroup)
+            if (enterpriseGroup.Key is null) continue;
+
+            List<Driver> enterpriseDrivers = Drivers.Where(d => d.EnterpriseId == enterpriseGroup.Key).ToList();
+
+            foreach (Vehicle vehicle in enterpriseGroup)
             {
-                var assignedDrivers = enterpriseDrivers.OrderBy(x => random.Next()).Take(3).ToList();
-                foreach (var driver in assignedDrivers)
-                {
-                    driverVehicles.Add(new DriverVehicle { DriverId = driver.DriverId, VehicleId = vehicle.VehicleId });
-                }
+                List<Driver> assignedDrivers = enterpriseDrivers.OrderBy(x => random.Next()).Take(3).ToList();
+
+                foreach (Driver driver in assignedDrivers) driverVehicles.Add(new DriverVehicle { DriverId = driver.DriverId, VehicleId = vehicle.VehicleId });
             }
         }
 
         return driverVehicles;
     }
-
 
 }
