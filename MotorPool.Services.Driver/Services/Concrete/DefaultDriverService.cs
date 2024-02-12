@@ -1,33 +1,26 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Runtime.CompilerServices;
 
+using AutoMapper;
+
+using Microsoft.EntityFrameworkCore;
+
+using MotorPool.Domain;
 using MotorPool.Persistence;
 using MotorPool.Services.Drivers.Models;
 
 namespace MotorPool.Services.Drivers.Services.Concrete;
 
-public class DefaultDriverService(AppDbContext dbContext) : DriverService
+public class DefaultDriverService(AppDbContext dbContext, IMapper mapper) : DriverService
 {
 
     public async ValueTask<List<DriverViewModel>> GetAllAsync()
     {
-        return await dbContext.Drivers
-                              .AsNoTracking()
-                              .Select(driver => new DriverViewModel
-                              {
-                                  DriverId = driver.DriverId,
-                                  FirstName = driver.FirstName,
-                                  LastName = driver.LastName,
-                                  Salary = driver.Salary,
-                                  EnterpriseId = driver.EnterpriseId,
-                                  ActiveVehicleId = driver.ActiveVehicleId,
-                                  Vehicles = driver.DriverVehicles.Select(driverVehicle => new VehicleSummary
-                                  {
-                                      VehicleId = driverVehicle.VehicleId,
-                                      CompanyName = driverVehicle.Vehicle.VehicleBrand.CompanyName,
-                                      ModelName = driverVehicle.Vehicle.VehicleBrand.ModelName
-                                  }).ToList()
-                              })
-                              .ToListAsync();
+        List<Driver> rawDrivers = await dbContext.Drivers
+                                                 .AsNoTracking()
+                                                 .Include(driver => driver.DriverVehicles)
+                                                 .ToListAsync();
+
+        return mapper.Map<List<DriverViewModel>>(rawDrivers);
     }
 
 }

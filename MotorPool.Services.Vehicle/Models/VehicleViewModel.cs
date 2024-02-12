@@ -1,10 +1,14 @@
-﻿namespace MotorPool.Services.Vehicles.ViewModels;
+﻿using MotorPool.Services.Vehicles.ViewModels;
+
+namespace MotorPool.Services.Vehicles.Models;
 
 public class VehicleViewModel : VehicleDTO
 {
 
-    public string CompanyName { get; set; }
+    public required string CompanyName { get; set; }
 
-    public string ModelName { get; set; }
+    public required string ModelName { get; set; }
+
+    public List<int> DriverIds { get; set; } = new ();
 
 }

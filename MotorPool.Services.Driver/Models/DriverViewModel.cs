@@ -15,17 +15,6 @@ public class DriverViewModel
 
     public int? ActiveVehicleId { get; set; }
 
-    public List<VehicleSummary> Vehicles { get; set; } = new ();
-
-}
-
-public class VehicleSummary
-{
-
-    public int VehicleId { get; set; }
-
-    public required string CompanyName { get; set; }
-
-    public required string ModelName { get; set; }
+    public List<int> VehicleIds { get; set; } = new ();
 
 }
