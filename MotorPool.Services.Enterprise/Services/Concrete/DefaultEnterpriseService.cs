@@ -13,47 +13,35 @@ public class DefaultEnterpriseService(AppDbContext dbContext) : EnterpriseServic
 
     public async ValueTask<List<EnterpriseViewModel>> GetAllAsync()
     {
-        return await dbContext.Enterprises.AsNoTracking()
-                                                  .Select(enterprise => new EnterpriseViewModel
-                                                  {
-                                                      EnterpriseId = enterprise.EnterpriseId,
-                                                      Name = enterprise.Name,
-                                                      City = enterprise.City,
-                                                      Street = enterprise.Street,
-                                                      VAT = enterprise.VAT,
-                                                      FoundedOn = enterprise.FoundedOn,
-                                                      Vehicles = enterprise.Vehicles
-                                                                           .Select(enterpriseVehicle => new VehicleSummaryModel
-                                                                           {
-                                                                               VehicleId = enterpriseVehicle.Vehicle.VehicleId,
-                                                                               Cost = enterpriseVehicle.Vehicle.Cost,
-                                                                               ModelName = enterpriseVehicle.Vehicle.VehicleBrand.ModelName,
-                                                                               CompanyName = enterpriseVehicle.Vehicle.VehicleBrand.CompanyName,
-                                                                               AssignedDriversCount = enterpriseVehicle.EnterpriseDriverLinks.Count,
-                                                                               ActiveDriverId = enterpriseVehicle.EnterpriseDriverLinks
-                                                                                                                 .Where(enterpriseVehicleDriver => enterpriseVehicleDriver.ActiveDriver != null)
-                                                                                                                 .Select(enterpriseVehicleDriver =>
-                                                                                                                     (int?)enterpriseVehicleDriver.ActiveDriver!.EnterpriseVehicleDriver.EnterpriseDriver.Driver.DriverId)
-                                                                                                                 .FirstOrDefault()
-                                                                           })
-                                                                           .ToList(),
-                                                      Drivers = enterprise.Drivers
-                                                                          .Select(enterpriseDriver => new DriverSummaryModel
-                                                                          {
-                                                                              DriverId = enterpriseDriver.Driver.DriverId,
-                                                                              FirstName = enterpriseDriver.Driver.FirstName,
-                                                                              LastName = enterpriseDriver.Driver.LastName,
-                                                                              HiredOn = enterpriseDriver.HiredOn,
-                                                                              AssignedVehiclesCount = enterpriseDriver.EnterpriseVehicleLinks.Count,
-                                                                              ActiveVehicleId = enterpriseDriver.EnterpriseVehicleLinks
-                                                                                                                .Where(enterpriseVehicleDriver => enterpriseVehicleDriver.ActiveDriver != null)
-                                                                                                                .Select(enterpriseVehicleDriver =>
-                                                                                                                    (int?)enterpriseVehicleDriver.ActiveDriver.EnterpriseVehicleDriver.EnterpriseVehicle.VehicleId)
-                                                                                                                .FirstOrDefault()
-                                                                          })
-                                                                          .ToList()
-                                                  })
-                                                  .ToListAsync();
+        return await dbContext.Enterprises
+                              .AsNoTracking()
+                              .Select(enterprise => new EnterpriseViewModel
+                              {
+                                  EnterpriseId = enterprise.EnterpriseId,
+                                  Name = enterprise.Name,
+                                  City = enterprise.City,
+                                  Street = enterprise.Street,
+                                  VAT = enterprise.VAT,
+                                  FoundedOn = enterprise.FoundedOn,
+                                  Vehicles = enterprise.Vehicles
+                                                       .Select(vehicle => new VehicleSummaryViewModel
+                                                       {
+                                                           VehicleId = vehicle.VehicleId,
+                                                           CompanyName = vehicle.VehicleBrand.CompanyName,
+                                                           ModelName = vehicle.VehicleBrand.ModelName,
+                                                           VIN = vehicle.MotorVIN
+                                                       })
+                                                       .ToList(),
+                                  Drivers = enterprise.Drivers
+                                                      .Select(driver => new DriverSummaryViewModel
+                                                      {
+                                                          DriverId = driver.DriverId,
+                                                          FullName = driver.FirstName + " " + driver.LastName,
+                                                          Salary = driver.Salary
+                                                      })
+                                                      .ToList()
+                              })
+                              .ToListAsync();
     }
 
 }

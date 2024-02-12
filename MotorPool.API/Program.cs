@@ -48,4 +48,6 @@ app.MapGet("enterprises", async (EnterpriseService enterpriseService) => await e
 
 app.MapGet("drivers", async (DriverService driverService) => await driverService.GetAllAsync());
 
+await app.SetupDatabaseAsync();
+
 app.Run();

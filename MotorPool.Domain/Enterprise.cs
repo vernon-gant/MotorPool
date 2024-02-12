@@ -22,8 +22,8 @@ public class Enterprise
 
     public DateTime FoundedOn { get; set; }
 
-    public ICollection<EnterpriseVehicle> Vehicles { get; set; }
+    public List<Vehicle> Vehicles { get; set; }
 
-    public ICollection<EnterpriseDriver> Drivers { get; set; }
+    public List<Driver> Drivers { get; set; }
 
 }

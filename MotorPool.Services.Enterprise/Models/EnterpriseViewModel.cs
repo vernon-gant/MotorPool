@@ -15,42 +15,32 @@ public class EnterpriseViewModel
 
     public DateTime FoundedOn { get; set; }
 
-    public List<VehicleSummaryModel> Vehicles { get; set; } = new();
+    public List<VehicleSummaryViewModel> Vehicles { get; set; } = new ();
 
-    public List<DriverSummaryModel> Drivers { get; set; } = new();
+    public List<DriverSummaryViewModel> Drivers { get; set; } = new ();
 
 }
 
-public class VehicleSummaryModel
+public class VehicleSummaryViewModel
 {
 
     public int VehicleId { get; set; }
 
-    public decimal Cost { get; set; }
+    public required string CompanyName { get; set; }
 
-    public string ModelName { get; set; } = null!;
+    public required string ModelName { get; set; }
 
-    public string CompanyName { get; set; } = null!;
-
-    public int AssignedDriversCount { get; set; }
-
-    public int? ActiveDriverId { get; set; }
+    public required string VIN { get; set; }
 
 }
 
-public class DriverSummaryModel
+public class DriverSummaryViewModel
 {
 
     public int DriverId { get; set; }
 
-    public string FirstName { get; set; } = null!;
+    public required string FullName { get; set; }
 
-    public string LastName { get; set; } = null!;
-
-    public DateTime HiredOn { get; set; }
-
-    public int AssignedVehiclesCount { get; set; }
-
-    public int? ActiveVehicleId { get; set; }
+    public decimal Salary { get; set; }
 
 }

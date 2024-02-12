@@ -28,6 +28,10 @@ public class Vehicle
 
     public VehicleBrand VehicleBrand { get; set; }
 
-    public EnterpriseVehicle? EnterpriseLink { get; set; }
+    public int? EnterpriseId { get; set; }
+
+    public Enterprise? Enterprise { get; set; }
+
+    public List<DriverVehicle> DriverVehicles { get; set; } = new();
 
 }

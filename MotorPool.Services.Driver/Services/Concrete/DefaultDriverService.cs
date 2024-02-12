@@ -18,16 +18,14 @@ public class DefaultDriverService(AppDbContext dbContext) : DriverService
                                   FirstName = driver.FirstName,
                                   LastName = driver.LastName,
                                   Salary = driver.Salary,
-                                  EnterpriseLink = driver.EnterpriseLink != null
-                                      ? new EnterpriseSummaryViewModel
-                                      {
-                                          EnterpriseId = driver.EnterpriseLink.EnterpriseId,
-                                          Name = driver.EnterpriseLink.Enterprise.Name,
-                                          VAT = driver.EnterpriseLink.Enterprise.VAT,
-                                          DriversCount = driver.EnterpriseLink.Enterprise.Drivers.Count,
-                                          VehiclesCount = driver.EnterpriseLink.Enterprise.Vehicles.Count
-                                      }
-                                      : null
+                                  EnterpriseId = driver.EnterpriseId,
+                                  ActiveVehicleId = driver.ActiveVehicleId,
+                                  Vehicles = driver.DriverVehicles.Select(driverVehicle => new VehicleSummary
+                                  {
+                                      VehicleId = driverVehicle.VehicleId,
+                                      CompanyName = driverVehicle.Vehicle.VehicleBrand.CompanyName,
+                                      ModelName = driverVehicle.Vehicle.VehicleBrand.ModelName
+                                  }).ToList()
                               })
                               .ToListAsync();
     }

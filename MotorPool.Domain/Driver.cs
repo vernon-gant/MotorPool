@@ -16,6 +16,14 @@ public class Driver
 
     public decimal Salary { get; set; }
 
-    public EnterpriseDriver? EnterpriseLink { get; set; }
+    public int? EnterpriseId { get; set; }
+
+    public Enterprise? Enterprise { get; set; }
+
+    public List<DriverVehicle> DriverVehicles { get; set; } = new();
+
+    public int? ActiveVehicleId { get; set; }
+
+    public Vehicle ActiveVehicle { get; set; }
 
 }
