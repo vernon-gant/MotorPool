@@ -23,23 +23,10 @@ public class DefaultEnterpriseService(AppDbContext dbContext) : EnterpriseServic
                                   Street = enterprise.Street,
                                   VAT = enterprise.VAT,
                                   FoundedOn = enterprise.FoundedOn,
-                                  Vehicles = enterprise.Vehicles
-                                                       .Select(vehicle => new VehicleSummaryViewModel
-                                                       {
-                                                           VehicleId = vehicle.VehicleId,
-                                                           CompanyName = vehicle.VehicleBrand.CompanyName,
-                                                           ModelName = vehicle.VehicleBrand.ModelName,
-                                                           VIN = vehicle.MotorVIN
-                                                       })
-                                                       .ToList(),
-                                  Drivers = enterprise.Drivers
-                                                      .Select(driver => new DriverSummaryViewModel
-                                                      {
-                                                          DriverId = driver.DriverId,
-                                                          FullName = driver.FirstName + " " + driver.LastName,
-                                                          Salary = driver.Salary
-                                                      })
-                                                      .ToList()
+                                  VehicleIds = enterprise.Vehicles
+                                                       .Select(vehicle => vehicle.VehicleId).ToList(),
+                                  DriverIds = enterprise.Drivers
+                                                      .Select(driver => driver.DriverId).ToList()
                               })
                               .ToListAsync();
     }

@@ -15,32 +15,7 @@ public class EnterpriseViewModel
 
     public DateTime FoundedOn { get; set; }
 
-    public List<VehicleSummaryViewModel> Vehicles { get; set; } = new ();
+    public List<int> VehicleIds { get; set; } = new ();
 
-    public List<DriverSummaryViewModel> Drivers { get; set; } = new ();
-
-}
-
-public class VehicleSummaryViewModel
-{
-
-    public int VehicleId { get; set; }
-
-    public required string CompanyName { get; set; }
-
-    public required string ModelName { get; set; }
-
-    public required string VIN { get; set; }
-
-}
-
-public class DriverSummaryViewModel
-{
-
-    public int DriverId { get; set; }
-
-    public required string FullName { get; set; }
-
-    public decimal Salary { get; set; }
-
+    public List<int> DriverIds { get; set; } = new ();
 }
