@@ -22,8 +22,10 @@ public class Enterprise
 
     public DateTime FoundedOn { get; set; }
 
-    public List<Vehicle> Vehicles { get; set; }
+    public List<Vehicle> Vehicles { get; set; } = new ();
 
-    public List<Driver> Drivers { get; set; }
+    public List<Driver> Drivers { get; set; } = new ();
+
+    public List<EnterpriseManager> ManagerLinks { get; set; } = new ();
 
 }

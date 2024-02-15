@@ -14,4 +14,6 @@ public interface VehicleService
 
     ValueTask<VehicleViewModel?> GetVehicleById(int id);
 
+    ValueTask<List<VehicleViewModel>> GetByManagerAsync(int managerId);
+
 }

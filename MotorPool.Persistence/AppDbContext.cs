@@ -6,7 +6,7 @@ using MotorPool.Domain;
 
 namespace MotorPool.Persistence;
 
-public class AppDbContext(DbContextOptions options) : DbContext(options)
+public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
 
     public DbSet<Vehicle> Vehicles { get; set; }
@@ -16,6 +16,8 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
     public DbSet<Driver> Drivers { get; set; }
 
     public DbSet<Enterprise> Enterprises { get; set; }
+
+    public DbSet<Manager> Managers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -30,6 +32,10 @@ public class AppDbContext(DbContextOptions options) : DbContext(options)
         modelBuilder.Entity<Driver>().HasData(SeedingData.Drivers);
 
         modelBuilder.Entity<DriverVehicle>().HasData(SeedingData.GenerateDriverVehicleAssignments());
+
+        modelBuilder.Entity<Manager>().HasData(SeedingData.Managers);
+
+        modelBuilder.Entity<EnterpriseManager>().HasData(SeedingData.EnterpriseManagers);
     }
 
 }

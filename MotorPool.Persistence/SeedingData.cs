@@ -123,6 +123,25 @@ public static class SeedingData
         new Driver { DriverId = 10, FirstName = "Jocelyn", LastName = "Doe", Salary = 6500M }
     ];
 
+    public static List<Manager> Managers =>
+    [
+        new Manager { ManagerId = 1 },
+        new Manager { ManagerId = 2 },
+        new Manager { ManagerId = 3 }
+    ];
+
+    public static List<EnterpriseManager> EnterpriseManagers =>
+    [
+        new EnterpriseManager { EnterpriseId = 1, ManagerId = 1 },
+        new EnterpriseManager { EnterpriseId = 1, ManagerId = 2 },
+        new EnterpriseManager { EnterpriseId = 2, ManagerId = 1 },
+        new EnterpriseManager { EnterpriseId = 2, ManagerId = 2 },
+        new EnterpriseManager { EnterpriseId = 3, ManagerId = 1 },
+        new EnterpriseManager { EnterpriseId = 3, ManagerId = 3 },
+        new EnterpriseManager { EnterpriseId = 4, ManagerId = 1 },
+        new EnterpriseManager { EnterpriseId = 5, ManagerId = 1 }
+    ];
+
     public static List<DriverVehicle> GenerateDriverVehicleAssignments()
     {
         List<DriverVehicle> driverVehicles = new ();

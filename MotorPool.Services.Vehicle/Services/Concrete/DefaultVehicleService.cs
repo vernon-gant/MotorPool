@@ -49,4 +49,17 @@ public class DefaultVehicleService(AppDbContext dbContext, IMapper mapper) : Veh
         return mapper.Map<VehicleViewModel>(foundVehicle);
     }
 
+    public async ValueTask<List<VehicleViewModel>> GetByManagerAsync(int managerId)
+    {
+        List<Vehicle> rawVehicles = await dbContext.Vehicles
+                                                .AsNoTracking()
+                                                .Include(vehicle => vehicle.VehicleBrand)
+                                                .Include(vehicle => vehicle.DriverVehicles)
+                                                .Where(vehicle => vehicle.Enterprise != null)
+                                                .Where(vehicle => vehicle.Enterprise!.ManagerLinks.Any(manager => manager.ManagerId == managerId))
+                                                .ToListAsync();
+
+        return mapper.Map<List<VehicleViewModel>>(rawVehicles);
+    }
+
 }

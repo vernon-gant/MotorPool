@@ -21,4 +21,17 @@ public class DefaultEnterpriseService(AppDbContext dbContext, IMapper mapper) : 
         return mapper.Map<List<EnterpriseViewModel>>(rawEnterprises);
     }
 
+    public async ValueTask<List<EnterpriseViewModel>> GetByManagerAsync(int managerId)
+    {
+        List<Domain.Enterprise> rawEnterprises = await dbContext.Enterprises
+                                                                .AsNoTracking()
+                                                                .Include(enterprise => enterprise.ManagerLinks)
+                                                                .Include(enterprise => enterprise.Vehicles)
+                                                                .Include(enterprise => enterprise.Drivers)
+                                                                .Where(enterprise => enterprise.ManagerLinks.Any(manager => manager.ManagerId == managerId))
+                                                                .ToListAsync();
+
+        return mapper.Map<List<EnterpriseViewModel>>(rawEnterprises);
+    }
+
 }

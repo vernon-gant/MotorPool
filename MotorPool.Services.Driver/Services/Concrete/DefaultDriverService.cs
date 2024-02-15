@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-using AutoMapper;
+﻿using AutoMapper;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -21,6 +19,18 @@ public class DefaultDriverService(AppDbContext dbContext, IMapper mapper) : Driv
                                                  .ToListAsync();
 
         return mapper.Map<List<DriverViewModel>>(rawDrivers);
+    }
+
+    public async ValueTask<List<DriverViewModel>> GetByManagerAsync(int managerId)
+    {
+        List<Driver> managerAccessibleDrivers = await dbContext.Drivers
+                                                               .AsNoTracking()
+                                                               .Include(driver => driver.DriverVehicles)
+                                                               .Where(driver => driver.Enterprise != null &&
+                                                                                driver.Enterprise.ManagerLinks.Any(link => link.ManagerId == managerId))
+                                                               .ToListAsync();
+
+        return mapper.Map<List<DriverViewModel>>(managerAccessibleDrivers);
     }
 
 }
