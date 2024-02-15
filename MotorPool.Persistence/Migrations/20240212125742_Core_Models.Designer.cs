@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MotorPool.Persistence;
 
@@ -11,9 +12,11 @@ using MotorPool.Persistence;
 namespace MotorPool.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240212125742_Core_Models")]
+    partial class Core_Models
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -157,6 +160,11 @@ namespace MotorPool.Persistence.Migrations
                     b.HasData(
                         new
                         {
+                            DriverId = 4,
+                            VehicleId = 1
+                        },
+                        new
+                        {
                             DriverId = 1,
                             VehicleId = 1
                         },
@@ -168,7 +176,7 @@ namespace MotorPool.Persistence.Migrations
                         new
                         {
                             DriverId = 4,
-                            VehicleId = 1
+                            VehicleId = 2
                         },
                         new
                         {
@@ -182,17 +190,7 @@ namespace MotorPool.Persistence.Migrations
                         },
                         new
                         {
-                            DriverId = 4,
-                            VehicleId = 2
-                        },
-                        new
-                        {
-                            DriverId = 1,
-                            VehicleId = 3
-                        },
-                        new
-                        {
-                            DriverId = 2,
+                            DriverId = 3,
                             VehicleId = 3
                         },
                         new
@@ -203,17 +201,32 @@ namespace MotorPool.Persistence.Migrations
                         new
                         {
                             DriverId = 1,
-                            VehicleId = 4
-                        },
-                        new
-                        {
-                            DriverId = 2,
-                            VehicleId = 4
+                            VehicleId = 3
                         },
                         new
                         {
                             DriverId = 3,
                             VehicleId = 4
+                        },
+                        new
+                        {
+                            DriverId = 1,
+                            VehicleId = 4
+                        },
+                        new
+                        {
+                            DriverId = 4,
+                            VehicleId = 4
+                        },
+                        new
+                        {
+                            DriverId = 2,
+                            VehicleId = 5
+                        },
+                        new
+                        {
+                            DriverId = 1,
+                            VehicleId = 5
                         },
                         new
                         {
@@ -222,13 +235,8 @@ namespace MotorPool.Persistence.Migrations
                         },
                         new
                         {
-                            DriverId = 3,
-                            VehicleId = 5
-                        },
-                        new
-                        {
-                            DriverId = 2,
-                            VehicleId = 5
+                            DriverId = 5,
+                            VehicleId = 6
                         },
                         new
                         {
@@ -243,7 +251,7 @@ namespace MotorPool.Persistence.Migrations
                         new
                         {
                             DriverId = 5,
-                            VehicleId = 6
+                            VehicleId = 7
                         },
                         new
                         {
@@ -252,17 +260,12 @@ namespace MotorPool.Persistence.Migrations
                         },
                         new
                         {
-                            DriverId = 5,
-                            VehicleId = 7
-                        },
-                        new
-                        {
                             DriverId = 6,
                             VehicleId = 7
                         },
                         new
                         {
-                            DriverId = 6,
+                            DriverId = 7,
                             VehicleId = 8
                         },
                         new
@@ -272,7 +275,7 @@ namespace MotorPool.Persistence.Migrations
                         },
                         new
                         {
-                            DriverId = 7,
+                            DriverId = 6,
                             VehicleId = 8
                         },
                         new
@@ -282,12 +285,12 @@ namespace MotorPool.Persistence.Migrations
                         },
                         new
                         {
-                            DriverId = 7,
+                            DriverId = 5,
                             VehicleId = 9
                         },
                         new
                         {
-                            DriverId = 5,
+                            DriverId = 7,
                             VehicleId = 9
                         },
                         new
@@ -312,13 +315,53 @@ namespace MotorPool.Persistence.Migrations
                         },
                         new
                         {
+                            DriverId = 9,
+                            VehicleId = 12
+                        },
+                        new
+                        {
                             DriverId = 8,
                             VehicleId = 12
                         },
                         new
                         {
-                            DriverId = 9,
-                            VehicleId = 12
+                            DriverId = 10,
+                            VehicleId = 13
+                        },
+                        new
+                        {
+                            DriverId = 10,
+                            VehicleId = 14
+                        },
+                        new
+                        {
+                            DriverId = 10,
+                            VehicleId = 15
+                        },
+                        new
+                        {
+                            DriverId = 10,
+                            VehicleId = 16
+                        },
+                        new
+                        {
+                            DriverId = 10,
+                            VehicleId = 17
+                        },
+                        new
+                        {
+                            DriverId = 10,
+                            VehicleId = 18
+                        },
+                        new
+                        {
+                            DriverId = 10,
+                            VehicleId = 19
+                        },
+                        new
+                        {
+                            DriverId = 10,
+                            VehicleId = 20
                         });
                 });
 

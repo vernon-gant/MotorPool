@@ -25,9 +25,9 @@ public class DefaultVehicleBrandService(AppDbContext dbContext, IMapper mapper) 
 
     public async ValueTask<List<VehicleBrandViewModel>> GetAllAsync()
     {
-        List<Domain.VehicleBrand> vehicleBrands = await dbContext.VehicleBrands.ToListAsync();
+        List<Domain.VehicleBrand> rawVehicleBrands = await dbContext.VehicleBrands.AsNoTracking().ToListAsync();
 
-        return mapper.Map<List<VehicleBrandViewModel>>(vehicleBrands);
+        return mapper.Map<List<VehicleBrandViewModel>>(rawVehicleBrands);
     }
 
 }

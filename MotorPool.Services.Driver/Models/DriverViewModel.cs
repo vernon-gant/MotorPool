@@ -13,15 +13,8 @@ public class DriverViewModel
 
     public int? EnterpriseId { get; set; }
 
-    public DriverEnterpriseSummary? DriverEnterpriseSummary { get; set; }
-
-}
-
-public class DriverEnterpriseSummary
-{
-
-    public int AssignedVehiclesCount { get; set; }
-
     public int? ActiveVehicleId { get; set; }
+
+    public List<int> VehicleIds { get; set; } = new ();
 
 }

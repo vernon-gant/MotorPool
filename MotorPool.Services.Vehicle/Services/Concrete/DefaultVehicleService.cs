@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 using MotorPool.Domain;
 using MotorPool.Persistence;
+using MotorPool.Services.Vehicles.Models;
 using MotorPool.Services.Vehicles.ViewModels;
 
 namespace MotorPool.Services.Vehicles.Services.Concrete;
@@ -25,9 +26,13 @@ public class DefaultVehicleService(AppDbContext dbContext, IMapper mapper) : Veh
 
     public async ValueTask<List<VehicleViewModel>> GetAllAsync()
     {
-        List<Vehicle> vehicles = await dbContext.Vehicles.Include(vehicle => vehicle.VehicleBrand).ToListAsync();
+        List<Vehicle> rawVehicles = await dbContext.Vehicles
+                                                .AsNoTracking()
+                                                .Include(vehicle => vehicle.VehicleBrand)
+                                                .Include(vehicle => vehicle.DriverVehicles)
+                                                .ToListAsync();
 
-        return mapper.Map<List<VehicleViewModel>>(vehicles);
+        return mapper.Map<List<VehicleViewModel>>(rawVehicles);
     }
 
     public async Task CreateVehicleAsync(VehicleDTO vehicleDto)
