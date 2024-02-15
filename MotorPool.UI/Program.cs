@@ -31,7 +31,7 @@ builder.Services
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddRazorPages();
 
-builder.Services.AddPersistence(connectionString);
+builder.Services.AddPersistenceServices(connectionString);
 builder.Services.AddVehicleServices();
 builder.Services.AddVehicleBrandServices();
 

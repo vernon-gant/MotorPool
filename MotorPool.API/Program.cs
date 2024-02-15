@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-builder.Services.AddPersistence(connectionString);
+builder.Services.AddPersistenceServices(connectionString);
 builder.Services.AddVehicleServices();
 builder.Services.AddVehicleBrandServices();
 builder.Services.AddEnterpriseServices();
