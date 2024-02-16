@@ -52,5 +52,20 @@ public class DefaultAuthService(UserManager<ApplicationUser> userManager, JWTCon
         return await LoginAsync(new LoginDTO { Email = registerDTO.Email, Password = registerDTO.Password });
     }
 
+    public async ValueTask<UserViewModel> GetUserAsync(string userId)
+    {
+        ApplicationUser user = (await userManager.FindByIdAsync(userId))!;
+
+        IList<Claim> claims = await userManager.GetClaimsAsync(user);
+
+        string? managerId = claims.FirstOrDefault(claim => claim.Type == "ManagerId")?.Value;
+
+        return new UserViewModel
+        {
+            UserName = user.UserName!,
+            Email = user.Email!,
+            ManagerId = managerId == null ? null : int.Parse(managerId)
+        };
+    }
 
 }

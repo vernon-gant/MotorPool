@@ -52,6 +52,7 @@ if (app.Environment.IsDevelopment())
 app.MapGet("vehicles", async (VehicleService vehicleService, ClaimsPrincipal user) =>
    {
        int managerId = int.Parse(user.FindFirstValue("ManagerId")!);
+
        return await vehicleService.GetByManagerAsync(managerId);
    })
    .RequireAuthorization("IsManager")
@@ -62,14 +63,16 @@ app.MapGet("vehicle-brands", async (VehicleBrandService vehicleBrandService) => 
 app.MapGet("enterprises", async (EnterpriseService enterpriseService, ClaimsPrincipal user) =>
    {
        int managerId = int.Parse(user.FindFirstValue("ManagerId")!);
+
        return await enterpriseService.GetByManagerAsync(managerId);
    })
    .RequireAuthorization("IsManager")
    .AddEndpointFilter<ManagerExistenceFilter>();
 
-app.MapGet("drivers", async (DriverService driverService, ClaimsPrincipal user) =>
+app.MapGet("drivers", async (DriverService driverService, ClaimsPrincipal principal) =>
    {
-       int managerId = int.Parse(user.FindFirstValue("ManagerId")!);
+       int managerId = int.Parse(principal.FindFirstValue("ManagerId")!);
+
        return await driverService.GetByManagerAsync(managerId);
    })
    .RequireAuthorization("IsManager")
@@ -94,7 +97,7 @@ app.MapPost("register", async (AuthService authService, RegisterDTO registerDTO)
     AuthResult result = await authService.RegisterAsync(registerDTO);
 
     return result.IsSuccess
-        ? Results.Ok(result)
+        ? Results.Ok(new  { result.Token })
         : Results.Problem(new ProblemDetails
         {
             Title = "Registration failed",
@@ -102,6 +105,17 @@ app.MapPost("register", async (AuthService authService, RegisterDTO registerDTO)
             Detail = result.Error
         });
 });
+
+app.MapGet("me", async (AuthService authService, ClaimsPrincipal principal) =>
+   {
+       string? userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
+
+       if (userId == null) return Results.Unauthorized();
+
+       return Results.Ok(await authService.GetUserAsync(userId));
+   })
+   .RequireAuthorization()
+   .Produces<UserViewModel>();
 
 await app.SetupDatabaseAsync();
 
