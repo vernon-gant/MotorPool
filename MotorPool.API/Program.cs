@@ -1,7 +1,9 @@
 using System.Security.Claims;
 using System.Text.Json;
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
 
 using MotorPool.API;
 using MotorPool.Auth;
@@ -30,7 +32,35 @@ builder.Services.AddDriverServices();
 builder.Services.AddAuthServices(jwtConfig, connectionString);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+
+    OpenApiSecurityScheme jwtSecurityScheme = new ()
+    {
+        Description = "Put **_ONLY_** your JWT Bearer token on textbox below!",
+        Name = "JWT Authentication",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = JwtBearerDefaults.AuthenticationScheme,
+
+        Reference = new OpenApiReference
+        {
+            Id = JwtBearerDefaults.AuthenticationScheme,
+            Type = ReferenceType.SecurityScheme
+        }
+    };
+
+    options.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        { jwtSecurityScheme, Array.Empty<string>() }
+    });
+});
+
 builder.Services.AddProblemDetails();
 
 builder.Services.ConfigureHttpJsonOptions(o =>
@@ -97,7 +127,7 @@ app.MapPost("register", async (AuthService authService, RegisterDTO registerDTO)
     AuthResult result = await authService.RegisterAsync(registerDTO);
 
     return result.IsSuccess
-        ? Results.Ok(new  { result.Token })
+        ? Results.Ok(new { result.Token })
         : Results.Problem(new ProblemDetails
         {
             Title = "Registration failed",
