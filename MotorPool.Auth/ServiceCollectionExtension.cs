@@ -1,16 +1,12 @@
-﻿using System.Text;
-
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 namespace MotorPool.Auth;
 
 public static class ServiceCollectionExtension
 {
 
-    public static void AddAuthServices(this IServiceCollection services, JWTConfig jwtConfig, string connectionString)
+    public static void AddAuthServices(this IServiceCollection services, string connectionString)
     {
         services.AddIdentity<ApplicationUser, IdentityRole>(options =>
                 {
@@ -27,27 +23,7 @@ public static class ServiceCollectionExtension
 
         services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(connectionString));
 
-        services.AddAuthentication(options =>
-                {
-                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig.Key)),
-                        ValidIssuer = jwtConfig.Issuer,
-                        ValidAudience = jwtConfig.Audience,
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
-                });
-
-        services.AddAuthorization(options => { options.AddPolicy("IsManager", policy => policy.RequireClaim("ManagerId")); });
-
-        services.AddScoped<AuthService, DefaultAuthService>();
+        services.AddScoped<ApiAuthService, DefaultApiAuthService>();
     }
 
 }

@@ -22,7 +22,7 @@ public class CreateModel(VehicleService vehicleService) : PageModel
     {
         if (!ModelState.IsValid) return Page();
 
-        await vehicleService.CreateVehicleAsync(VehicleDto);
+        await vehicleService.CreateAsync(VehicleDto);
 
         return RedirectToPage("./Index");
     }

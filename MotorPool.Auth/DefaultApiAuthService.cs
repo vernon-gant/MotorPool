@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace MotorPool.Auth;
 
-public class DefaultAuthService(UserManager<ApplicationUser> userManager, JWTConfig jwtConfig) : AuthService
+public class DefaultApiAuthService(UserManager<ApplicationUser> userManager, JWTConfig jwtConfig) : ApiAuthService
 {
 
     public async ValueTask<AuthResult> LoginAsync(LoginDTO loginDTO)

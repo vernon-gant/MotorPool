@@ -7,6 +7,6 @@ public interface DriverService
 
     ValueTask<List<DriverViewModel>> GetAllAsync();
 
-    ValueTask<List<DriverViewModel>> GetByManagerAsync(int managerId);
+    ValueTask<List<DriverViewModel>> GetByManagerIdAsync(int managerId);
 
 }

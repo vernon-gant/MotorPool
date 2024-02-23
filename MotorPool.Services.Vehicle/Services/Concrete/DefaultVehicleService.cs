@@ -12,7 +12,7 @@ namespace MotorPool.Services.Vehicles.Services.Concrete;
 public class DefaultVehicleService(AppDbContext dbContext, IMapper mapper) : VehicleService
 {
 
-    public async Task EditVehicleAsync(VehicleDTO vehicleDto)
+    public async Task EditAsync(VehicleDTO vehicleDto)
     {
         Vehicle oldVehicle = await dbContext.Vehicles
                                            .FirstAsync(vehicle => vehicle.VehicleId == vehicleDto.VehicleId);
@@ -35,12 +35,12 @@ public class DefaultVehicleService(AppDbContext dbContext, IMapper mapper) : Veh
         return mapper.Map<List<VehicleViewModel>>(rawVehicles);
     }
 
-    public async Task CreateVehicleAsync(VehicleDTO vehicleDto)
+    public async Task CreateAsync(VehicleDTO vehicleDto)
     {
         throw new NotImplementedException();
     }
 
-    public async ValueTask<VehicleViewModel?> GetVehicleById(int id)
+    public async ValueTask<VehicleViewModel?> GetById(int id)
     {
         Vehicle? foundVehicle = await dbContext.Vehicles
                                               .Include(vehicle => vehicle.VehicleBrand)
@@ -49,12 +49,14 @@ public class DefaultVehicleService(AppDbContext dbContext, IMapper mapper) : Veh
         return mapper.Map<VehicleViewModel>(foundVehicle);
     }
 
-    public async ValueTask<List<VehicleViewModel>> GetByManagerAsync(int managerId)
+    public async ValueTask<List<VehicleViewModel>> GetByManagerIdAsync(int managerId)
     {
         List<Vehicle> rawVehicles = await dbContext.Vehicles
                                                 .AsNoTracking()
                                                 .Include(vehicle => vehicle.VehicleBrand)
                                                 .Include(vehicle => vehicle.DriverVehicles)
+                                                .Include(vehicle => vehicle.Enterprise)
+                                                .Include(vehicle => vehicle.Enterprise!.ManagerLinks)
                                                 .Where(vehicle => vehicle.Enterprise != null)
                                                 .Where(vehicle => vehicle.Enterprise!.ManagerLinks.Any(manager => manager.ManagerId == managerId))
                                                 .ToListAsync();

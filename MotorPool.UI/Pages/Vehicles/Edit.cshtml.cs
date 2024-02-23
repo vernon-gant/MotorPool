@@ -1,29 +1,33 @@
 using AutoMapper;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using MotorPool.Services.VehicleBrand.Services;
+using MotorPool.Services.Vehicles.Models;
 using MotorPool.Services.Vehicles.Services;
 using MotorPool.Services.Vehicles.ViewModels;
 using MotorPool.UI.Pages.Admin.Vehicles;
 
 namespace MotorPool.UI.Pages.Vehicles;
 
-public class EditModel(VehicleService vehicleService, VehicleBrandService vehicleBrandService, IMapper mapper) : VehicleBrandsSelectListPageModel
+public class EditModel(VehicleService vehicleService, VehicleBrandService vehicleBrandService, IAuthorizationService authorizationService) : VehicleBrandsSelectListPageModel
 {
 
     [BindProperty]
-    public VehicleDTO VehicleDto { get; set; } = default!;
+    public VehicleViewModel VehicleViewModel { get; set; } = default!;
 
     public async Task<IActionResult> OnGetAsync(int id)
     {
         PopulateVehicleBrandsDropDownList(vehicleBrandService);
 
-        VehicleDTO? foundVehicle = await vehicleService.GetVehicleById(id);
+        VehicleViewModel? foundVehicle = await vehicleService.GetById(id);
 
         if (foundVehicle == null) return NotFound();
 
-        VehicleDto = foundVehicle;
+        var authorizationResult = await authorizationService.AuthorizeAsync(User, foundVehicle, "IsManagerAccessible");
+
+        VehicleViewModel = foundVehicle;
 
         return Page();
     }
@@ -32,7 +36,7 @@ public class EditModel(VehicleService vehicleService, VehicleBrandService vehicl
     {
         if (!ModelState.IsValid) return Page();
 
-        await vehicleService.EditVehicleAsync(VehicleDto);
+        await vehicleService.EditAsync(VehicleViewModel);
 
         return RedirectToPage("./Index");
     }

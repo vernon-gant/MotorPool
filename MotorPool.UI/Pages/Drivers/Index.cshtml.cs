@@ -15,6 +15,6 @@ public class IndexModel(DriverService driverService, UserManager<ApplicationUser
     public async Task OnGetAsync()
     {
         int managerId = int.Parse(User.Claims.First(c => c.Type == "managerId").Value);
-        Drivers = await driverService.GetByManagerAsync(managerId);
+        Drivers = await driverService.GetByManagerIdAsync(managerId);
     }
 }

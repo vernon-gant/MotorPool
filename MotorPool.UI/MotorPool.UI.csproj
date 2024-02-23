@@ -146,9 +146,7 @@
     <ItemGroup>
       <AdditionalFiles Include="Pages\Brands\Add.cshtml" />
       <AdditionalFiles Include="Pages\Brands\List.cshtml" />
-      <AdditionalFiles Include="Pages\Vehicles\Add.cshtml" />
       <AdditionalFiles Include="Pages\Vehicles\Edit.cshtml" />
-      <AdditionalFiles Include="Pages\Vehicles\List.cshtml" />
     </ItemGroup>
 
 </Project>

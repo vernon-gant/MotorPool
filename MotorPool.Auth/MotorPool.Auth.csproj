@@ -25,4 +25,10 @@
       <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\MotorPool.Services.Driver\MotorPool.Services.Driver.csproj" />
+      <ProjectReference Include="..\MotorPool.Services.Enterprise\MotorPool.Services.Enterprise.csproj" />
+      <ProjectReference Include="..\MotorPool.Services.Vehicle\MotorPool.Services.Vehicle.csproj" />
+    </ItemGroup>
+
 </Project>

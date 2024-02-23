@@ -21,7 +21,7 @@ public class DefaultEnterpriseService(AppDbContext dbContext, IMapper mapper) : 
         return mapper.Map<List<EnterpriseViewModel>>(rawEnterprises);
     }
 
-    public async ValueTask<List<EnterpriseViewModel>> GetByManagerAsync(int managerId)
+    public async ValueTask<List<EnterpriseViewModel>> GetByManagerIdAsync(int managerId)
     {
         List<Domain.Enterprise> rawEnterprises = await dbContext.Enterprises
                                                                 .AsNoTracking()

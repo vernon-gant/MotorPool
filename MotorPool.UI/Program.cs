@@ -2,9 +2,7 @@ using System.Globalization;
 
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.EntityFrameworkCore;
 
 using MotorPool.Auth;
 using MotorPool.Persistence;
@@ -22,21 +20,7 @@ builder.Services.AddVehicleServices();
 builder.Services.AddVehicleBrandServices();
 builder.Services.AddEnterpriseServices();
 builder.Services.AddDriverServices();
-
-builder.Services
-       .AddIdentity<ApplicationUser, IdentityRole>(options =>
-       {
-           options.Password.RequireDigit = true;
-           options.Password.RequireLowercase = true;
-           options.Password.RequireUppercase = true;
-           options.Password.RequireNonAlphanumeric = true;
-           options.Password.RequiredLength = 8;
-
-           options.User.RequireUniqueEmail = true;
-       })
-       .AddEntityFrameworkStores<AuthDbContext>();
-
-builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddAuthServices(connectionString);
 
 builder.Services
        .AddAuthentication(options =>
@@ -49,10 +33,10 @@ builder.Services
            options.LoginPath = "/Identity/Account/Login";
            options.AccessDeniedPath = "/Identity/Account/AccessDenied";
        });
-
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("IsManager", policy => policy.RequireClaim("ManagerId"));
+    options.AddPolicy("IsManagerAccessible", policy => policy.Requirements.Add(new IsManagerAccessibleRequirement()));
 
     options.DefaultPolicy = new AuthorizationPolicyBuilder()
                             .RequireAuthenticatedUser()

@@ -1,4 +1,6 @@
-﻿namespace MotorPool.Services.Drivers.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace MotorPool.Services.Drivers.Models;
 
 public class DriverViewModel
 {
@@ -16,5 +18,8 @@ public class DriverViewModel
     public int? ActiveVehicleId { get; set; }
 
     public List<int> VehicleIds { get; set; } = new ();
+
+    [JsonIgnore]
+    public List<int> ManagerIds { get; set; } = new ();
 
 }

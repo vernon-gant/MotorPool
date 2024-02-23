@@ -1,8 +1,11 @@
 using System.Security.Claims;
+using System.Text;
 using System.Text.Json;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 using MotorPool.API;
@@ -29,10 +32,38 @@ builder.Services.AddVehicleServices();
 builder.Services.AddVehicleBrandServices();
 builder.Services.AddEnterpriseServices();
 builder.Services.AddDriverServices();
-builder.Services.AddAuthServices(jwtConfig, connectionString);
+builder.Services.AddAuthServices(connectionString);
 
+
+builder.Services
+       .AddAuthentication(options =>
+       {
+           options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+           options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+       })
+       .AddJwtBearer(options =>
+       {
+           options.TokenValidationParameters = new TokenValidationParameters
+           {
+               ValidateIssuerSigningKey = true,
+               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig.Key)),
+               ValidIssuer = jwtConfig.Issuer,
+               ValidAudience = jwtConfig.Audience,
+               ValidateIssuer = false,
+               ValidateAudience = false
+           };
+       });
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("IsManager", policy => policy.RequireClaim("ManagerId"));
+    options.AddPolicy("IsManagerAccessible", policy => policy.Requirements.Add(new IsManagerAccessibleRequirement()));
+
+    options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                            .RequireAuthenticatedUser()
+                            .RequireClaim("ManagerId")
+                            .Build();
+});
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
@@ -60,9 +91,7 @@ builder.Services.AddSwaggerGen(options =>
         { jwtSecurityScheme, Array.Empty<string>() }
     });
 });
-
 builder.Services.AddProblemDetails();
-
 builder.Services.ConfigureHttpJsonOptions(o =>
 {
     o.SerializerOptions.AllowTrailingCommas = true;
@@ -79,36 +108,34 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapGet("vehicles", async (VehicleService vehicleService, ClaimsPrincipal user) =>
-   {
-       int managerId = int.Parse(user.FindFirstValue("ManagerId")!);
+RouteGroupBuilder managerResourcesGroup = app.MapGroup("/").AddEndpointFilter<ManagerExistenceFilter>();
 
-       return await vehicleService.GetByManagerAsync(managerId);
-   })
-   .RequireAuthorization("IsManager")
-   .AddEndpointFilter<ManagerExistenceFilter>();
+managerResourcesGroup.MapGet("vehicles", async (VehicleService vehicleService, ClaimsPrincipal user) =>
+                     {
+                         int managerId = int.Parse(user.FindFirstValue("ManagerId")!);
+
+                         return await vehicleService.GetByManagerIdAsync(managerId);
+                     })
+                     .RequireAuthorization("IsManager")
+                     .AddEndpointFilter<ManagerExistenceFilter>();
 
 app.MapGet("vehicle-brands", async (VehicleBrandService vehicleBrandService) => await vehicleBrandService.GetAllAsync());
 
-app.MapGet("enterprises", async (EnterpriseService enterpriseService, ClaimsPrincipal user) =>
-   {
-       int managerId = int.Parse(user.FindFirstValue("ManagerId")!);
+managerResourcesGroup.MapGet("enterprises", async (EnterpriseService enterpriseService, ClaimsPrincipal user) =>
+{
+    int managerId = int.Parse(user.FindFirstValue("ManagerId")!);
 
-       return await enterpriseService.GetByManagerAsync(managerId);
-   })
-   .RequireAuthorization("IsManager")
-   .AddEndpointFilter<ManagerExistenceFilter>();
+    return await enterpriseService.GetByManagerIdAsync(managerId);
+});
 
-app.MapGet("drivers", async (DriverService driverService, ClaimsPrincipal principal) =>
-   {
-       int managerId = int.Parse(principal.FindFirstValue("ManagerId")!);
+managerResourcesGroup.MapGet("drivers", async (DriverService driverService, ClaimsPrincipal principal) =>
+{
+    int managerId = int.Parse(principal.FindFirstValue("ManagerId")!);
 
-       return await driverService.GetByManagerAsync(managerId);
-   })
-   .RequireAuthorization("IsManager")
-   .AddEndpointFilter<ManagerExistenceFilter>();
+    return await driverService.GetByManagerIdAsync(managerId);
+});
 
-app.MapPost("login", async (AuthService authService, LoginDTO loginDTO) =>
+app.MapPost("login", async (ApiAuthService authService, LoginDTO loginDTO) =>
 {
     AuthResult result = await authService.LoginAsync(loginDTO);
 
@@ -122,7 +149,7 @@ app.MapPost("login", async (AuthService authService, LoginDTO loginDTO) =>
         });
 });
 
-app.MapPost("register", async (AuthService authService, RegisterDTO registerDTO) =>
+app.MapPost("register", async (ApiAuthService authService, RegisterDTO registerDTO) =>
 {
     AuthResult result = await authService.RegisterAsync(registerDTO);
 
@@ -136,7 +163,7 @@ app.MapPost("register", async (AuthService authService, RegisterDTO registerDTO)
         });
 });
 
-app.MapGet("me", async (AuthService authService, ClaimsPrincipal principal) =>
+app.MapGet("me", async (ApiAuthService authService, ClaimsPrincipal principal) =>
    {
        string? userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
 
