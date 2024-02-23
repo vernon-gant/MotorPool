@@ -18,7 +18,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\MotorPool.Auth\MotorPool.Auth.csproj" />
         <ProjectReference Include="..\MotorPool.Persistence\MotorPool.Persistence.csproj"/>
+        <ProjectReference Include="..\MotorPool.Services.Driver\MotorPool.Services.Driver.csproj" />
+        <ProjectReference Include="..\MotorPool.Services.Enterprise\MotorPool.Services.Enterprise.csproj" />
         <ProjectReference Include="..\MotorPool.Services.VehicleBrand\MotorPool.Services.VehicleBrand.csproj" />
         <ProjectReference Include="..\MotorPool.Services.Vehicle\MotorPool.Services.Vehicle.csproj" />
     </ItemGroup>
@@ -84,6 +87,11 @@
       <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.min.js" />
       <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.min.map" />
       <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\LICENSE.txt" />
+      <_ContentIncludedByDefault Remove="Pages\Admin\Brands\Add.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Admin\Brands\List.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Admin\Vehicles\Add.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Admin\Vehicles\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Admin\Vehicles\List.cshtml" />
     </ItemGroup>
 
     <ItemGroup>
@@ -129,8 +137,18 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Pages\Drivers\" />
+      <Folder Include="Pages\Enterprises\" />
       <Folder Include="wwwroot\css\Admin\Brands\" />
       <Folder Include="wwwroot\css\Admin\Vehicles\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Pages\Brands\Add.cshtml" />
+      <AdditionalFiles Include="Pages\Brands\List.cshtml" />
+      <AdditionalFiles Include="Pages\Vehicles\Add.cshtml" />
+      <AdditionalFiles Include="Pages\Vehicles\Edit.cshtml" />
+      <AdditionalFiles Include="Pages\Vehicles\List.cshtml" />
     </ItemGroup>
 
 </Project>

@@ -1,8 +1,3 @@
-// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-
-#nullable disable
-
 using System.ComponentModel.DataAnnotations;
 
 using Microsoft.AspNetCore.Authentication;
@@ -10,33 +5,27 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
+using MotorPool.Auth;
+
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
+
 namespace MotorPool.UI.Areas.Identity.Pages.Account;
 
-public class LoginModel : PageModel
+public class LoginModel(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, ILogger<LoginModel> logger) : PageModel
 {
 
-    private readonly SignInManager<IdentityUser> _signInManager;
-
-    private readonly ILogger<LoginModel> _logger;
-
-    public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
-    {
-        _signInManager = signInManager;
-        _logger = logger;
-    }
-
     [BindProperty]
-    public InputModel Input { get; set; }
+    public InputModel Input { get; set; } = default!;
 
 
-    public IList<AuthenticationScheme> ExternalLogins { get; set; }
+    public IList<AuthenticationScheme> ExternalLogins { get; set; } = default!;
 
 
-    public string ReturnUrl { get; set; }
+    public string ReturnUrl { get; set; } = string.Empty;
 
 
     [TempData]
-    public string ErrorMessage { get; set; }
+    public string ErrorMessage { get; set; } = string.Empty;
 
 
     public class InputModel
@@ -57,7 +46,7 @@ public class LoginModel : PageModel
 
     }
 
-    public async Task OnGetAsync(string returnUrl = null)
+    public async Task OnGetAsync(string? returnUrl = null)
     {
         if (!string.IsNullOrEmpty(ErrorMessage)) ModelState.AddModelError(string.Empty, ErrorMessage);
 
@@ -65,42 +54,34 @@ public class LoginModel : PageModel
 
         await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-        ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+        ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
         ReturnUrl = returnUrl;
     }
 
-    public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+    public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
     {
         returnUrl ??= Url.Content("~/");
-
-        ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
+        ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         if (!ModelState.IsValid) return Page();
 
-        var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+        ApplicationUser? user = await userManager.FindByEmailAsync(Input.Email);
+
+        if (user == null)
+        {
+            ModelState.AddModelError(string.Empty, "User with this email does not exist.");
+            return Page();
+        }
+
+        SignInResult result = await signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe, lockoutOnFailure: false);
 
         if (result.Succeeded)
         {
-            _logger.LogInformation("User logged in.");
-
+            logger.LogInformation("User logged in");
             return LocalRedirect(returnUrl);
         }
 
-        if (result.RequiresTwoFactor)
-        {
-            return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-        }
-
-        if (result.IsLockedOut)
-        {
-            _logger.LogWarning("User account locked out.");
-
-            return RedirectToPage("./Lockout");
-        }
-
         ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-
         return Page();
     }
 

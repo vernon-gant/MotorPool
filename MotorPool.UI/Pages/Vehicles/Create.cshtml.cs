@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using MotorPool.Services.Vehicles.Services;
 using MotorPool.Services.Vehicles.ViewModels;
 
-namespace MotorPool.UI.Pages.Admin.Vehicles;
+namespace MotorPool.UI.Pages.Vehicles;
 
-public class AddVehicleModel(VehicleService vehicleService) : PageModel
+public class CreateModel(VehicleService vehicleService) : PageModel
 {
 
     public IActionResult OnGet()
@@ -26,4 +26,5 @@ public class AddVehicleModel(VehicleService vehicleService) : PageModel
 
         return RedirectToPage("./Index");
     }
+
 }

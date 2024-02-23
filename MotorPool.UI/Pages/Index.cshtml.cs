@@ -1,18 +1,18 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace MotorPool.UI.Pages;
 
-public class IndexModel : PageModel
+[AllowAnonymous]
+public class Index : PageModel
 {
 
-    private readonly ILogger<IndexModel> _logger;
-
-    public IndexModel(ILogger<IndexModel> logger)
+    public void OnGet()
     {
-        _logger = logger;
+        if (User.Identity is { IsAuthenticated: false })
+        {
+            Response.Redirect("/Identity/Account/Login");
+        }
     }
-
-    public void OnGet() { }
 
 }

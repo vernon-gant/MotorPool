@@ -1,0 +1,52 @@
+@page
+@model MotorPool.UI.Pages.Enterprises.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Enterprise</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Enterprise.EnterpriseId" />
+            <div class="form-group">
+                <label asp-for="Enterprise.Name" class="control-label"></label>
+                <input asp-for="Enterprise.Name" class="form-control" />
+                <span asp-validation-for="Enterprise.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Enterprise.City" class="control-label"></label>
+                <input asp-for="Enterprise.City" class="form-control" />
+                <span asp-validation-for="Enterprise.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Enterprise.Street" class="control-label"></label>
+                <input asp-for="Enterprise.Street" class="form-control" />
+                <span asp-validation-for="Enterprise.Street" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Enterprise.VAT" class="control-label"></label>
+                <input asp-for="Enterprise.VAT" class="form-control" />
+                <span asp-validation-for="Enterprise.VAT" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Enterprise.FoundedOn" class="control-label"></label>
+                <input asp-for="Enterprise.FoundedOn" class="form-control" />
+                <span asp-validation-for="Enterprise.FoundedOn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+

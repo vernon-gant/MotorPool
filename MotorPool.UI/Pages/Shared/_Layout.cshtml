@@ -1,4 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MotorPool.Auth
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,11 +27,14 @@
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
+                    @if (User.IsManager())
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Manager panel</a>
+                        </li>
+                    }
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-page="/Admin/Index">Admin panel</a>
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Brands/Index">Brands</a>
                     </li>
                 </ul>
                 <partial name="_LoginPartial"/>

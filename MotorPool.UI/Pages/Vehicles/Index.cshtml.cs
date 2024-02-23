@@ -6,12 +6,12 @@ using MotorPool.Persistence;
 
 namespace MotorPool.UI.Pages.Admin.Vehicles;
 
-public class ListModel : PageModel
+public class IndexModel : PageModel
 {
 
     private readonly AppDbContext _context;
 
-    public ListModel(AppDbContext context)
+    public IndexModel(AppDbContext context)
     {
         _context = context;
     }

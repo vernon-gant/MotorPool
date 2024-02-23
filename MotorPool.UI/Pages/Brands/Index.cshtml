@@ -1,6 +1,6 @@
 @page
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@model ListModel
+@model IndexModel
 
 @{
     ViewData["Title"] = "Vehicle brands management";
@@ -68,7 +68,7 @@
                 </td>
                 <td class="text-nowrap">
                     @await Html.PartialAsync("_Actions", item.VehicleBrandId)
-                    <a asp-page="../Vehicles/List" asp-route-vehicleBrandId="@item.VehicleBrandId" class="text-decoration-none">
+                    <a asp-page="../Vehicles/Index" asp-route-vehicleBrandId="@item.VehicleBrandId" class="text-decoration-none">
                         <i class="fas fa-car" title="To vehicles"></i>
                     </a>
                 </td>

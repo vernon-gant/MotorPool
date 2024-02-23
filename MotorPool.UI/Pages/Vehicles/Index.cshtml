@@ -1,7 +1,7 @@
 @page "{vehicleBrandId:int?}"
 @using MotorPool.Domain
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@model ListModel
+@model MotorPool.UI.Pages.Admin.Vehicles.IndexModel
 
 @{
     ViewData["Title"] = "Vehicles management";
@@ -84,7 +84,7 @@
         </a>
         @if (RouteData.Values["vehicleBrandId"] != null)
         {
-            <a asp-page="../Brands/List" class="text-decoration-none admin-back-link mt-4">
+            <a asp-page="../Brands/Index" class="text-decoration-none admin-back-link mt-4">
                 <i class="fa-solid fa-arrow-left fa-2x me-2"></i>
                 <span class="fw-bold" style="position: relative; bottom: 7px;">Back to vehicle brands</span>
             </a>

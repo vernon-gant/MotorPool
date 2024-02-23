@@ -4,19 +4,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using MotorPool.Domain;
 using MotorPool.Persistence;
 
-namespace MotorPool.UI.Pages.Admin.Brands;
+namespace MotorPool.UI.Pages.Brands;
 
-public class AddModel : PageModel
+public class CreateModel(AppDbContext context) : PageModel
 {
-    private readonly AppDbContext _context;
 
     [BindProperty]
     public VehicleBrand VehicleBrand { get; set; } = default!;
-
-    public AddModel(AppDbContext context)
-    {
-        _context = context;
-    }
 
     public IActionResult OnGet()
     {
@@ -28,9 +22,9 @@ public class AddModel : PageModel
     {
         if (!ModelState.IsValid) return Page();
 
-        _context.VehicleBrands.Add(VehicleBrand);
-        await _context.SaveChangesAsync();
+        context.VehicleBrands.Add(VehicleBrand);
+        await context.SaveChangesAsync();
 
-        return RedirectToPage("./List");
+        return RedirectToPage("./Index");
     }
 }

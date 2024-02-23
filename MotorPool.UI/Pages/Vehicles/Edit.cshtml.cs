@@ -1,16 +1,13 @@
 using AutoMapper;
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
-using MotorPool.Domain;
-using MotorPool.Persistence;
 using MotorPool.Services.VehicleBrand.Services;
 using MotorPool.Services.Vehicles.Services;
 using MotorPool.Services.Vehicles.ViewModels;
+using MotorPool.UI.Pages.Admin.Vehicles;
 
-namespace MotorPool.UI.Pages.Admin.Vehicles;
+namespace MotorPool.UI.Pages.Vehicles;
 
 public class EditModel(VehicleService vehicleService, VehicleBrandService vehicleBrandService, IMapper mapper) : VehicleBrandsSelectListPageModel
 {
@@ -37,7 +34,7 @@ public class EditModel(VehicleService vehicleService, VehicleBrandService vehicl
 
         await vehicleService.EditVehicleAsync(VehicleDto);
 
-        return RedirectToPage("./List");
+        return RedirectToPage("./Index");
     }
 
 }

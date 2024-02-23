@@ -1,48 +1,30 @@
-#nullable disable
-
 using System.ComponentModel.DataAnnotations;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
+using MotorPool.Auth;
+
 namespace MotorPool.UI.Areas.Identity.Pages.Account;
 
-public class RegisterModel : PageModel
+public class RegisterModel(
+    UserManager<ApplicationUser> userManager,
+    IUserStore<ApplicationUser> userStore,
+    SignInManager<ApplicationUser> signInManager,
+    ILogger<RegisterModel> logger)
+    : PageModel
 {
 
-    private readonly SignInManager<IdentityUser> _signInManager;
-
-    private readonly UserManager<IdentityUser> _userManager;
-
-    private readonly IUserStore<IdentityUser> _userStore;
-
-    private readonly ILogger<RegisterModel> _logger;
-
-    public RegisterModel(
-        UserManager<IdentityUser> userManager,
-        IUserStore<IdentityUser> userStore,
-        SignInManager<IdentityUser> signInManager,
-        ILogger<RegisterModel> logger,
-        IEmailSender emailSender)
-    {
-        _userManager = userManager;
-        _userStore = userStore;
-        _signInManager = signInManager;
-        _logger = logger;
-    }
-
-
     [BindProperty]
-    public InputModel Input { get; set; }
+    public InputModel Input { get; set; } = default!;
 
 
-    public string ReturnUrl { get; set; }
+    public string? ReturnUrl { get; set; }
 
 
-    public IList<AuthenticationScheme> ExternalLogins { get; set; }
+    public IList<AuthenticationScheme> ExternalLogins { get; set; } = new List<AuthenticationScheme>();
 
 
     public class InputModel
@@ -53,6 +35,9 @@ public class RegisterModel : PageModel
         [Display(Name = "Email")]
         public string Email { get; set; }
 
+        [Required]
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
@@ -69,23 +54,33 @@ public class RegisterModel : PageModel
     }
 
 
-    public async Task OnGetAsync(string returnUrl = null)
+    public async Task OnGetAsync(string? returnUrl = null)
     {
         ReturnUrl = returnUrl;
-        ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+        ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
     }
 
-    public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+    public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
     {
         returnUrl ??= Url.Content("~/");
-        ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
+        ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         if (!ModelState.IsValid) return Page();
 
-        var user = CreateUser();
+        ApplicationUser? user = await userManager.FindByEmailAsync(Input.Email);
 
-        await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-        var result = await _userManager.CreateAsync(user, Input.Password);
+        if (user != null)
+        {
+            ModelState.AddModelError(string.Empty, "User with this email already exists.");
+            return Page();
+        }
+
+        user = new ApplicationUser
+        {
+            UserName = Input.UserName,
+            Email = Input.Email
+        };
+
+        IdentityResult result = await userManager.CreateAsync(user, Input.Password);
 
         if (!result.Succeeded)
         {
@@ -93,25 +88,11 @@ public class RegisterModel : PageModel
             return Page();
         }
 
-        _logger.LogInformation("User created a new account with password");
+        logger.LogInformation("User created a new account with password");
 
-        await _signInManager.SignInAsync(user, isPersistent: false);
+        await signInManager.SignInAsync(user, isPersistent: false);
 
         return LocalRedirect(returnUrl);
-    }
-
-    private IdentityUser CreateUser()
-    {
-        try
-        {
-            return Activator.CreateInstance<IdentityUser>();
-        }
-        catch
-        {
-            throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
-                                                $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-                                                $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
-        }
     }
 
 }
