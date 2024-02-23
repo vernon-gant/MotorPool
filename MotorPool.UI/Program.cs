@@ -1,5 +1,6 @@
 using System.Globalization;
 
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
@@ -22,7 +23,6 @@ builder.Services.AddVehicleBrandServices();
 builder.Services.AddEnterpriseServices();
 builder.Services.AddDriverServices();
 
-
 builder.Services
        .AddIdentity<ApplicationUser, IdentityRole>(options =>
        {
@@ -35,18 +35,32 @@ builder.Services
            options.User.RequireUniqueEmail = true;
        })
        .AddEntityFrameworkStores<AuthDbContext>();
+
 builder.Services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(connectionString));
-builder.Services.AddAuthentication();
+
+builder.Services
+       .AddAuthentication(options =>
+       {
+           options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+           options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+       })
+       .AddCookie(options =>
+       {
+           options.LoginPath = "/Identity/Account/Login";
+           options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+       });
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("IsManager", policy => policy.RequireClaim("ManagerId"));
 
-    options.FallbackPolicy = new AuthorizationPolicyBuilder()
-        .RequireAuthenticatedUser()
-        .RequireClaim("ManagerId")
-        .Build();
+    options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                            .RequireAuthenticatedUser()
+                            .RequireClaim("ManagerId")
+                            .Build();
 });
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
 IMvcBuilder mvcBuilder = builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/Brands");
