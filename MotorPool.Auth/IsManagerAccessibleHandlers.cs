@@ -6,11 +6,10 @@ using MotorPool.Persistence;
 using MotorPool.Services.Drivers.Models;
 using MotorPool.Services.Enterprise.Models;
 using MotorPool.Services.Vehicles.Models;
-using MotorPool.Services.Vehicles.ViewModels;
 
 namespace MotorPool.Auth;
 
-public class IsManagerAccessibleVehicleHandler(AppDbContext dbContext) : AuthorizationHandler<IsManagerAccessibleRequirement, VehicleViewModel>
+public class IsManagerAccessibleVehicleHandler : AuthorizationHandler<IsManagerAccessibleRequirement, VehicleViewModel>
 {
 
     protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, IsManagerAccessibleRequirement requirement, VehicleViewModel vehicleViewModel)

@@ -13,30 +13,24 @@ public class DeleteModel(AppDbContext context) : PageModel
     [BindProperty]
     public Driver Driver { get; set; } = default!;
 
-    public async Task<IActionResult> OnGetAsync(int? id)
+    public async Task<IActionResult> OnGetAsync(int? vehicleId)
     {
-        if (id == null)
-        {
-            return NotFound();
-        }
+        if (vehicleId == null) return NotFound();
 
-        var driver = await context.Drivers.FirstOrDefaultAsync(m => m.DriverId == id);
+        var driver = await context.Drivers.FirstOrDefaultAsync(m => m.DriverId == vehicleId);
 
-        if (driver == null)
-        {
-            return NotFound();
-        }
+        if (driver == null) return NotFound();
 
         Driver = driver;
 
         return Page();
     }
 
-    public async Task<IActionResult> OnPostAsync(int? id)
+    public async Task<IActionResult> OnPostAsync(int? vehicleId)
     {
-        if (id == null) return NotFound();
+        if (vehicleId == null) return NotFound();
 
-        var driver = await context.Drivers.FindAsync(id);
+        var driver = await context.Drivers.FindAsync(vehicleId);
 
         if (driver != null)
         {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MotorPool.Services.Vehicles.ViewModels;
+namespace MotorPool.Services.Vehicles.Models;
 
 public class VehicleDTO
 {

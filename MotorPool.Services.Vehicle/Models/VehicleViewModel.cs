@@ -1,7 +1,5 @@
 ﻿using System.Text.Json.Serialization;
 
-using MotorPool.Services.Vehicles.ViewModels;
-
 namespace MotorPool.Services.Vehicles.Models;
 
 public class VehicleViewModel : VehicleDTO

@@ -33,6 +33,7 @@ builder.Services.AddVehicleBrandServices();
 builder.Services.AddEnterpriseServices();
 builder.Services.AddDriverServices();
 builder.Services.AddAuthServices(connectionString);
+builder.Services.AddScoped<ApiAuthService, DefaultApiAuthService>();
 
 
 builder.Services
@@ -114,7 +115,7 @@ managerResourcesGroup.MapGet("vehicles", async (VehicleService vehicleService, C
                      {
                          int managerId = int.Parse(user.FindFirstValue("ManagerId")!);
 
-                         return await vehicleService.GetByManagerIdAsync(managerId);
+                         return await vehicleService.GetAllByManagerIdAsync(managerId);
                      })
                      .RequireAuthorization("IsManager")
                      .AddEndpointFilter<ManagerExistenceFilter>();
@@ -125,7 +126,7 @@ managerResourcesGroup.MapGet("enterprises", async (EnterpriseService enterpriseS
 {
     int managerId = int.Parse(user.FindFirstValue("ManagerId")!);
 
-    return await enterpriseService.GetByManagerIdAsync(managerId);
+    return await enterpriseService.GetAllByManagerIdAsync(managerId);
 });
 
 managerResourcesGroup.MapGet("drivers", async (DriverService driverService, ClaimsPrincipal principal) =>

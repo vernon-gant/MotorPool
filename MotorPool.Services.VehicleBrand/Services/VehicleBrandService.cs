@@ -1,4 +1,5 @@
-﻿using MotorPool.Services.VehicleBrand.ViewModels;
+﻿using MotorPool.Services.VehicleBrand.Models;
+using MotorPool.Services.VehicleBrand.ViewModels;
 
 namespace MotorPool.Services.VehicleBrand.Services;
 

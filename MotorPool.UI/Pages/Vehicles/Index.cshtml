@@ -1,7 +1,10 @@
 @page "{vehicleBrandId:int?}"
 @using MotorPool.Domain
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@model MotorPool.UI.Pages.Admin.Vehicles.IndexModel
+@using MotorPool.Auth
+@using MotorPool.Services.Vehicles.Models
+@using MotorPool.UI.Pages.Shared
+@model IndexModel
 
 @{
     ViewData["Title"] = "Vehicles management";
@@ -18,12 +21,6 @@
     <table class="table table-hover">
         <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Vehicles[0].VehicleBrand.CompanyName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Vehicles[0].VehicleBrand.ModelName)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Vehicles[0].MotorVIN)
             </th>
@@ -43,32 +40,30 @@
         </tr>
         </thead>
         <tbody>
-        @foreach (Vehicle item in Model.Vehicles)
+        @foreach (VehicleViewModel vehicleViewModel in Model.Vehicles)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.VehicleBrand.CompanyName)
+                    @Html.DisplayFor(modelItem => vehicleViewModel.MotorVIN)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.VehicleBrand.ModelName)
+                    @Html.DisplayFor(modelItem => vehicleViewModel.ManufactureYear)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.MotorVIN)
+                    @Html.DisplayFor(modelItem => vehicleViewModel.ManufactureLand)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ManufactureYear)
+                    @Html.DisplayFor(modelItem => vehicleViewModel.Cost)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ManufactureLand)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cost)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Mileage)
+                    @Html.DisplayFor(modelItem => vehicleViewModel.Mileage)
                 </td>
                 <td class="text-nowrap">
-                    @await Html.PartialAsync("_Actions", item.VehicleId)
+                    @await Html.PartialAsync("_Actions", new ActionsModel
+                    {
+                        Id = vehicleViewModel.VehicleId,
+                        HasChangeAccess = User.IsManager()
+                    })
                 </td>
             </tr>
         }
@@ -78,9 +73,9 @@
 
 <div class="row w-100 py-3">
     <div class="col-12 d-flex flex-column justify-content-center align-items-center">
-        <a asp-page="/Admin/Index" class="text-decoration-none admin-back-link">
+        <a asp-page="/Index" class="text-decoration-none admin-back-link">
             <i class="fa-solid fa-arrow-left fa-2x me-2"></i>
-            <span class="fw-bold" style="position: relative; bottom: 7px;">Back to admin panel</span>
+            <span class="fw-bold" style="position: relative; bottom: 7px;">Back to manager panel</span>
         </a>
         @if (RouteData.Values["vehicleBrandId"] != null)
         {

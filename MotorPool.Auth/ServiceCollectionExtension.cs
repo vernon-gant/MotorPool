@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace MotorPool.Auth;
@@ -23,7 +24,10 @@ public static class ServiceCollectionExtension
 
         services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(connectionString));
 
-        services.AddScoped<ApiAuthService, DefaultApiAuthService>();
+        services.AddSingleton<IAuthorizationHandler, IsManagerAccessibleVehicleHandler>();
+        services.AddSingleton<IAuthorizationHandler, IsManagerAccessibleEnterpriseHandler>();
+        services.AddSingleton<IAuthorizationHandler, IsManagerAccessibleDriverHandler>();
+
     }
 
 }

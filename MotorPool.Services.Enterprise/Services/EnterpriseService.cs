@@ -7,6 +7,6 @@ public interface EnterpriseService
 
     ValueTask<List<EnterpriseViewModel>> GetAllAsync();
 
-    ValueTask<List<EnterpriseViewModel>> GetByManagerIdAsync(int managerId);
+    ValueTask<List<EnterpriseViewModel>> GetAllByManagerIdAsync(int managerId);
 
 }

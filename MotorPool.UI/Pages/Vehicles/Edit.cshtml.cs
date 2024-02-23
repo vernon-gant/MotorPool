@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using MotorPool.Services.VehicleBrand.Services;
 using MotorPool.Services.Vehicles.Models;
 using MotorPool.Services.Vehicles.Services;
-using MotorPool.Services.Vehicles.ViewModels;
 using MotorPool.UI.Pages.Admin.Vehicles;
 
 namespace MotorPool.UI.Pages.Vehicles;
@@ -24,8 +23,6 @@ public class EditModel(VehicleService vehicleService, VehicleBrandService vehicl
         VehicleViewModel? foundVehicle = await vehicleService.GetById(id);
 
         if (foundVehicle == null) return NotFound();
-
-        var authorizationResult = await authorizationService.AuthorizeAsync(User, foundVehicle, "IsManagerAccessible");
 
         VehicleViewModel = foundVehicle;
 

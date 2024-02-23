@@ -1,50 +1,67 @@
 @page
+@using MotorPool.Services.Drivers.Models
+@using MotorPool.UI.Pages.Shared
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using MotorPool.Auth
 @model MotorPool.UI.Pages.Drivers.IndexModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Drivers[0].FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Drivers[0].LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Drivers[0].Salary)
-        </th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model.Drivers)
-    {
+<div class="header-with-icon mb-4">
+    <h1 class="text-center">Drivers</h1>
+    <a asp-page="./Create">
+        <i class="fa-solid fa-plus icon-plus"></i>
+    </a>
+</div>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Salary)
-            </td>
-            <td class="text-nowrap">
-                @await Html.PartialAsync("_Actions", item.DriverId)
-                <a asp-page="../Vehicles/Index" asp-route-vehicleBrandId="@item.DriverId" class="text-decoration-none">
-                    <i class="fas fa-car" title="To vehicles"></i>
-                </a>
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Drivers[0].FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Drivers[0].LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Drivers[0].Salary)
+            </th>
+            <th></th>
         </tr>
-    }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        @foreach (DriverViewModel driverViewModel in Model.Drivers)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => driverViewModel.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => driverViewModel.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => driverViewModel.Salary)
+                </td>
+                <td>
+                    @await Html.PartialAsync("_Actions", new ActionsModel
+                    {
+                        Id = driverViewModel.DriverId,
+                        HasChangeAccess = User.IsManager()
+                    })
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+<div class="row w-100 py-3">
+    <div class="col-12 d-flex justify-content-center align-items-center">
+        <a asp-page="/Index" class="text-decoration-none admin-back-link">
+            <i class="fa-solid fa-arrow-left fa-2x me-2"></i>
+            <span class="fw-bold" style="position: relative; bottom: 7px;">Back to manager panel</span>
+        </a>
+    </div>
+</div>

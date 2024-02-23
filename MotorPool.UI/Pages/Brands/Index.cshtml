@@ -1,6 +1,8 @@
 @page
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using MotorPool.Auth
+@using MotorPool.Domain
+@using MotorPool.UI.Pages.Shared
 @model IndexModel
 
 @{
@@ -9,7 +11,7 @@
 
 <div class="header-with-icon mb-4">
     <h1 class="text-center">Vehicle brands</h1>
-    @if (User.IsManager())
+    @if (User.IsManager() || User.IsAdmin())
     {
         <a asp-page="./Create">
             <i class="fa-solid fa-plus icon-plus"></i>
@@ -46,35 +48,39 @@
         </tr>
         </thead>
         <tbody>
-        @foreach (var item in Model.VehicleBrand)
+        @foreach (VehicleBrand vehicleBrand in Model.VehicleBrand)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CompanyName)
+                    @Html.DisplayFor(modelItem => vehicleBrand.CompanyName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ModelName)
+                    @Html.DisplayFor(modelItem => vehicleBrand.ModelName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Type)
+                    @Html.DisplayFor(modelItem => vehicleBrand.Type)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FuelTankCapacityLiters)
+                    @Html.DisplayFor(modelItem => vehicleBrand.FuelTankCapacityLiters)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PayloadCapacityKg)
+                    @Html.DisplayFor(modelItem => vehicleBrand.PayloadCapacityKg)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.NumberOfSeats)
+                    @Html.DisplayFor(modelItem => vehicleBrand.NumberOfSeats)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ReleaseYear)
+                    @Html.DisplayFor(modelItem => vehicleBrand.ReleaseYear)
                 </td>
                 @if (User.IsManager())
                 {
                     <td class="text-nowrap">
-                        @await Html.PartialAsync("_Actions", item.VehicleBrandId)
-                        <a asp-page="../Vehicles/Index" asp-route-vehicleBrandId="@item.VehicleBrandId" class="text-decoration-none">
+                        @await Html.PartialAsync("_Actions", new ActionsModel
+                        {
+                            Id = vehicleBrand.VehicleBrandId,
+                            HasChangeAccess = User.IsManager()
+                        })
+                        <a asp-page="/Vehicles/Index" asp-route-vehicleBrandId="@vehicleBrand.VehicleBrandId" class="text-decoration-none">
                             <i class="fas fa-car" title="To vehicles"></i>
                         </a>
                     </td>
@@ -89,7 +95,7 @@
 {
     <div class="row w-100 py-3">
         <div class="col-12 d-flex justify-content-center align-items-center">
-            <a asp-page="/Admin/Index" class="text-decoration-none admin-back-link">
+            <a asp-page="/Index" class="text-decoration-none admin-back-link">
                 <i class="fa-solid fa-arrow-left fa-2x me-2"></i>
                 <span class="fw-bold" style="position: relative; bottom: 7px;">Back to manager panel</span>
             </a>

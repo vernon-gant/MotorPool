@@ -1,13 +1,16 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using MotorPool.Auth
-@model int
+@model ActionsModel
 
-<a asp-page="./Edit" asp-route-id="@Model" title="Edit" class="me-2 text-decoration-none">
-    <i class="fas fa-edit"></i>
-</a>
-<a asp-page="./Details" asp-route-id="@Model" title="Details" class="me-2 text-decoration-none">
+<a asp-page="./Details" asp-route-id="@Model.Id" title="Details" class="me-2 text-decoration-none">
     <i class="fas fa-info-circle"></i>
 </a>
-<a asp-page="./Delete" asp-route-id="@Model" title="Delete" class="me-2 text-decoration-none">
-    <i class="fas fa-trash-alt"></i>
-</a>
+@if (Model.HasChangeAccess)
+{
+    <a asp-page="./Edit" asp-route-id="@Model.Id" title="Edit" class="me-2 text-decoration-none">
+        <i class="fas fa-edit"></i>
+    </a>
+
+    <a asp-page="./Delete" asp-route-id="@Model.Id" title="Delete" class="me-2 text-decoration-none">
+        <i class="fas fa-trash-alt"></i>
+    </a>
+}

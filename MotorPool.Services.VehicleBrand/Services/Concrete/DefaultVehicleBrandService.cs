@@ -3,6 +3,7 @@
 using Microsoft.EntityFrameworkCore;
 
 using MotorPool.Persistence;
+using MotorPool.Services.VehicleBrand.Models;
 using MotorPool.Services.VehicleBrand.ViewModels;
 
 namespace MotorPool.Services.VehicleBrand.Services.Concrete;

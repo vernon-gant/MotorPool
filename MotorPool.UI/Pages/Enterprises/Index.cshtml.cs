@@ -1,25 +1,20 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
-using MotorPool.Domain;
-using MotorPool.Persistence;
+using MotorPool.Auth;
+using MotorPool.Services.Enterprise.Models;
+using MotorPool.Services.Enterprise.Services;
 
-namespace MotorPool.UI.Pages.Enterprises
+namespace MotorPool.UI.Pages.Enterprises;
+
+public class IndexModel(EnterpriseService enterpriseService) : PageModel
 {
-    public class IndexModel : PageModel
+
+    public IList<EnterpriseViewModel> Enterprises { get; set; } = new List<EnterpriseViewModel>();
+
+    public async Task OnGetAsync()
     {
-        private readonly AppDbContext _context;
-
-        public IndexModel(AppDbContext context)
-        {
-            _context = context;
-        }
-
-        public IList<Enterprise> Enterprise { get;set; } = default!;
-
-        public async Task OnGetAsync()
-        {
-            Enterprise = await _context.Enterprises.ToListAsync();
-        }
+        int managerId = User.GetManagerId();
+        Enterprises = await enterpriseService.GetAllByManagerIdAsync(managerId);
     }
+
 }

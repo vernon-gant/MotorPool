@@ -1,24 +1,10 @@
-﻿using MotorPool.Domain;
+﻿using MotorPool.Services.VehicleBrand.ViewModels;
 
-namespace MotorPool.Services.VehicleBrand.ViewModels;
+namespace MotorPool.Services.VehicleBrand.Models;
 
-public class VehicleBrandViewModel
+public class VehicleBrandViewModel : VehicleBrandDTO
 {
 
     public int VehicleBrandId { get; set; }
-
-    public string CompanyName { get; set; }
-
-    public string ModelName { get; set; }
-
-    public string Type { get; set; }
-
-    public decimal FuelTankCapacityLiters { get; set; }
-
-    public decimal PayloadCapacityKg { get; set; }
-
-    public int NumberOfSeats { get; set; }
-
-    public int ReleaseYear { get; set; }
 
 }

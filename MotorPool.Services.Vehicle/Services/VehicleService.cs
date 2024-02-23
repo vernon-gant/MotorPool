@@ -1,5 +1,4 @@
 ﻿using MotorPool.Services.Vehicles.Models;
-using MotorPool.Services.Vehicles.ViewModels;
 
 namespace MotorPool.Services.Vehicles.Services;
 
@@ -14,6 +13,6 @@ public interface VehicleService
 
     ValueTask<VehicleViewModel?> GetById(int id);
 
-    ValueTask<List<VehicleViewModel>> GetByManagerIdAsync(int managerId);
+    ValueTask<List<VehicleViewModel>> GetAllByManagerIdAsync(int managerId);
 
 }

@@ -2,7 +2,6 @@
 
 using MotorPool.Domain;
 using MotorPool.Services.Vehicles.Models;
-using MotorPool.Services.Vehicles.ViewModels;
 
 namespace MotorPool.Services.Vehicles;
 
