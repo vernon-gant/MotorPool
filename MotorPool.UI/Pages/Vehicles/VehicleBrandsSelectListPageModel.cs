@@ -1,20 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
-using MotorPool.Domain;
-using MotorPool.Persistence;
 using MotorPool.Services.VehicleBrand.Services;
 using MotorPool.Services.VehicleBrand.ViewModels;
 
-namespace MotorPool.UI.Pages.Admin.Vehicles;
+namespace MotorPool.UI.Pages.Vehicles;
 
 public class VehicleBrandsSelectListPageModel : PageModel
 {
 
     public SelectList VehicleBrandSelectList { get; set; }
 
-    public async void PopulateVehicleBrandsDropDownList(VehicleBrandService vehicleBrandService, object? selectedVehicleBrand = null)
+    public async Task PopulateVehicleBrandsDropDownList(VehicleBrandService vehicleBrandService, object? selectedVehicleBrand = null)
     {
         List<VehicleBrandSignatureWithId> vehicleBrandSignatureWithIds = await vehicleBrandService.GetVehicleBrandsWithIdAsync();
 
