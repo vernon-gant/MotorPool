@@ -1,19 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
+using MotorPool.Services.VehicleBrand.Services;
 using MotorPool.Services.Vehicles.Models;
 using MotorPool.Services.Vehicles.Services;
 
 namespace MotorPool.UI.Pages.Vehicles;
 
-public class CreateModel(VehicleService vehicleService) : PageModel
+public class CreateModel(VehicleService vehicleService, VehicleBrandService vehicleBrandService) : VehicleBrandsSelectListPageModel
 {
 
     [BindProperty]
     public VehicleDTO VehicleDto { get; set; } = default!;
 
-    public IActionResult OnGet()
+    public async Task<IActionResult> OnGet()
     {
+        await PopulateVehicleBrandsDropDownList(vehicleBrandService);
         return Page();
     }
 
