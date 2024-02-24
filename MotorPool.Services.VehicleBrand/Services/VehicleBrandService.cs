@@ -10,4 +10,6 @@ public interface VehicleBrandService
 
     ValueTask<List<VehicleBrandViewModel>> GetAllAsync();
 
+    ValueTask CreateAsync(VehicleBrandDTO vehicleBrandDTO);
+
 }

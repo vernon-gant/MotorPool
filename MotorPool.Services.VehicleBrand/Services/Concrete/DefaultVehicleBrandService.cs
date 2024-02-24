@@ -31,4 +31,12 @@ public class DefaultVehicleBrandService(AppDbContext dbContext, IMapper mapper) 
         return mapper.Map<List<VehicleBrandViewModel>>(rawVehicleBrands);
     }
 
+    public async ValueTask CreateAsync(VehicleBrandDTO vehicleBrandDTO)
+    {
+        Domain.VehicleBrand vehicleBrand = mapper.Map<Domain.VehicleBrand>(vehicleBrandDTO);
+
+        await dbContext.VehicleBrands.AddAsync(vehicleBrand);
+        await dbContext.SaveChangesAsync();
+    }
+
 }

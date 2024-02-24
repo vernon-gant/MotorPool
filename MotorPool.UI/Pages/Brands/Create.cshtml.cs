@@ -1,16 +1,16 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-using MotorPool.Domain;
-using MotorPool.Persistence;
+using MotorPool.Services.VehicleBrand.Models;
+using MotorPool.Services.VehicleBrand.Services;
 
 namespace MotorPool.UI.Pages.Brands;
 
-public class CreateModel(AppDbContext context) : PageModel
+public class CreateModel(VehicleBrandService vehicleBrandService) : PageModel
 {
 
     [BindProperty]
-    public VehicleBrand VehicleBrand { get; set; } = default!;
+    public VehicleBrandDTO VehicleBrandDto { get; set; } = default!;
 
     public IActionResult OnGet()
     {
@@ -22,8 +22,7 @@ public class CreateModel(AppDbContext context) : PageModel
     {
         if (!ModelState.IsValid) return Page();
 
-        context.VehicleBrands.Add(VehicleBrand);
-        await context.SaveChangesAsync();
+        await vehicleBrandService.CreateAsync(VehicleBrandDto);
 
         return RedirectToPage("./Index");
     }
