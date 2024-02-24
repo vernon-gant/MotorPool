@@ -1,10 +1,7 @@
 ﻿@page
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@using Microsoft.AspNetCore.Identity
 @using MotorPool.Auth
-@model Index
-
-@inject UserManager<ApplicationUser> UserManager
+@model IndexModel
 
 @{
     ViewData["Title"] = "Manager panel";
@@ -14,19 +11,24 @@
     <link rel="stylesheet" href="~/css/Admin/styles.css"/>
 }
 
-@if (!User.IsManager()) { return; }
-
 <div class="container h-100 d-flex flex-column justify-content-evenly align-items-center">
-    <h1 class="text-center">Manager panel</h1>
-    <div class="w-100 h-25 d-flex justify-content-around shadow rounded">
-        <div class="d-flex align-items-center justify-content-center flex-grow-1">
-            <a class="cool-link h4" asp-page="/Vehicles/Index">Vehicles</a>
+    @if (User.IsManager())
+    {
+        <h1 class="text-center">Manager panel</h1>
+        <div class="w-100 h-25 d-flex justify-content-around shadow rounded">
+            <div class="d-flex align-items-center justify-content-center flex-grow-1">
+                <a class="cool-link h4" asp-page="/Vehicles/Index">Vehicles</a>
+            </div>
+            <div class="d-flex align-items-center justify-content-center flex-grow-1">
+                <a class="cool-link h4" asp-page="/Enterprises/Index">Enterprises</a>
+            </div>
+            <div class="d-flex align-items-center justify-content-center flex-grow-1">
+                <a class="cool-link h4" asp-page="/Drivers/Index">Drivers</a>
+            </div>
         </div>
-        <div class="d-flex align-items-center justify-content-center flex-grow-1">
-            <a class="cool-link h4" asp-page="/Enterprises/Index">Enterprises</a>
-        </div>
-        <div class="d-flex align-items-center justify-content-center flex-grow-1">
-            <a class="cool-link h4" asp-page="/Drivers/Index">Drivers</a>
-        </div>
-    </div>
+    }
+    else
+    {
+        <h1 class="text-center">Welcome to MotorPool</h1>
+    }
 </div>
