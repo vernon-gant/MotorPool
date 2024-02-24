@@ -21,6 +21,10 @@ public class EditModel(VehicleService vehicleService, VehicleBrandService vehicl
 
         if (foundVehicle == null) return NotFound();
 
+        var authorizationResult = await authorizationService.AuthorizeAsync(User, foundVehicle, "IsManagerAccessible");
+
+        if (!authorizationResult.Succeeded) return Forbid();
+
         VehicleViewModel = foundVehicle;
 
         return Page();
