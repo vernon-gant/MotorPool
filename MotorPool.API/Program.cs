@@ -22,7 +22,7 @@ using MotorPool.Services.Vehicles.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 JWTConfig jwtConfig = new ();
 builder.Configuration.GetSection("JWTConfig").Bind(jwtConfig);
 builder.Services.AddSingleton(jwtConfig);
@@ -34,7 +34,6 @@ builder.Services.AddEnterpriseServices();
 builder.Services.AddDriverServices();
 builder.Services.AddAuthServices(connectionString);
 builder.Services.AddScoped<ApiAuthService, DefaultApiAuthService>();
-
 
 builder.Services
        .AddAuthentication(options =>
@@ -54,6 +53,7 @@ builder.Services
                ValidateAudience = false
            };
        });
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("IsManager", policy => policy.RequireClaim("ManagerId"));
@@ -65,6 +65,7 @@ builder.Services.AddAuthorization(options =>
                             .Build();
 });
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
@@ -93,6 +94,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 builder.Services.AddProblemDetails();
+
 builder.Services.ConfigureHttpJsonOptions(o =>
 {
     o.SerializerOptions.AllowTrailingCommas = true;
@@ -100,7 +102,7 @@ builder.Services.ConfigureHttpJsonOptions(o =>
     o.SerializerOptions.PropertyNameCaseInsensitive = true;
 });
 
-WebApplication app = builder.Build();
+var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
@@ -109,11 +111,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-RouteGroupBuilder managerResourcesGroup = app.MapGroup("/").AddEndpointFilter<ManagerExistenceFilter>();
+var managerResourcesGroup = app.MapGroup("/").AddEndpointFilter<ManagerExistenceFilter>();
 
 managerResourcesGroup.MapGet("vehicles", async (VehicleService vehicleService, ClaimsPrincipal user) =>
                      {
-                         int managerId = int.Parse(user.FindFirstValue("ManagerId")!);
+                         var managerId = int.Parse(user.FindFirstValue("ManagerId")!);
 
                          return await vehicleService.GetAllByManagerIdAsync(managerId);
                      })
@@ -124,21 +126,21 @@ app.MapGet("vehicle-brands", async (VehicleBrandService vehicleBrandService) => 
 
 managerResourcesGroup.MapGet("enterprises", async (EnterpriseService enterpriseService, ClaimsPrincipal user) =>
 {
-    int managerId = int.Parse(user.FindFirstValue("ManagerId")!);
+    var managerId = int.Parse(user.FindFirstValue("ManagerId")!);
 
     return await enterpriseService.GetAllByManagerIdAsync(managerId);
 });
 
 managerResourcesGroup.MapGet("drivers", async (DriverService driverService, ClaimsPrincipal principal) =>
 {
-    int managerId = int.Parse(principal.FindFirstValue("ManagerId")!);
+    var managerId = int.Parse(principal.FindFirstValue("ManagerId")!);
 
     return await driverService.GetByManagerIdAsync(managerId);
 });
 
 app.MapPost("login", async (ApiAuthService authService, LoginDTO loginDTO) =>
 {
-    AuthResult result = await authService.LoginAsync(loginDTO);
+    var result = await authService.LoginAsync(loginDTO);
 
     return result.IsSuccess
         ? Results.Ok(new { result.Token })
@@ -152,7 +154,7 @@ app.MapPost("login", async (ApiAuthService authService, LoginDTO loginDTO) =>
 
 app.MapPost("register", async (ApiAuthService authService, RegisterDTO registerDTO) =>
 {
-    AuthResult result = await authService.RegisterAsync(registerDTO);
+    var result = await authService.RegisterAsync(registerDTO);
 
     return result.IsSuccess
         ? Results.Ok(new { result.Token })
@@ -166,7 +168,7 @@ app.MapPost("register", async (ApiAuthService authService, RegisterDTO registerD
 
 app.MapGet("me", async (ApiAuthService authService, ClaimsPrincipal principal) =>
    {
-       string? userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
+       var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
 
        if (userId == null) return Results.Unauthorized();
 

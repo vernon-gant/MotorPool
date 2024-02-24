@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 using MotorPool.Auth;
-using MotorPool.Domain;
-using MotorPool.Persistence;
 using MotorPool.Services.Vehicles.Models;
 using MotorPool.Services.Vehicles.Services;
 
@@ -16,12 +13,13 @@ public class IndexModel(VehicleService vehicleService) : PageModel
 
     public async Task OnGetAsync(int? vehicleBrandId)
     {
-        int managerId = User.GetManagerId();
-        List<VehicleViewModel> managerVehicles = await vehicleService.GetAllByManagerIdAsync(managerId);
+        var managerId = User.GetManagerId();
+        var managerVehicles = await vehicleService.GetAllByManagerIdAsync(managerId);
 
         if (!vehicleBrandId.HasValue)
         {
             Vehicles = managerVehicles;
+
             return;
         }
 

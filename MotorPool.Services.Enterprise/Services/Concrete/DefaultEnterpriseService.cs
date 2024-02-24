@@ -12,24 +12,24 @@ public class DefaultEnterpriseService(AppDbContext dbContext, IMapper mapper) : 
 
     public async ValueTask<List<EnterpriseViewModel>> GetAllAsync()
     {
-        List<Domain.Enterprise> rawEnterprises = await dbContext.Enterprises
-                                                                .AsNoTracking()
-                                                                .Include(enterprise => enterprise.Vehicles)
-                                                                .Include(enterprise => enterprise.Drivers)
-                                                                .ToListAsync();
+        var rawEnterprises = await dbContext.Enterprises
+                                            .AsNoTracking()
+                                            .Include(enterprise => enterprise.Vehicles)
+                                            .Include(enterprise => enterprise.Drivers)
+                                            .ToListAsync();
 
         return mapper.Map<List<EnterpriseViewModel>>(rawEnterprises);
     }
 
     public async ValueTask<List<EnterpriseViewModel>> GetAllByManagerIdAsync(int managerId)
     {
-        List<Domain.Enterprise> rawEnterprises = await dbContext.Enterprises
-                                                                .AsNoTracking()
-                                                                .Include(enterprise => enterprise.ManagerLinks)
-                                                                .Include(enterprise => enterprise.Vehicles)
-                                                                .Include(enterprise => enterprise.Drivers)
-                                                                .Where(enterprise => enterprise.ManagerLinks.Any(manager => manager.ManagerId == managerId))
-                                                                .ToListAsync();
+        var rawEnterprises = await dbContext.Enterprises
+                                            .AsNoTracking()
+                                            .Include(enterprise => enterprise.ManagerLinks)
+                                            .Include(enterprise => enterprise.Vehicles)
+                                            .Include(enterprise => enterprise.Drivers)
+                                            .Where(enterprise => enterprise.ManagerLinks.Any(manager => manager.ManagerId == managerId))
+                                            .ToListAsync();
 
         return mapper.Map<List<EnterpriseViewModel>>(rawEnterprises);
     }

@@ -11,9 +11,9 @@ using MotorPool.Services.Enterprise;
 using MotorPool.Services.VehicleBrand;
 using MotorPool.Services.Vehicles;
 
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
-string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 builder.Services.AddPersistenceServices(connectionString);
 builder.Services.AddVehicleServices();
@@ -33,6 +33,7 @@ builder.Services
            options.LoginPath = "/Identity/Account/Login";
            options.AccessDeniedPath = "/Identity/Account/AccessDenied";
        });
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("IsManager", policy => policy.RequireClaim("ManagerId"));
@@ -45,7 +46,7 @@ builder.Services.AddAuthorization(options =>
 });
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-IMvcBuilder mvcBuilder = builder.Services.AddRazorPages(options =>
+var mvcBuilder = builder.Services.AddRazorPages(options =>
 {
     options.Conventions.AuthorizeFolder("/Brands");
     options.Conventions.AuthorizeFolder("/Drivers");
@@ -55,7 +56,7 @@ IMvcBuilder mvcBuilder = builder.Services.AddRazorPages(options =>
 
 if (builder.Environment.IsDevelopment()) mvcBuilder.AddRazorRuntimeCompilation();
 
-WebApplication app = builder.Build();
+var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {

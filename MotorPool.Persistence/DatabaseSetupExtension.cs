@@ -3,8 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-using MotorPool.Domain;
-
 namespace MotorPool.Persistence;
 
 public static class DatabaseSetupExtension
@@ -12,10 +10,10 @@ public static class DatabaseSetupExtension
 
     public static async Task SetupDatabaseAsync(this IHost webHost)
     {
-        using IServiceScope freshScope = webHost.Services.CreateScope();
-        AppDbContext appDbContext = freshScope.ServiceProvider.GetRequiredService<AppDbContext>();
-        ILoggerFactory loggerFactory = freshScope.ServiceProvider.GetRequiredService<ILoggerFactory>();
-        ILogger logger = loggerFactory.CreateLogger("test");
+        using var freshScope = webHost.Services.CreateScope();
+        var appDbContext = freshScope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var loggerFactory = freshScope.ServiceProvider.GetRequiredService<ILoggerFactory>();
+        var logger = loggerFactory.CreateLogger("test");
 
         try
         {
@@ -24,7 +22,8 @@ public static class DatabaseSetupExtension
         }
         catch (Exception e)
         {
-            logger.LogError(e,"Error while migrating the database...");
+            logger.LogError(e, "Error while migrating the database...");
+
             throw;
         }
     }

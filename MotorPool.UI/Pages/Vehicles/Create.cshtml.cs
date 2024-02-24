@@ -9,13 +9,13 @@ namespace MotorPool.UI.Pages.Vehicles;
 public class CreateModel(VehicleService vehicleService) : PageModel
 {
 
+    [BindProperty]
+    public VehicleDTO VehicleDto { get; set; } = default!;
+
     public IActionResult OnGet()
     {
         return Page();
     }
-
-    [BindProperty]
-    public VehicleDTO VehicleDto { get; set; } = default!;
 
 
     public async Task<IActionResult> OnPostAsync()

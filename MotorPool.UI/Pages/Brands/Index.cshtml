@@ -1,7 +1,6 @@
 @page
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using MotorPool.Auth
-@using MotorPool.Domain
 @using MotorPool.UI.Pages.Shared
 @model IndexModel
 
@@ -48,7 +47,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach (VehicleBrand vehicleBrand in Model.VehicleBrand)
+        @foreach (var vehicleBrand in Model.VehicleBrand)
         {
             <tr>
                 <td>

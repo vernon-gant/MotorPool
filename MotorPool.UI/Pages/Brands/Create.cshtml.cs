@@ -27,4 +27,5 @@ public class CreateModel(AppDbContext context) : PageModel
 
         return RedirectToPage("./Index");
     }
+
 }

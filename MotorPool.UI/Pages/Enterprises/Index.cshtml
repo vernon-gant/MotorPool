@@ -1,9 +1,8 @@
 @page
-@using MotorPool.Services.Enterprise.Models
-@using MotorPool.UI.Pages.Shared
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using MotorPool.Auth
-@model MotorPool.UI.Pages.Enterprises.IndexModel
+@using MotorPool.UI.Pages.Shared
+@model IndexModel
 
 @{
     ViewData["Title"] = "Enterprises management";
@@ -41,7 +40,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach (EnterpriseViewModel enterpriseViewModel in Model.Enterprises)
+        @foreach (var enterpriseViewModel in Model.Enterprises)
         {
             <tr>
                 <td>

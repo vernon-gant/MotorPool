@@ -9,26 +9,26 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.1" />
-      <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="8.0.1" />
-      <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.1" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.1">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
-      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.1">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.1"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="8.0.1"/>
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.1"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.1"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MotorPool.Services.Driver\MotorPool.Services.Driver.csproj" />
-      <ProjectReference Include="..\MotorPool.Services.Enterprise\MotorPool.Services.Enterprise.csproj" />
-      <ProjectReference Include="..\MotorPool.Services.Vehicle\MotorPool.Services.Vehicle.csproj" />
+        <ProjectReference Include="..\MotorPool.Services.Driver\MotorPool.Services.Driver.csproj"/>
+        <ProjectReference Include="..\MotorPool.Services.Enterprise\MotorPool.Services.Enterprise.csproj"/>
+        <ProjectReference Include="..\MotorPool.Services.Vehicle\MotorPool.Services.Vehicle.csproj"/>
     </ItemGroup>
 
 </Project>

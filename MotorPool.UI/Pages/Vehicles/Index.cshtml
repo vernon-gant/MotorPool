@@ -1,8 +1,6 @@
 @page "{vehicleBrandId:int?}"
-@using MotorPool.Domain
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using MotorPool.Auth
-@using MotorPool.Services.Vehicles.Models
 @using MotorPool.UI.Pages.Shared
 @model IndexModel
 
@@ -40,7 +38,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach (VehicleViewModel vehicleViewModel in Model.Vehicles)
+        @foreach (var vehicleViewModel in Model.Vehicles)
         {
             <tr>
                 <td>

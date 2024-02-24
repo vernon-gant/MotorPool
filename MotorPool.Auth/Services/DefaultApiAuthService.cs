@@ -12,7 +12,7 @@ public class DefaultApiAuthService(UserManager<ApplicationUser> userManager, JWT
 
     public async ValueTask<AuthResult> LoginAsync(LoginDTO loginDTO)
     {
-        ApplicationUser? user = await userManager.FindByEmailAsync(loginDTO.Email);
+        var user = await userManager.FindByEmailAsync(loginDTO.Email);
 
         if (user == null) return AuthResult.Failure("User not found.");
 
@@ -20,11 +20,11 @@ public class DefaultApiAuthService(UserManager<ApplicationUser> userManager, JWT
 
         List<Claim> claims = new ()
         {
-            new (ClaimTypes.NameIdentifier, user.Id),
-            new (ClaimTypes.Name, user.UserName!),
-            new (ClaimTypes.Email, user.Email!)
+            new Claim(ClaimTypes.NameIdentifier, user.Id),
+            new Claim(ClaimTypes.Name, user.UserName!),
+            new Claim(ClaimTypes.Email, user.Email!)
         };
-        IList<Claim> userClaims = await userManager.GetClaimsAsync(user);
+        var userClaims = await userManager.GetClaimsAsync(user);
         claims.AddRange(userClaims);
 
         SymmetricSecurityKey key = new (Encoding.UTF8.GetBytes(jwtConfig.Key));
@@ -39,13 +39,13 @@ public class DefaultApiAuthService(UserManager<ApplicationUser> userManager, JWT
     {
         if (registerDTO.Password != registerDTO.ConfirmPassword) return AuthResult.Failure("Passwords do not match.");
 
-        ApplicationUser user = new ApplicationUser
+        var user = new ApplicationUser
         {
             Email = registerDTO.Email,
-            UserName = registerDTO.UserName,
+            UserName = registerDTO.UserName
         };
 
-        IdentityResult result = await userManager.CreateAsync(user, registerDTO.Password);
+        var result = await userManager.CreateAsync(user, registerDTO.Password);
 
         if (!result.Succeeded) return AuthResult.Failure(result.Errors.Select(identityError => identityError.Description).First());
 
@@ -54,11 +54,11 @@ public class DefaultApiAuthService(UserManager<ApplicationUser> userManager, JWT
 
     public async ValueTask<UserViewModel> GetUserAsync(string userId)
     {
-        ApplicationUser user = (await userManager.FindByIdAsync(userId))!;
+        var user = (await userManager.FindByIdAsync(userId))!;
 
-        IList<Claim> claims = await userManager.GetClaimsAsync(user);
+        var claims = await userManager.GetClaimsAsync(user);
 
-        string? managerId = claims.FirstOrDefault(claim => claim.Type == "ManagerId")?.Value;
+        var managerId = claims.FirstOrDefault(claim => claim.Type == "ManagerId")?.Value;
 
         return new UserViewModel
         {

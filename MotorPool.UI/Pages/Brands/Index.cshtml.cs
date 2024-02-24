@@ -13,12 +13,12 @@ public class IndexModel : PageModel
 
     private readonly AppDbContext _context;
 
-    public IList<VehicleBrand> VehicleBrand { get; set; } = default!;
-
     public IndexModel(AppDbContext context)
     {
         _context = context;
     }
+
+    public IList<VehicleBrand> VehicleBrand { get; set; } = default!;
 
     public async Task OnGetAsync()
     {

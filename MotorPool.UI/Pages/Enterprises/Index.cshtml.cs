@@ -13,7 +13,7 @@ public class IndexModel(EnterpriseService enterpriseService) : PageModel
 
     public async Task OnGetAsync()
     {
-        int managerId = User.GetManagerId();
+        var managerId = User.GetManagerId();
         Enterprises = await enterpriseService.GetAllByManagerIdAsync(managerId);
     }
 

@@ -4,6 +4,7 @@ namespace MotorPool.Services.Vehicles.Models;
 
 public class VehicleDTO
 {
+
     public int VehicleId { get; set; }
 
     [MinLength(17)]

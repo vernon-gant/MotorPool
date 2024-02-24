@@ -20,7 +20,7 @@ public class Driver
 
     public Enterprise? Enterprise { get; set; }
 
-    public List<DriverVehicle> DriverVehicles { get; set; } = new();
+    public List<DriverVehicle> DriverVehicles { get; set; } = new ();
 
     public int? ActiveVehicleId { get; set; }
 

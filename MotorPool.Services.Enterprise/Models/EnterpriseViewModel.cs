@@ -15,4 +15,5 @@ public class EnterpriseViewModel : EnterpriseDTO
 
     [JsonIgnore]
     public List<int> ManagerIds { get; set; } = new ();
+
 }

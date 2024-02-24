@@ -11,22 +11,22 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.1"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.1">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.1">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MotorPool.Auth\MotorPool.Auth.csproj" />
-      <ProjectReference Include="..\MotorPool.Services.Driver\MotorPool.Services.Driver.csproj" />
-      <ProjectReference Include="..\MotorPool.Services.Enterprise\MotorPool.Services.Enterprise.csproj" />
-      <ProjectReference Include="..\MotorPool.Services.VehicleBrand\MotorPool.Services.VehicleBrand.csproj" />
-      <ProjectReference Include="..\MotorPool.Services.Vehicle\MotorPool.Services.Vehicle.csproj" />
+        <ProjectReference Include="..\MotorPool.Auth\MotorPool.Auth.csproj"/>
+        <ProjectReference Include="..\MotorPool.Services.Driver\MotorPool.Services.Driver.csproj"/>
+        <ProjectReference Include="..\MotorPool.Services.Enterprise\MotorPool.Services.Enterprise.csproj"/>
+        <ProjectReference Include="..\MotorPool.Services.VehicleBrand\MotorPool.Services.VehicleBrand.csproj"/>
+        <ProjectReference Include="..\MotorPool.Services.Vehicle\MotorPool.Services.Vehicle.csproj"/>
     </ItemGroup>
 
 </Project>

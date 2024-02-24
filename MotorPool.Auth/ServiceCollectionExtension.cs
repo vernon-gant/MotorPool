@@ -27,7 +27,6 @@ public static class ServiceCollectionExtension
         services.AddSingleton<IAuthorizationHandler, IsManagerAccessibleVehicleHandler>();
         services.AddSingleton<IAuthorizationHandler, IsManagerAccessibleEnterpriseHandler>();
         services.AddSingleton<IAuthorizationHandler, IsManagerAccessibleDriverHandler>();
-
     }
 
 }

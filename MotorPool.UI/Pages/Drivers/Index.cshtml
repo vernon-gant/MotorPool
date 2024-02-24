@@ -1,9 +1,8 @@
 @page
-@using MotorPool.Services.Drivers.Models
-@using MotorPool.UI.Pages.Shared
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using MotorPool.Auth
-@model MotorPool.UI.Pages.Drivers.IndexModel
+@using MotorPool.UI.Pages.Shared
+@model IndexModel
 
 @{
     ViewData["Title"] = "Index";
@@ -32,7 +31,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach (DriverViewModel driverViewModel in Model.Drivers)
+        @foreach (var driverViewModel in Model.Drivers)
         {
             <tr>
                 <td>

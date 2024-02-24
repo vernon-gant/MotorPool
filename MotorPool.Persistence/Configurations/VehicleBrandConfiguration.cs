@@ -13,6 +13,7 @@ public class VehicleBrandConfiguration : IEntityTypeConfiguration<VehicleBrand>
         builder.Property(vehicleBrand => vehicleBrand.Type).HasConversion<string>();
         builder.Property(vehicleBrand => vehicleBrand.FuelTankCapacityLiters).HasPrecision(10, 4);
         builder.Property(vehicleBrand => vehicleBrand.PayloadCapacityKg).HasPrecision(11, 5);
+
         builder.HasMany(vehicleBrand => vehicleBrand.Vehicles)
                .WithOne(vehicle => vehicle.VehicleBrand)
                .HasForeignKey(vehicle => vehicle.VehicleBrandId);

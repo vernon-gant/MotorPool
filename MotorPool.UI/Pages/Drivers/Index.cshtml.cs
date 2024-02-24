@@ -10,11 +10,12 @@ namespace MotorPool.UI.Pages.Drivers;
 public class IndexModel(DriverService driverService, UserManager<ApplicationUser> userManager) : PageModel
 {
 
-    public IList<DriverViewModel> Drivers { get;set; } = default!;
+    public IList<DriverViewModel> Drivers { get; set; } = default!;
 
     public async Task OnGetAsync()
     {
-        int managerId = User.GetManagerId();
+        var managerId = User.GetManagerId();
         Drivers = await driverService.GetByManagerIdAsync(managerId);
     }
+
 }

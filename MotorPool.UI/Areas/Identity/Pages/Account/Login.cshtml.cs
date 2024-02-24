@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 using MotorPool.Auth;
 
-using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
-
 namespace MotorPool.UI.Areas.Identity.Pages.Account;
 
 public class LoginModel(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, ILogger<LoginModel> logger) : PageModel
@@ -27,25 +25,6 @@ public class LoginModel(SignInManager<ApplicationUser> signInManager, UserManage
     [TempData]
     public string ErrorMessage { get; set; } = string.Empty;
 
-
-    public class InputModel
-    {
-
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-
-
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
-
-        [Display(Name = "Remember me?")]
-        public bool RememberMe { get; set; }
-
-    }
-
     public async Task OnGetAsync(string? returnUrl = null)
     {
         if (!string.IsNullOrEmpty(ErrorMessage)) ModelState.AddModelError(string.Empty, ErrorMessage);
@@ -63,26 +42,49 @@ public class LoginModel(SignInManager<ApplicationUser> signInManager, UserManage
     {
         returnUrl ??= Url.Content("~/");
         ExternalLogins = (await signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
         if (!ModelState.IsValid) return Page();
 
-        ApplicationUser? user = await userManager.FindByEmailAsync(Input.Email);
+        var user = await userManager.FindByEmailAsync(Input.Email);
 
         if (user == null)
         {
             ModelState.AddModelError(string.Empty, "User with this email does not exist.");
+
             return Page();
         }
 
-        SignInResult result = await signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+        var result = await signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe, false);
 
         if (result.Succeeded)
         {
             logger.LogInformation("User logged in");
+
             return LocalRedirect(returnUrl);
         }
 
         ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+
         return Page();
+    }
+
+
+    public class InputModel
+    {
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+
+        [Display(Name = "Remember me?")]
+        public bool RememberMe { get; set; }
+
     }
 
 }

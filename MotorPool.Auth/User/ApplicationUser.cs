@@ -2,9 +2,4 @@
 
 namespace MotorPool.Auth;
 
-public class ApplicationUser : IdentityUser
-{
-
-
-
-}
+public class ApplicationUser : IdentityUser { }

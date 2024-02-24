@@ -1,7 +1,6 @@
-﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using MotorPool.Auth
-@using Microsoft.AspNetCore.Identity
-
 @inject SignInManager<ApplicationUser> SignInManager
 
 <!DOCTYPE html>
@@ -14,7 +13,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/MotorPool.UI.styles.css" asp-append-version="true"/>
     <script src="https://kit.fontawesome.com/55006738dc.js" crossorigin="anonymous"></script>
-    @await RenderSectionAsync("Styles", required: false)
+    @await RenderSectionAsync("Styles", false)
 </head>
 <body class="d-flex flex-column">
 <header>
@@ -58,6 +57,6 @@
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 
-@await RenderSectionAsync("Scripts", required: false)
+@await RenderSectionAsync("Scripts", false)
 </body>
 </html>

@@ -13,9 +13,10 @@ public class VehicleBrandsSelectListPageModel : PageModel
 
     public async Task PopulateVehicleBrandsDropDownList(VehicleBrandService vehicleBrandService, object? selectedVehicleBrand = null)
     {
-        List<VehicleBrandSignatureWithId> vehicleBrandSignatureWithIds = await vehicleBrandService.GetVehicleBrandsWithIdAsync();
+        var vehicleBrandSignatureWithIds = await vehicleBrandService.GetVehicleBrandsWithIdAsync();
 
-        VehicleBrandSelectList = new (vehicleBrandSignatureWithIds, nameof(VehicleBrandSignatureWithId.VehicleBrandId), nameof(VehicleBrandSignatureWithId.BrandSignature), selectedVehicleBrand);
+        VehicleBrandSelectList = new SelectList(vehicleBrandSignatureWithIds, nameof(VehicleBrandSignatureWithId.VehicleBrandId),
+                                                nameof(VehicleBrandSignatureWithId.BrandSignature), selectedVehicleBrand);
     }
 
 }

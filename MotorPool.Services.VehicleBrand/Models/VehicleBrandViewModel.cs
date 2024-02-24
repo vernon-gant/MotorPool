@@ -1,6 +1,4 @@
-﻿using MotorPool.Services.VehicleBrand.ViewModels;
-
-namespace MotorPool.Services.VehicleBrand.Models;
+﻿namespace MotorPool.Services.VehicleBrand.Models;
 
 public class VehicleBrandViewModel : VehicleBrandDTO
 {
