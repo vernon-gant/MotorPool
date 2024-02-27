@@ -7,7 +7,7 @@ public interface VehicleActionService
 
     ValueTask<VehicleViewModel> CreateAsync(VehicleDTO vehicleDto);
 
-    ValueTask UpdateAsync(VehicleViewModel vehicleViewModel);
+    ValueTask UpdateAsync(VehicleDTO vehicleDto, int vehicleId);
 
     ValueTask DeleteAsync(int vehicleId);
 

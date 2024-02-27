@@ -18,6 +18,10 @@ public class VehicleProfile : Profile
                        opt => opt.MapFrom(vehicle => vehicle.Enterprise!.ManagerLinks.Select(managerLink => managerLink.ManagerId)));
 
         CreateMap<VehicleDTO, Vehicle>();
+
+        CreateMap<VehicleDTO, VehicleViewModel>();
+
+        CreateMap<VehicleViewModel, VehicleDTO>();
     }
 
 }

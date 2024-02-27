@@ -9,6 +9,11 @@ public class EnterpriseProfile : Profile
 
     public EnterpriseProfile()
     {
+        CreateMap<EnterpriseDTO, Domain.Enterprise>()
+            .ForMember(enterprise => enterprise.Drivers, opt => opt.Ignore())
+            .ForMember(enterprise => enterprise.Vehicles, opt => opt.Ignore())
+            .ForMember(enterprise => enterprise.ManagerLinks, opt => opt.Ignore());
+
         CreateMap<Domain.Enterprise, EnterpriseViewModel>()
             .ForMember(enterpriseViewModel => enterpriseViewModel.DriverIds, opt => opt.MapFrom(enterprise => enterprise.Drivers.Select(driver => driver.DriverId)))
             .ForMember(enterpriseViewModel => enterpriseViewModel.VehicleIds, opt => opt.MapFrom(enterprise => enterprise.Vehicles.Select(vehicle => vehicle.VehicleId)))

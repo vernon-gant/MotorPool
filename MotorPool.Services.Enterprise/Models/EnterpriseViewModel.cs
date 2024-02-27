@@ -1,8 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-using MotorPool.Abstractions;
-
 namespace MotorPool.Services.Enterprise.Models;
 
 public class EnterpriseViewModel : EnterpriseDTO

@@ -29,13 +29,13 @@ public class DefaultVehicleActionService(AppDbContext dbContext, IMapper mapper,
         return await vehicleQueryService.GetByIdAsync(newVehicle.VehicleId)!;
     }
 
-    private async ValueTask<bool> VINExists(string VIN) => await dbContext.Vehicles.AnyAsync(vehicle => vehicle.MotorVIN == VIN);
-
-    public async ValueTask UpdateAsync(VehicleViewModel vehicleViewModel)
+    public async ValueTask UpdateAsync(VehicleDTO vehicleDto, int vehicleId)
     {
-        await EnsureVehicleBrandExistsAsync(vehicleViewModel.VehicleBrandId);
+        await EnsureVehicleBrandExistsAsync(vehicleDto.VehicleBrandId);
 
-        dbContext.Vehicles.Update(mapper.Map<Vehicle>(vehicleViewModel));
+        Vehicle vehicle = await dbContext.Vehicles.FindAsync(vehicleId) ?? throw new VehicleNotFoundException("Vehicle not found");
+
+        dbContext.Vehicles.Update(mapper.Map(vehicleDto, vehicle));
 
         await dbContext.SaveChangesAsync();
     }
@@ -55,5 +55,7 @@ public class DefaultVehicleActionService(AppDbContext dbContext, IMapper mapper,
 
         if (vehicleBrand == null) throw new VehicleBrandNotFoundException("Vehicle brand not found");
     }
+
+    private async ValueTask<bool> VINExists(string VIN) => await dbContext.Vehicles.AnyAsync(vehicle => vehicle.MotorVIN == VIN);
 
 }

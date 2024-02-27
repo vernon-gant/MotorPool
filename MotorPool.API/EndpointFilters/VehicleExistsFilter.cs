@@ -8,7 +8,7 @@ public class VehicleExistsFilter(VehicleQueryService vehicleQueryService) : IEnd
 
     public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
     {
-        int vehicleId = int.Parse(context.Arguments.FirstOrDefault(x => x.GetType().IsAssignableTo(typeof(int))).ToString());
+        int vehicleId = (int)context.HttpContext.Request.RouteValues["vehicleId"]!;
 
         VehicleViewModel? vehicle = await vehicleQueryService.GetByIdAsync(vehicleId);
 

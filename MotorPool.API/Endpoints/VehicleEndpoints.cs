@@ -1,5 +1,7 @@
 ﻿using System.Security.Claims;
 
+using AutoMapper;
+
 using MotorPool.API.EndpointFilters;
 using MotorPool.Services.Manager;
 using MotorPool.Services.Vehicles.Exceptions;
@@ -36,6 +38,7 @@ public static class VehicleEndpoints
                             .Produces(StatusCodes.Status201Created);
 
         vehiclesGroupBuilder.MapPut("{vehicleId:int}", Update)
+                            .WithParameterValidation()
                             .AddEndpointFilter<VehicleExistsFilter>()
                             .AddEndpointFilter<IsManagerAccessibleVehicleFilter>()
                             .WithName("UpdateVehicle")
@@ -60,11 +63,11 @@ public static class VehicleEndpoints
         return Results.Ok(vehicles.ForManager(user.GetManagerId()));
     }
 
-    private static async Task<IResult> GetById(int vehicleId, HttpContext httpContext)
+    private static Task<IResult> GetById(int vehicleId, HttpContext httpContext)
     {
         VehicleViewModel vehicle = httpContext.Items["Vehicle"] as VehicleViewModel ?? throw new InvalidOperationException("Vehicle not found in the request context.");
 
-        return Results.Ok(vehicle);
+        return Task.FromResult(Results.Ok(vehicle));
     }
 
     private static async Task<IResult> Create(VehicleActionService vehicleActionService, VehicleDTO vehicleDTO)
@@ -85,19 +88,21 @@ public static class VehicleEndpoints
         }
     }
 
-    private static async Task<IResult> Update(VehicleActionService vehicleActionService, int vehicleId, VehicleDTO vehicleDTO, HttpContext httpContext)
+    private static async Task<IResult> Update(VehicleActionService vehicleActionService, VehicleDTO vehicleDTO, int vehicleId)
     {
         try
         {
-            VehicleViewModel updateModel = httpContext.Items["Vehicle"] as VehicleViewModel ?? throw new InvalidOperationException("Vehicle not found in the request context.");
-
-            await vehicleActionService.UpdateAsync(updateModel);
+            await vehicleActionService.UpdateAsync(vehicleDTO, vehicleId);
 
             return Results.NoContent();
         }
         catch (VehicleBrandNotFoundException)
         {
             return Results.Problem(statusCode: 400, title: "Vehicle brand not found");
+        }
+        catch (VehicleNotFoundException)
+        {
+            return Results.Problem(statusCode: 404, title: "Vehicle not found");
         }
     }
 

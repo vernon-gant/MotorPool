@@ -5,10 +5,10 @@ namespace MotorPool.Services.Enterprise.Services;
 public interface EnterpriseActionService
 {
 
-    ValueTask<int> CreateAsync(EnterpriseDTO enterpriseDTO);
+    ValueTask<EnterpriseViewModel> CreateAsync(EnterpriseDTO enterpriseDTO, int managerId);
 
-    ValueTask<int> UpdateAsync(EnterpriseViewModel enterpriseViewModel);
+    ValueTask UpdateAsync(EnterpriseDTO enterpriseDTO, int enterpriseId);
 
-    ValueTask<int> DeleteAsync(int enterpriseId);
+    ValueTask DeleteAsync(int enterpriseId);
 
 }
