@@ -31,6 +31,13 @@ public class DefaultVehicleBrandService(AppDbContext dbContext, IMapper mapper) 
         return mapper.Map<List<VehicleBrandViewModel>>(rawVehicleBrands);
     }
 
+    public async ValueTask<VehicleBrandViewModel?> GetByIdAsync(int vehicleBrandId)
+    {
+        Domain.VehicleBrand? vehicleBrand = await dbContext.VehicleBrands.AsNoTracking().FirstOrDefaultAsync(brand => brand.VehicleBrandId == vehicleBrandId);
+
+        return mapper.Map<VehicleBrandViewModel>(vehicleBrand);
+    }
+
     public async ValueTask CreateAsync(VehicleBrandDTO vehicleBrandDTO)
     {
         Domain.VehicleBrand vehicleBrand = mapper.Map<Domain.VehicleBrand>(vehicleBrandDTO);

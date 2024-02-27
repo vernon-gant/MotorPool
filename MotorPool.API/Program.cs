@@ -8,66 +8,51 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
+using MotorPool.API;
 using MotorPool.Auth;
 using MotorPool.Auth.Manager;
 using MotorPool.Persistence;
 using MotorPool.Services.Drivers;
 using MotorPool.Services.Drivers.Services;
 using MotorPool.Services.Enterprise;
+using MotorPool.Services.Enterprise.Models;
 using MotorPool.Services.Enterprise.Services;
+using MotorPool.Services.Manager;
 using MotorPool.Services.VehicleBrand;
 using MotorPool.Services.VehicleBrand.Services;
 using MotorPool.Services.Vehicles;
+using MotorPool.Services.Vehicles.Exceptions;
+using MotorPool.Services.Vehicles.Models;
 using MotorPool.Services.Vehicles.Services;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 JWTConfig jwtConfig = new ();
 builder.Configuration.GetSection("JWTConfig").Bind(jwtConfig);
 builder.Services.AddSingleton(jwtConfig);
+builder.Services.AddScoped<ApiAuthService, DefaultApiAuthService>();
 
 builder.Services.AddPersistenceServices(connectionString);
 builder.Services.AddVehicleServices();
 builder.Services.AddVehicleBrandServices();
 builder.Services.AddEnterpriseServices();
 builder.Services.AddDriverServices();
-builder.Services.AddAuthServices(connectionString);
-builder.Services.AddScoped<ApiAuthService, DefaultApiAuthService>();
-
-builder.Services
-       .AddAuthentication(options =>
-       {
+builder.Services.AddAuthentication(options => {
            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-       })
-       .AddJwtBearer(options =>
-       {
-           options.TokenValidationParameters = new TokenValidationParameters
-           {
-               ValidateIssuerSigningKey = true,
-               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig.Key)),
-               ValidIssuer = jwtConfig.Issuer,
-               ValidAudience = jwtConfig.Audience,
-               ValidateIssuer = false,
-               ValidateAudience = false
-           };
-       });
+       }).AddJwtBearer(options => { options.TokenValidationParameters = new TokenValidationParameters {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig.Key)),
+        ValidIssuer = jwtConfig.Issuer,
+        ValidAudience = jwtConfig.Audience,
+        ValidateIssuer = false,
+        ValidateAudience = false
+    }; });
+builder.Services.AddAuthorization(connectionString);
 
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("IsManager", policy => policy.RequireClaim("ManagerId"));
-    options.AddPolicy("IsManagerAccessible", policy => policy.Requirements.Add(new IsManagerAccessibleRequirement()));
-
-    options.DefaultPolicy = new AuthorizationPolicyBuilder()
-                            .RequireAuthenticatedUser()
-                            .RequireClaim("ManagerId")
-                            .Build();
-});
 builder.Services.AddEndpointsApiExplorer();
-
-builder.Services.AddSwaggerGen(options =>
-{
+builder.Services.AddSwaggerGen(options => {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
 
     OpenApiSecurityScheme jwtSecurityScheme = new ()
@@ -94,15 +79,13 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 builder.Services.AddProblemDetails();
-
-builder.Services.ConfigureHttpJsonOptions(o =>
-{
+builder.Services.ConfigureHttpJsonOptions(o => {
     o.SerializerOptions.AllowTrailingCommas = true;
     o.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     o.SerializerOptions.PropertyNameCaseInsensitive = true;
 });
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
@@ -111,69 +94,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-var managerResourcesGroup = app.MapGroup("/").RequireAuthorization("IsManager").AddEndpointFilter<ManagerExistenceFilter>();
+app.MapVehicleBrandEndpoints();
 
-managerResourcesGroup.MapGet("vehicles", async (VehicleService vehicleService, ClaimsPrincipal user) =>
-{
-    int managerId = user.GetManagerId();
+app.MapAuthEndpoints();
 
-    return await vehicleService.GetAllByManagerIdAsync(managerId);
-});
+RouteGroupBuilder managerResourcesGroupBuilder = app.MapGroup("/")
+                                                    .RequireAuthorization()
+                                                    .AddEndpointFilter<ManagerExistenceFilter>();
 
-app.MapGet("vehicle-brands", async (VehicleBrandService vehicleBrandService) => await vehicleBrandService.GetAllAsync());
+managerResourcesGroupBuilder.MapVehicleEndpoints();
 
-managerResourcesGroup.MapGet("enterprises", async (EnterpriseService enterpriseService, ClaimsPrincipal user) =>
-{
-    int managerId = user.GetManagerId();
+managerResourcesGroupBuilder.MapDriverEndpoints();
 
-    return await enterpriseService.GetAllByManagerIdAsync(managerId);
-});
-
-managerResourcesGroup.MapGet("drivers", async (DriverService driverService, ClaimsPrincipal principal) =>
-{
-    int managerId = principal.GetManagerId();
-
-    return await driverService.GetByManagerIdAsync(managerId);
-});
-
-app.MapPost("login", async (ApiAuthService authService, LoginDTO loginDTO) =>
-{
-    var result = await authService.LoginAsync(loginDTO);
-
-    return result.IsSuccess
-        ? Results.Ok(new { result.Token })
-        : Results.Problem(new ProblemDetails
-        {
-            Title = "Login failed",
-            Status = 400,
-            Detail = result.Error
-        });
-});
-
-app.MapPost("register", async (ApiAuthService authService, RegisterDTO registerDTO) =>
-{
-    var result = await authService.RegisterAsync(registerDTO);
-
-    return result.IsSuccess
-        ? Results.Ok(new { result.Token })
-        : Results.Problem(new ProblemDetails
-        {
-            Title = "Registration failed",
-            Status = 400,
-            Detail = result.Error
-        });
-});
-
-app.MapGet("me", async (ApiAuthService authService, ClaimsPrincipal principal) =>
-   {
-       var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
-
-       if (userId == null) return Results.Unauthorized();
-
-       return Results.Ok(await authService.GetUserAsync(userId));
-   })
-   .RequireAuthorization()
-   .Produces<UserViewModel>();
+managerResourcesGroupBuilder.MapEnterpriseEndpoints();
 
 await app.SetupDatabaseAsync();
 

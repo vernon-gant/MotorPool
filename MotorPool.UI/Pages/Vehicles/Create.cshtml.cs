@@ -7,7 +7,7 @@ using MotorPool.Services.Vehicles.Services;
 
 namespace MotorPool.UI.Pages.Vehicles;
 
-public class CreateModel(VehicleService vehicleService, VehicleBrandService vehicleBrandService) : VehicleBrandsSelectListPageModel
+public class CreateModel(VehicleActionService vehicleActionService, VehicleBrandService vehicleBrandService) : VehicleBrandsSelectListPageModel
 {
 
     [BindProperty]
@@ -24,7 +24,7 @@ public class CreateModel(VehicleService vehicleService, VehicleBrandService vehi
     {
         if (!ModelState.IsValid) return Page();
 
-        await vehicleService.CreateAsync(VehicleDto);
+        await vehicleActionService.CreateAsync(VehicleDto);
 
         return RedirectToPage("./Index");
     }

@@ -1,12 +1,16 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+
+using MotorPool.Abstractions;
 
 namespace MotorPool.Services.Enterprise.Models;
 
-public class EnterpriseViewModel : EnterpriseDTO
+public class EnterpriseViewModel : EnterpriseDTO, ManagersOwned
 {
 
     public int EnterpriseId { get; set; }
 
+    [Display(Name = "Founded on")]
     public DateTime FoundedOn { get; set; }
 
     public List<int> VehicleIds { get; set; } = new ();

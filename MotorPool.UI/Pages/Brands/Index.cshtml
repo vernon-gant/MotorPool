@@ -1,6 +1,7 @@
 @page
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using MotorPool.Auth
+@using MotorPool.Auth.EndpointFilters
 @using MotorPool.Auth.Manager
 @using MotorPool.UI.Pages.Shared
 @model IndexModel
@@ -11,7 +12,7 @@
 
 <div class="header-with-icon mb-4">
     <h1 class="text-center">Vehicle brands</h1>
-    @if (User.IsManager() || User.IsAdmin())
+    @if (User.IsManager())
     {
         <a asp-page="./Create">
             <i class="fa-solid fa-plus icon-plus"></i>
@@ -24,25 +25,25 @@
         <thead>
         <tr>
             <th>
-                Company name
+                @Html.DisplayNameFor(model => model.VehicleBrand[0].CompanyName)
             </th>
             <th>
-                Model name
+                @Html.DisplayNameFor(model => model.VehicleBrand[0].ModelName)
             </th>
             <th>
-                Type
+                @Html.DisplayNameFor(model => model.VehicleBrand[0].Type)
             </th>
             <th>
-                Fuel tank capacity (liters)
+                @Html.DisplayNameFor(model => model.VehicleBrand[0].FuelTankCapacityLiters)
             </th>
             <th>
-                Payload capacity (kg)
+                @Html.DisplayNameFor(model => model.VehicleBrand[0].PayloadCapacityKg)
             </th>
             <th>
-                Number of seats
+                @Html.DisplayNameFor(model => model.VehicleBrand[0].NumberOfSeats)
             </th>
             <th>
-                Release year
+                @Html.DisplayNameFor(model => model.VehicleBrand[0].ReleaseYear)
             </th>
             <th></th>
         </tr>

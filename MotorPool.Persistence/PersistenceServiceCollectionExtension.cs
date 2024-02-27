@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace MotorPool.Persistence;
 
-public static class PersistenceExtension
+public static class PersistenceServiceCollectionExtension
 {
 
     public static void AddPersistenceServices(this IServiceCollection serviceCollection, string connectionString)

@@ -11,7 +11,7 @@ public static class DriverServiceExtension
     public static void AddDriverServices(this IServiceCollection services)
     {
         services.AddAutoMapper(typeof(DriverServiceExtension));
-        services.AddScoped<DriverService, DefaultDriverService>();
+        services.AddScoped<DriverQueryService, DefaultDriverQueryService>();
     }
 
 }

@@ -11,7 +11,8 @@ public static class VehicleServicesExtension
     public static void AddVehicleServices(this IServiceCollection services)
     {
         services.AddAutoMapper(typeof(VehicleServicesExtension));
-        services.AddScoped<VehicleService, DefaultVehicleService>();
+        services.AddScoped<VehicleActionService, DefaultVehicleActionService>();
+        services.AddScoped<VehicleQueryService, DefaultVehicleQueryService>();
     }
 
 }

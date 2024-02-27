@@ -1,12 +1,11 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 using MotorPool.Abstractions;
 using MotorPool.Utils.ValidationAttributes;
 
 namespace MotorPool.Services.Vehicles.Models;
 
-public class VehicleDTO : EnterpriseOwnedEntity
+public class VehicleDTO : EnterpriseOwned
 {
 
     public int VehicleId { get; set; }
@@ -33,6 +32,9 @@ public class VehicleDTO : EnterpriseOwnedEntity
     [Range(0, 1000000)]
     public decimal Mileage { get; set; }
 
+    [Display(Name = "Vehicle brand")]
     public int VehicleBrandId { get; set; }
+
+    public int? EnterpriseId { get; set; }
 
 }

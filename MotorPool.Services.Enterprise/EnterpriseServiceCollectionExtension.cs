@@ -11,7 +11,7 @@ public static class EnterpriseServiceExtension
     public static void AddEnterpriseServices(this IServiceCollection services)
     {
         services.AddAutoMapper(typeof(EnterpriseServiceExtension));
-        services.AddScoped<EnterpriseService, DefaultEnterpriseService>();
+        services.AddScoped<EnterpriseQueryService, DefaultEnterpriseQueryService>();
     }
 
 }

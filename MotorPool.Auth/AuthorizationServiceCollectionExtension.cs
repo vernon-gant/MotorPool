@@ -6,10 +6,10 @@ using MotorPool.Auth.Manager;
 
 namespace MotorPool.Auth;
 
-public static class ServiceCollectionExtension
+public static class AuthorizationServiceCollectionExtension
 {
 
-    public static void AddAuthServices(this IServiceCollection services, string connectionString)
+    public static void AddAuthorization(this IServiceCollection services, string connectionString)
     {
         services.AddIdentity<ApplicationUser, IdentityRole>(options =>
                 {
@@ -26,9 +26,15 @@ public static class ServiceCollectionExtension
 
         services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(connectionString));
 
-        services.AddSingleton<IAuthorizationHandler, IsManagerAccessibleVehicleHandler>();
-        services.AddSingleton<IAuthorizationHandler, IsManagerAccessibleEnterpriseHandler>();
-        services.AddSingleton<IAuthorizationHandler, IsManagerAccessibleDriverHandler>();
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("IsManager", policy => policy.RequireClaim("ManagerId"));
+
+            options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                                    .RequireAuthenticatedUser()
+                                    .RequireClaim("ManagerId")
+                                    .Build();
+        });
     }
 
 }

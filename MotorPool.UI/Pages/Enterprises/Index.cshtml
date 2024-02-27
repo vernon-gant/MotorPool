@@ -1,7 +1,9 @@
 @page
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using MotorPool.Auth
+@using MotorPool.Auth.EndpointFilters
 @using MotorPool.Auth.Manager
+@using MotorPool.Services.Enterprise.Models
 @using MotorPool.UI.Pages.Shared
 @model IndexModel
 
@@ -11,37 +13,34 @@
 
 <div class="header-with-icon mb-4">
     <h1 class="text-center">Enterprises</h1>
-    @if (User.IsAdmin())
-    {
-        <a asp-page="./Create">
-            <i class="fa-solid fa-plus icon-plus"></i>
-        </a>
-    }
+    <a asp-page="./Create">
+        <i class="fa-solid fa-plus icon-plus"></i>
+    </a>
 </div>
 <div class="table-responsive">
     <table class="table table-hover">
         <thead>
         <tr>
             <th>
-                Name
+                @Html.DisplayNameFor(model => model.Enterprises[0].Name)
             </th>
             <th>
-                City
+                @Html.DisplayNameFor(model => model.Enterprises[0].City)
             </th>
             <th>
-                Street
+                @Html.DisplayNameFor(model => model.Enterprises[0].Street)
             </th>
             <th>
-                VAT
+                @Html.DisplayNameFor(model => model.Enterprises[0].VAT)
             </th>
             <th>
-                Founded on
+                @Html.DisplayNameFor(model => model.Enterprises[0].FoundedOn)
             </th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        @foreach (var enterpriseViewModel in Model.Enterprises)
+        @foreach (EnterpriseViewModel enterpriseViewModel in Model.Enterprises)
         {
             <tr>
                 <td>
@@ -63,7 +62,7 @@
                     @await Html.PartialAsync("_Actions", new ActionsModel
                     {
                         Id = enterpriseViewModel.EnterpriseId,
-                        HasChangeAccess = User.IsAdmin()
+                        HasChangeAccess = User.IsManager()
                     })
                 </td>
             </tr>

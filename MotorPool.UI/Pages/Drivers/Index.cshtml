@@ -1,7 +1,9 @@
 @page
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using MotorPool.Auth
+@using MotorPool.Auth.EndpointFilters
 @using MotorPool.Auth.Manager
+@using MotorPool.Services.Drivers.Models
 @using MotorPool.UI.Pages.Shared
 @model IndexModel
 
@@ -20,19 +22,19 @@
         <thead>
         <tr>
             <th>
-                First name
+                @Html.DisplayNameFor(model => model.Drivers[0].FirstName)
             </th>
             <th>
-                Last name
+                @Html.DisplayNameFor(model => model.Drivers[0].LastName)
             </th>
             <th>
-                Salary
+                @Html.DisplayNameFor(model => model.Drivers[0].Salary)
             </th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        @foreach (var driverViewModel in Model.Drivers)
+        @foreach (DriverViewModel driverViewModel in Model.Drivers)
         {
             <tr>
                 <td>

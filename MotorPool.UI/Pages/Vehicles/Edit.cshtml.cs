@@ -7,7 +7,7 @@ using MotorPool.Services.Vehicles.Services;
 
 namespace MotorPool.UI.Pages.Vehicles;
 
-public class EditModel(VehicleService vehicleService, VehicleBrandService vehicleBrandService, IAuthorizationService authorizationService) : VehicleBrandsSelectListPageModel
+public class EditModel(VehicleActionService vehicleActionService, VehicleQueryService vehicleQueryService, VehicleBrandService vehicleBrandService) : VehicleBrandsSelectListPageModel
 {
 
     [BindProperty]
@@ -17,13 +17,9 @@ public class EditModel(VehicleService vehicleService, VehicleBrandService vehicl
     {
         await PopulateVehicleBrandsDropDownList(vehicleBrandService);
 
-        var foundVehicle = await vehicleService.GetById(id);
+        VehicleViewModel? foundVehicle = await vehicleQueryService.GetById(id);
 
         if (foundVehicle == null) return NotFound();
-
-        var authorizationResult = await authorizationService.AuthorizeAsync(User, foundVehicle, "IsManagerAccessible");
-
-        if (!authorizationResult.Succeeded) return Forbid();
 
         VehicleViewModel = foundVehicle;
 
@@ -34,7 +30,7 @@ public class EditModel(VehicleService vehicleService, VehicleBrandService vehicl
     {
         if (!ModelState.IsValid) return Page();
 
-        await vehicleService.EditAsync(VehicleViewModel);
+        await vehicleActionService.UpdateAsync(VehicleViewModel);
 
         return RedirectToPage("./Index");
     }

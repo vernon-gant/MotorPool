@@ -2,11 +2,11 @@
 
 namespace MotorPool.Services.Drivers.Services;
 
-public interface DriverService
+public interface DriverQueryService
 {
 
     ValueTask<List<DriverViewModel>> GetAllAsync();
 
-    ValueTask<List<DriverViewModel>> GetByManagerIdAsync(int managerId);
+    ValueTask<DriverViewModel> GetByIdAsync(int driverId);
 
 }

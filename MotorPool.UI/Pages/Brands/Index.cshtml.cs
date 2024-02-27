@@ -4,25 +4,20 @@ using Microsoft.EntityFrameworkCore;
 
 using MotorPool.Domain;
 using MotorPool.Persistence;
+using MotorPool.Services.VehicleBrand.Models;
+using MotorPool.Services.VehicleBrand.Services;
 
 namespace MotorPool.UI.Pages.Brands;
 
 [AllowAnonymous]
-public class IndexModel : PageModel
+public class IndexModel(VehicleBrandService vehicleBrandService) : PageModel
 {
 
-    private readonly AppDbContext _context;
-
-    public IndexModel(AppDbContext context)
-    {
-        _context = context;
-    }
-
-    public IList<VehicleBrand> VehicleBrand { get; set; } = default!;
+    public List<VehicleBrandViewModel> VehicleBrand { get; set; } = default!;
 
     public async Task OnGetAsync()
     {
-        VehicleBrand = await _context.VehicleBrands.ToListAsync();
+        VehicleBrand = await vehicleBrandService.GetAllAsync();
     }
 
 }

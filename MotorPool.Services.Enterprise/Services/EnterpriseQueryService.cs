@@ -2,11 +2,11 @@
 
 namespace MotorPool.Services.Enterprise.Services;
 
-public interface EnterpriseService
+public interface EnterpriseQueryService
 {
 
     ValueTask<List<EnterpriseViewModel>> GetAllAsync();
 
-    ValueTask<List<EnterpriseViewModel>> GetAllByManagerIdAsync(int managerId);
+    ValueTask<EnterpriseViewModel?> GetByIdAsync(int enterpriseId);
 
 }

@@ -1,16 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 using MotorPool.Abstractions;
+using MotorPool.Auth.EndpointFilters;
 using MotorPool.Persistence;
 
 namespace MotorPool.Auth.Manager;
 
-public class EnterpriseInResourceIsManagerAccessibleFilter(AppDbContext dbContext) : IEndpointFilter
+public class EnterpriseIsManagerAccessibleFilter(AppDbContext dbContext) : IEndpointFilter
 {
 
     public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
     {
-        EnterpriseOwnedEntity? enterpriseOwnedEntity = context.HttpContext.Request.RouteValues.Values.FirstOrDefault(x => x.GetType().IsAssignableTo(typeof(EnterpriseOwnedEntity))) as EnterpriseOwnedEntity;
+        EnterpriseOwned? enterpriseOwnedEntity = context.HttpContext.Request.RouteValues.Values.FirstOrDefault(x => x.GetType().IsAssignableTo(typeof(EnterpriseOwned))) as EnterpriseOwned;
 
         if (enterpriseOwnedEntity is null) throw new InvalidOperationException("No enterprise owned entity found in the request.");
 

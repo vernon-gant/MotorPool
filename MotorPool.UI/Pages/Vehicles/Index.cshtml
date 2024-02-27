@@ -1,7 +1,9 @@
 @page "{vehicleBrandId:int?}"
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using MotorPool.Auth
+@using MotorPool.Auth.EndpointFilters
 @using MotorPool.Auth.Manager
+@using MotorPool.Services.Vehicles.Models
 @using MotorPool.UI.Pages.Shared
 @model IndexModel
 
@@ -21,27 +23,39 @@
         <thead>
         <tr>
             <th>
-                VIN
+                @Html.DisplayNameFor(model => model.Vehicles[0].CompanyName)
             </th>
             <th>
-                Manufacture year
+                @Html.DisplayNameFor(model => model.Vehicles[0].ModelName)
             </th>
             <th>
-                Manufacture land
+                @Html.DisplayNameFor(model => model.Vehicles[0].MotorVIN)
             </th>
             <th>
-                Current cost
+                @Html.DisplayNameFor(model => model.Vehicles[0].ManufactureYear)
             </th>
             <th>
-                Mileage(km)
+                @Html.DisplayNameFor(model => model.Vehicles[0].ManufactureLand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].Cost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].Mileage)
             </th>
             <th></th>
         </tr>
         </thead>
         <tbody>
-        @foreach (var vehicleViewModel in Model.Vehicles)
+        @foreach (VehicleViewModel vehicleViewModel in Model.Vehicles)
         {
             <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => vehicleViewModel.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => vehicleViewModel.ModelName)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => vehicleViewModel.MotorVIN)
                 </td>

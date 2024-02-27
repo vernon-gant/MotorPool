@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MotorPool.Services.Driver\MotorPool.Services.Driver.csproj" />
+      <ProjectReference Include="..\MotorPool.Services.Enterprise\MotorPool.Services.Enterprise.csproj" />
+      <ProjectReference Include="..\MotorPool.Services.Vehicle\MotorPool.Services.Vehicle.csproj" />
+    </ItemGroup>
+
+</Project>
