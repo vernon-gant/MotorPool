@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace MotorPool.Auth;
+namespace MotorPool.Auth.Manager;
 
 public static class ManagerExtensions
 {

@@ -1,9 +1,12 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
+using MotorPool.Abstractions;
+using MotorPool.Utils.ValidationAttributes;
+
 namespace MotorPool.Services.Vehicles.Models;
 
-public class VehicleDTO
+public class VehicleDTO : EnterpriseOwnedEntity
 {
 
     public int VehicleId { get; set; }
@@ -18,11 +21,12 @@ public class VehicleDTO
     public decimal Cost { get; set; }
 
     [Display(Name = "Manufacture year")]
-    [Range(1900, 2100)]
+    [DateRange(MinYear = 2000)]
     public int ManufactureYear { get; set; }
 
     [Display(Name = "Manufacture land")]
     [Required]
+    [ExistingCounty]
     public string ManufactureLand { get; set; }
 
     [Display(Name = "Mileage (km)")]

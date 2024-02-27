@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 using MotorPool.Auth;
+using MotorPool.Auth.Manager;
 using MotorPool.Services.Drivers.Models;
 using MotorPool.Services.Drivers.Services;
 

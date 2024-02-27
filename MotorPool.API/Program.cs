@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
-using MotorPool.API;
 using MotorPool.Auth;
+using MotorPool.Auth.Manager;
 using MotorPool.Persistence;
 using MotorPool.Services.Drivers;
 using MotorPool.Services.Drivers.Services;
@@ -111,29 +111,27 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-var managerResourcesGroup = app.MapGroup("/").AddEndpointFilter<ManagerExistenceFilter>();
+var managerResourcesGroup = app.MapGroup("/").RequireAuthorization("IsManager").AddEndpointFilter<ManagerExistenceFilter>();
 
 managerResourcesGroup.MapGet("vehicles", async (VehicleService vehicleService, ClaimsPrincipal user) =>
-                     {
-                         var managerId = int.Parse(user.FindFirstValue("ManagerId")!);
+{
+    int managerId = user.GetManagerId();
 
-                         return await vehicleService.GetAllByManagerIdAsync(managerId);
-                     })
-                     .RequireAuthorization("IsManager")
-                     .AddEndpointFilter<ManagerExistenceFilter>();
+    return await vehicleService.GetAllByManagerIdAsync(managerId);
+});
 
 app.MapGet("vehicle-brands", async (VehicleBrandService vehicleBrandService) => await vehicleBrandService.GetAllAsync());
 
 managerResourcesGroup.MapGet("enterprises", async (EnterpriseService enterpriseService, ClaimsPrincipal user) =>
 {
-    var managerId = int.Parse(user.FindFirstValue("ManagerId")!);
+    int managerId = user.GetManagerId();
 
     return await enterpriseService.GetAllByManagerIdAsync(managerId);
 });
 
 managerResourcesGroup.MapGet("drivers", async (DriverService driverService, ClaimsPrincipal principal) =>
 {
-    var managerId = int.Parse(principal.FindFirstValue("ManagerId")!);
+    int managerId = principal.GetManagerId();
 
     return await driverService.GetByManagerIdAsync(managerId);
 });

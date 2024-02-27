@@ -4,14 +4,14 @@ using MotorPool.Services.Drivers.Models;
 using MotorPool.Services.Enterprise.Models;
 using MotorPool.Services.Vehicles.Models;
 
-namespace MotorPool.Auth;
+namespace MotorPool.Auth.Manager;
 
 public class IsManagerAccessibleVehicleHandler : AuthorizationHandler<IsManagerAccessibleRequirement, VehicleViewModel>
 {
 
     protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, IsManagerAccessibleRequirement requirement, VehicleViewModel vehicleViewModel)
     {
-        var managerId = int.Parse(context.User.FindFirst("ManagerId")!.Value);
+        var managerId = context.User.GetManagerId();
 
         if (vehicleViewModel.ManagerIds.Contains(managerId)) context.Succeed(requirement);
         else context.Fail();
@@ -26,7 +26,7 @@ public class IsManagerAccessibleEnterpriseHandler : AuthorizationHandler<IsManag
 
     protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, IsManagerAccessibleRequirement requirement, EnterpriseViewModel enterpriseViewModel)
     {
-        var managerId = int.Parse(context.User.FindFirst("ManagerId")!.Value);
+        var managerId = context.User.GetManagerId();
 
         if (enterpriseViewModel.ManagerIds.Contains(managerId)) context.Succeed(requirement);
         else context.Fail();
@@ -41,7 +41,7 @@ public class IsManagerAccessibleDriverHandler : AuthorizationHandler<IsManagerAc
 
     protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, IsManagerAccessibleRequirement requirement, DriverViewModel driverViewModel)
     {
-        var managerId = int.Parse(context.User.FindFirst("ManagerId")!.Value);
+        var managerId = context.User.GetManagerId();
 
         if (driverViewModel.ManagerIds.Contains(managerId)) context.Succeed(requirement);
         else context.Fail();

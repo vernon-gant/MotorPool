@@ -1,16 +1,14 @@
-﻿using System.Security.Claims;
+﻿using MotorPool.Persistence;
 
-using MotorPool.Persistence;
-
-namespace MotorPool.API;
+namespace MotorPool.Auth.Manager;
 
 public class ManagerExistenceFilter(AppDbContext dbContext) : IEndpointFilter
 {
 
     public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
     {
-        var managerId = context.HttpContext.User.FindFirstValue("ManagerId")!;
-        var manager = await dbContext.Managers.FindAsync(int.Parse(managerId));
+        int managerId = context.HttpContext.User.GetManagerId();
+        Domain.Manager? manager = await dbContext.Managers.FindAsync(managerId);
 
         if (manager is not null) return await next(context);
 

@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
+using MotorPool.Auth.Manager;
+
 namespace MotorPool.Auth;
 
 public static class ServiceCollectionExtension
