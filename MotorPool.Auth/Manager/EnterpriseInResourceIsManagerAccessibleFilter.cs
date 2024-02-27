@@ -16,11 +16,15 @@ public class EnterpriseInResourceIsManagerAccessibleFilter(AppDbContext dbContex
 
         Domain.Manager manager = await dbContext.Managers.FirstAsync(x => x.ManagerId == context.HttpContext.User.GetManagerId());
 
-        if (enterpriseOwnedEntity.EnterpriseId is null) await next(context);
+        if (enterpriseOwnedEntity.EnterpriseId is null) return await next(context);
 
-        if (enterpriseOwnedEntity.EnterpriseId != null && manager.OwnsEnterprise(enterpriseOwnedEntity.EnterpriseId.Value)) await next(context);
-        else context.HttpContext.Response.StatusCode = 403;
+        if (!manager.OwnsEnterprise(enterpriseOwnedEntity.EnterpriseId.Value))
+        {
+            context.HttpContext.Response.StatusCode = 403;
+            return null;
+        }
 
+        return await next(context);
     }
 
 }
