@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-using MotorPool.Auth;
-using MotorPool.Auth.EndpointFilters;
-using MotorPool.Auth.Manager;
+using MotorPool.API.EndpointFilters;
 using MotorPool.Services.Manager;
 using MotorPool.Services.Vehicles.Models;
 using MotorPool.Services.Vehicles.Services;

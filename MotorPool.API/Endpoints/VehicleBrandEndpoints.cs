@@ -1,6 +1,6 @@
 ﻿using MotorPool.Services.VehicleBrand.Services;
 
-namespace MotorPool.API;
+namespace MotorPool.API.Endpoints;
 
 public static class VehicleBrandEndpoints
 {

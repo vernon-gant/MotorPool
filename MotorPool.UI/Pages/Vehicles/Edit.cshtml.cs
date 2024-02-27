@@ -17,7 +17,7 @@ public class EditModel(VehicleActionService vehicleActionService, VehicleQuerySe
     {
         await PopulateVehicleBrandsDropDownList(vehicleBrandService);
 
-        VehicleViewModel? foundVehicle = await vehicleQueryService.GetById(id);
+        VehicleViewModel? foundVehicle = await vehicleQueryService.GetByIdAsync(id);
 
         if (foundVehicle == null) return NotFound();
 

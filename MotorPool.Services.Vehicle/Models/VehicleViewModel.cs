@@ -5,8 +5,9 @@ using MotorPool.Abstractions;
 
 namespace MotorPool.Services.Vehicles.Models;
 
-public class VehicleViewModel : VehicleDTO, ManagersOwned
+public class VehicleViewModel : VehicleDTO
 {
+    public int VehicleId { get; set; }
 
     [Display(Name = "Company name")]
     public required string CompanyName { get; set; }

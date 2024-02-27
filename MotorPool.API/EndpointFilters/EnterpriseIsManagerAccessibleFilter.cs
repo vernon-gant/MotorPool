@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 using MotorPool.Abstractions;
-using MotorPool.Auth.EndpointFilters;
 using MotorPool.Persistence;
 
-namespace MotorPool.Auth.Manager;
+namespace MotorPool.API.EndpointFilters;
 
 public class EnterpriseIsManagerAccessibleFilter(AppDbContext dbContext) : IEndpointFilter
 {

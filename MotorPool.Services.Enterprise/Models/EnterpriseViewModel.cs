@@ -5,7 +5,7 @@ using MotorPool.Abstractions;
 
 namespace MotorPool.Services.Enterprise.Models;
 
-public class EnterpriseViewModel : EnterpriseDTO, ManagersOwned
+public class EnterpriseViewModel : EnterpriseDTO
 {
 
     public int EnterpriseId { get; set; }

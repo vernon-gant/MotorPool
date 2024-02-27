@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace MotorPool.Auth.EndpointFilters;
+namespace MotorPool.API.EndpointFilters;
 
 public static class ManagerExtensions
 {

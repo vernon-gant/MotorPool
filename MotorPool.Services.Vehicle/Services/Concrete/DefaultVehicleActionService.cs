@@ -27,15 +27,11 @@ public class DefaultVehicleActionService(AppDbContext dbContext, IMapper mapper,
         return mapper.Map<VehicleViewModel>(newVehicle);
     }
 
-    public async ValueTask UpdateAsync(VehicleDTO vehicleDto)
+    public async ValueTask UpdateAsync(VehicleViewModel vehicleViewModel)
     {
-        await EnsureVehicleBrandExistsAsync(vehicleDto.VehicleBrandId);
+        await EnsureVehicleBrandExistsAsync(vehicleViewModel.VehicleBrandId);
 
-        Vehicle oldVehicle = await dbContext.Vehicles.FirstAsync(vehicle => vehicle.VehicleId == vehicleDto.VehicleId);
-
-        mapper.Map(vehicleDto, oldVehicle);
-
-        dbContext.Update(oldVehicle);
+        dbContext.Vehicles.Update(mapper.Map<Vehicle>(vehicleViewModel));
 
         await dbContext.SaveChangesAsync();
     }

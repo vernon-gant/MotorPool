@@ -4,7 +4,7 @@ using MotorPool.Abstractions;
 
 namespace MotorPool.Services.Drivers.Models;
 
-public class DriverViewModel : DriverDTO, ManagersOwned
+public class DriverViewModel : DriverDTO
 {
 
     public int DriverId { get; set; }

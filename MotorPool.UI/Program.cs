@@ -1,11 +1,9 @@
 using System.Globalization;
 
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
 
 using MotorPool.Auth;
-using MotorPool.Auth.Manager;
 using MotorPool.Persistence;
 using MotorPool.Services.Drivers;
 using MotorPool.Services.Enterprise;

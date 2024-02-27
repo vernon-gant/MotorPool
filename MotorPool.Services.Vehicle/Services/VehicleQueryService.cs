@@ -7,6 +7,6 @@ public interface VehicleQueryService
 
     ValueTask<List<VehicleViewModel>> GetAllAsync();
 
-    ValueTask<VehicleViewModel?> GetById(int vehicleId);
+    ValueTask<VehicleViewModel?> GetByIdAsync(int vehicleId);
 
 }

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using MotorPool.Auth;
 
-namespace MotorPool.API;
+namespace MotorPool.API.Endpoints;
 
 public static class AuthEndpoints
 {

@@ -1,4 +1,4 @@
-﻿using MotorPool.Auth.EndpointFilters;
+﻿using MotorPool.API.EndpointFilters;
 using MotorPool.Persistence;
 
 namespace MotorPool.Auth.Manager;

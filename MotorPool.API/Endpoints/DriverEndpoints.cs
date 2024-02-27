@@ -1,12 +1,11 @@
 ﻿using System.Security.Claims;
 
-using MotorPool.Auth.EndpointFilters;
-using MotorPool.Auth.Manager;
+using MotorPool.API.EndpointFilters;
 using MotorPool.Services.Drivers.Models;
 using MotorPool.Services.Drivers.Services;
 using MotorPool.Services.Manager;
 
-namespace MotorPool.API;
+namespace MotorPool.API.Endpoints;
 
 public static class DriverEndpoints
 {

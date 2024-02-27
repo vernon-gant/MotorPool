@@ -8,8 +8,6 @@ namespace MotorPool.Services.Vehicles.Models;
 public class VehicleDTO : EnterpriseOwned
 {
 
-    public int VehicleId { get; set; }
-
     [MinLength(17)]
     [MaxLength(17)]
     [Display(Name = "VIN")]

@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 using MotorPool.API;
+using MotorPool.API.Endpoints;
 using MotorPool.Auth;
 using MotorPool.Auth.Manager;
 using MotorPool.Persistence;
