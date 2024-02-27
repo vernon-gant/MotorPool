@@ -12,21 +12,20 @@ public static class DriverEndpoints
 
     public static void MapDriverEndpoints(this IEndpointRouteBuilder managerResourcesGroupBuilder)
     {
-        RouteGroupBuilder driversGroupBuilder = managerResourcesGroupBuilder.MapGroup("/drivers");
+        RouteGroupBuilder driversGroupBuilder = managerResourcesGroupBuilder.MapGroup("drivers");
 
-        driversGroupBuilder.MapGetAll();
+        driversGroupBuilder.MapGet("", GetAll)
+                          .WithName("GetAllDrivers")
+                          .Produces<List<DriverViewModel>>();
     }
 
-    private static void MapGetAll(this IEndpointRouteBuilder driversGroupBuilder)
+    private static async Task<IResult> GetAll(DriverQueryService driverService, ClaimsPrincipal principal)
     {
-        driversGroupBuilder.MapGet("", async (DriverQueryService driverService, ClaimsPrincipal principal) =>
-        {
-            List<DriverViewModel> drivers = await driverService.GetAllAsync();
+        List<DriverViewModel> drivers = await driverService.GetAllAsync();
 
-            int managerId = principal.GetManagerId();
+        int managerId = principal.GetManagerId();
 
-            return drivers.ForManager(managerId);
-        });
+        return Results.Ok(drivers.ForManager(managerId));
     }
 
 }

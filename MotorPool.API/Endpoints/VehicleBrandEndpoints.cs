@@ -1,4 +1,5 @@
-﻿using MotorPool.Services.VehicleBrand.Services;
+﻿using MotorPool.Services.VehicleBrand.Models;
+using MotorPool.Services.VehicleBrand.Services;
 
 namespace MotorPool.API.Endpoints;
 
@@ -7,14 +8,13 @@ public static class VehicleBrandEndpoints
 
     public static void MapVehicleBrandEndpoints(this WebApplication app)
     {
-        RouteGroupBuilder vehicleBrandsGroupBuilder = app.MapGroup("/vehicle-brands");
+        RouteGroupBuilder vehicleBrandsGroupBuilder = app.MapGroup("vehicle-brands");
 
-        vehicleBrandsGroupBuilder.MapGetAll();
+        vehicleBrandsGroupBuilder.MapGet("", GetAll)
+                                 .WithName("GetAllVehicleBrands")
+                                 .Produces<List<VehicleBrandViewModel>>();
     }
 
-    private static void MapGetAll(this IEndpointRouteBuilder vehiclesGroupBuilder)
-    {
-        vehiclesGroupBuilder.MapGet("", async (VehicleBrandService vehicleBrandService) => await vehicleBrandService.GetAllAsync());
-    }
+    private static async Task<IResult> GetAll(VehicleBrandService vehicleBrandService) => Results.Ok(await vehicleBrandService.GetAllAsync());
 
 }
