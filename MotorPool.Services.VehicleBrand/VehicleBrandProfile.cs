@@ -12,7 +12,7 @@ public class VehicleBrandProfile : Profile
     {
         CreateMap<VehicleBrandDTO, Domain.VehicleBrand>();
         CreateMap<Domain.VehicleBrand, VehicleBrandViewModel>()
-            .ForMember(viewModel => viewModel.Type, opt => opt.MapFrom(vehicleBrand => vehicleBrand.Type.GetDisplayName()));
+            .ForMember(viewModel => viewModel.Type, opt => opt.MapFrom(vehicleBrand => vehicleBrand.Type));
     }
 
 }

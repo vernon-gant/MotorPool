@@ -11,6 +11,7 @@ public class VehicleDTO : EnterpriseOwned
     [MinLength(17)]
     [MaxLength(17)]
     [Display(Name = "VIN")]
+    [Required]
     public string MotorVIN { get; set; }
 
     [Required]
@@ -19,6 +20,7 @@ public class VehicleDTO : EnterpriseOwned
 
     [Display(Name = "Manufacture year")]
     [DateRange(MinYear = 2000)]
+    [Required]
     public int ManufactureYear { get; set; }
 
     [Display(Name = "Manufacture land")]
@@ -31,6 +33,7 @@ public class VehicleDTO : EnterpriseOwned
     public decimal Mileage { get; set; }
 
     [Display(Name = "Vehicle brand")]
+    [Required]
     public int VehicleBrandId { get; set; }
 
     public int? EnterpriseId { get; set; }

@@ -19,6 +19,7 @@ builder.Services.AddVehicleServices();
 builder.Services.AddVehicleBrandServices();
 builder.Services.AddEnterpriseServices();
 builder.Services.AddDriverServices();
+builder.Services.AddAppIdentity(connectionString);
 builder.Services
        .AddAuthentication(options =>
        {
@@ -30,8 +31,7 @@ builder.Services
            options.LoginPath = "/Identity/Account/Login";
            options.AccessDeniedPath = "/Identity/Account/AccessDenied";
        });
-builder.Services.AddAuthorization(connectionString);
-
+builder.Services.AddAppAuthorization();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 var mvcBuilder = builder.Services.AddRazorPages(options =>

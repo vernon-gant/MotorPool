@@ -9,9 +9,9 @@ public class DateRangeAttribute : ValidationAttribute
 
     public override bool IsValid(object? value)
     {
-        if (value is not DateTime date) return false;
+        if (value is not int year) return false;
 
-        return date.Year >= MinYear && date.Year <= DateTime.Now.Year;
+        return year >= MinYear && year <= DateTime.Now.Year;
     }
 
 }

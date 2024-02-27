@@ -12,8 +12,7 @@ public class IsManagerAccessibleVehicleFilter(VehicleQueryService vehicleQuerySe
 
         if (currentVehicle.ManagerIds.Contains(context.HttpContext.User.GetManagerId())) return await next(context);
 
-        context.HttpContext.Response.StatusCode = 403;
-
+        context.HttpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
         return null;
     }
 

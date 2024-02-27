@@ -24,11 +24,13 @@ public static class VehicleEndpoints
                             .AddEndpointFilter<IsManagerAccessibleVehicleFilter>()
                             .WithName("GetVehicleById")
                             .Produces<VehicleViewModel>()
-                            .Produces(StatusCodes.Status404NotFound);
+                            .Produces(StatusCodes.Status404NotFound)
+                            .Produces(StatusCodes.Status403Forbidden);
 
         vehiclesGroupBuilder.MapPost("", Create)
+                            .WithParameterValidation()
                             .WithName("CreateVehicle")
-                            .Accepts<VehicleDTO>("Vehicle data")
+                            .AddEndpointFilter<EnterpriseIsManagerAccessibleFilter>()
                             .Produces<VehicleViewModel>()
                             .Produces(StatusCodes.Status400BadRequest)
                             .Produces(StatusCodes.Status201Created);
@@ -37,15 +39,18 @@ public static class VehicleEndpoints
                             .AddEndpointFilter<VehicleExistsFilter>()
                             .AddEndpointFilter<IsManagerAccessibleVehicleFilter>()
                             .WithName("UpdateVehicle")
-                            .Accepts<VehicleDTO>("Vehicle data")
                             .Produces(StatusCodes.Status400BadRequest)
-                            .Produces(StatusCodes.Status204NoContent);
+                            .Produces(StatusCodes.Status204NoContent)
+                            .Produces(StatusCodes.Status404NotFound)
+                            .Produces(StatusCodes.Status403Forbidden);
 
         vehiclesGroupBuilder.MapDelete("{vehicleId:int}", Delete)
                             .AddEndpointFilter<VehicleExistsFilter>()
                             .AddEndpointFilter<IsManagerAccessibleVehicleFilter>()
                             .WithName("DeleteVehicle")
-                            .Produces(StatusCodes.Status204NoContent);
+                            .Produces(StatusCodes.Status204NoContent)
+                            .Produces(StatusCodes.Status404NotFound)
+                            .Produces(StatusCodes.Status403Forbidden);
     }
 
     private static async Task<IResult> GetAll(VehicleQueryService vehicleQueryService, ClaimsPrincipal user)
@@ -73,6 +78,10 @@ public static class VehicleEndpoints
         catch (VehicleBrandNotFoundException)
         {
             return Results.Problem(statusCode: 400, title: "Vehicle brand not found");
+        }
+        catch (VINAlreadyExistsException)
+        {
+            return Results.Problem(statusCode: 400, title: "VIN already exists");
         }
     }
 

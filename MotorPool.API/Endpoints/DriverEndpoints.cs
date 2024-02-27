@@ -19,7 +19,7 @@ public static class DriverEndpoints
 
     private static void MapGetAll(this IEndpointRouteBuilder driversGroupBuilder)
     {
-        driversGroupBuilder.MapGet("drivers", async (DriverQueryService driverService, ClaimsPrincipal principal) =>
+        driversGroupBuilder.MapGet("", async (DriverQueryService driverService, ClaimsPrincipal principal) =>
         {
             List<DriverViewModel> drivers = await driverService.GetAllAsync();
 

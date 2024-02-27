@@ -16,6 +16,8 @@ public class DefaultVehicleQueryService(AppDbContext dbContext, IMapper mapper) 
                                          .AsNoTracking()
                                          .Include(vehicle => vehicle.VehicleBrand)
                                          .Include(vehicle => vehicle.DriverVehicles)
+                                         .Include(vehicle => vehicle.Enterprise)
+                                         .Include(vehicle => vehicle.Enterprise!.ManagerLinks)
                                          .ToListAsync();
 
         return mapper.Map<List<VehicleViewModel>>(rawVehicles);

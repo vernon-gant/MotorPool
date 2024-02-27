@@ -19,7 +19,7 @@ public static class EnterpriseEndpoints
 
     private static void MapGetAll(this IEndpointRouteBuilder enterprisesGroupBuilder)
     {
-        enterprisesGroupBuilder.MapGet("enterprises", async (EnterpriseQueryService enterpriseService, ClaimsPrincipal user) =>
+        enterprisesGroupBuilder.MapGet("", async (EnterpriseQueryService enterpriseService, ClaimsPrincipal user) =>
         {
             int managerId = user.GetManagerId();
 

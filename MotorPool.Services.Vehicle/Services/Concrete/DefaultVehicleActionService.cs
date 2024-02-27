@@ -11,12 +11,14 @@ using MotorPool.Services.Vehicles.Models;
 
 namespace MotorPool.Services.Vehicles.Services.Concrete;
 
-public class DefaultVehicleActionService(AppDbContext dbContext, IMapper mapper, VehicleBrandService vehicleBrandService) : VehicleActionService
+public class DefaultVehicleActionService(AppDbContext dbContext, IMapper mapper, VehicleQueryService vehicleQueryService, VehicleBrandService vehicleBrandService) : VehicleActionService
 {
 
     public async ValueTask<VehicleViewModel> CreateAsync(VehicleDTO vehicleDto)
     {
         await EnsureVehicleBrandExistsAsync(vehicleDto.VehicleBrandId);
+
+        if (await VINExists(vehicleDto.MotorVIN)) throw new VINAlreadyExistsException("VIN already exists");
 
         Vehicle newVehicle = mapper.Map<Vehicle>(vehicleDto);
 
@@ -24,8 +26,10 @@ public class DefaultVehicleActionService(AppDbContext dbContext, IMapper mapper,
 
         await dbContext.SaveChangesAsync();
 
-        return mapper.Map<VehicleViewModel>(newVehicle);
+        return await vehicleQueryService.GetByIdAsync(newVehicle.VehicleId)!;
     }
+
+    private async ValueTask<bool> VINExists(string VIN) => await dbContext.Vehicles.AnyAsync(vehicle => vehicle.MotorVIN == VIN);
 
     public async ValueTask UpdateAsync(VehicleViewModel vehicleViewModel)
     {
@@ -38,7 +42,7 @@ public class DefaultVehicleActionService(AppDbContext dbContext, IMapper mapper,
 
     public async ValueTask DeleteAsync(int vehicleId)
     {
-        Vehicle vehicle = await dbContext.Vehicles.FirstAsync(vehicle => vehicle.VehicleId == vehicleId);
+        Vehicle vehicle = await dbContext.Vehicles.FindAsync(vehicleId) ?? throw new VehicleNotFoundException("Vehicle not found");
 
         dbContext.Vehicles.Remove(vehicle);
 

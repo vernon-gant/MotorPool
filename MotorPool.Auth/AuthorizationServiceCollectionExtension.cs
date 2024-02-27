@@ -2,14 +2,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-using MotorPool.Auth.Manager;
-
 namespace MotorPool.Auth;
 
 public static class AuthorizationServiceCollectionExtension
 {
 
-    public static void AddAuthorization(this IServiceCollection services, string connectionString)
+    public static void AddAppIdentity(this IServiceCollection services, string connectionString)
     {
         services.AddIdentity<ApplicationUser, IdentityRole>(options =>
                 {
@@ -25,15 +23,13 @@ public static class AuthorizationServiceCollectionExtension
                 .AddDefaultTokenProviders();
 
         services.AddDbContext<AuthDbContext>(options => options.UseSqlServer(connectionString));
+    }
 
+    public static void AddAppAuthorization(this IServiceCollection services)
+    {
         services.AddAuthorization(options =>
         {
             options.AddPolicy("IsManager", policy => policy.RequireClaim("ManagerId"));
-
-            options.DefaultPolicy = new AuthorizationPolicyBuilder()
-                                    .RequireAuthenticatedUser()
-                                    .RequireClaim("ManagerId")
-                                    .Build();
         });
     }
 

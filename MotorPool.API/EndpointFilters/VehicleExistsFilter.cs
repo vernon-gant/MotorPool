@@ -18,8 +18,7 @@ public class VehicleExistsFilter(VehicleQueryService vehicleQueryService) : IEnd
             return await next(context);
         }
 
-        context.HttpContext.Response.StatusCode = 404;
-
+        context.HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
         return null;
     }
 

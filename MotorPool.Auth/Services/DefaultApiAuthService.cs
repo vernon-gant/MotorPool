@@ -5,14 +5,14 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
-namespace MotorPool.Auth;
+namespace MotorPool.Auth.Services;
 
 public class DefaultApiAuthService(UserManager<ApplicationUser> userManager, JWTConfig jwtConfig) : ApiAuthService
 {
 
     public async ValueTask<AuthResult> LoginAsync(LoginDTO loginDTO)
     {
-        var user = await userManager.FindByEmailAsync(loginDTO.Email);
+        ApplicationUser? user = await userManager.FindByEmailAsync(loginDTO.Email);
 
         if (user == null) return AuthResult.Failure("User not found.");
 
@@ -24,7 +24,7 @@ public class DefaultApiAuthService(UserManager<ApplicationUser> userManager, JWT
             new Claim(ClaimTypes.Name, user.UserName!),
             new Claim(ClaimTypes.Email, user.Email!)
         };
-        var userClaims = await userManager.GetClaimsAsync(user);
+        IList<Claim> userClaims = await userManager.GetClaimsAsync(user);
         claims.AddRange(userClaims);
 
         SymmetricSecurityKey key = new (Encoding.UTF8.GetBytes(jwtConfig.Key));
@@ -39,13 +39,13 @@ public class DefaultApiAuthService(UserManager<ApplicationUser> userManager, JWT
     {
         if (registerDTO.Password != registerDTO.ConfirmPassword) return AuthResult.Failure("Passwords do not match.");
 
-        var user = new ApplicationUser
+        ApplicationUser user = new ApplicationUser
         {
             Email = registerDTO.Email,
             UserName = registerDTO.UserName
         };
 
-        var result = await userManager.CreateAsync(user, registerDTO.Password);
+        IdentityResult result = await userManager.CreateAsync(user, registerDTO.Password);
 
         if (!result.Succeeded) return AuthResult.Failure(result.Errors.Select(identityError => identityError.Description).First());
 
@@ -54,11 +54,11 @@ public class DefaultApiAuthService(UserManager<ApplicationUser> userManager, JWT
 
     public async ValueTask<UserViewModel> GetUserAsync(string userId)
     {
-        var user = (await userManager.FindByIdAsync(userId))!;
+        ApplicationUser user = (await userManager.FindByIdAsync(userId))!;
 
-        var claims = await userManager.GetClaimsAsync(user);
+        IList<Claim> claims = await userManager.GetClaimsAsync(user);
 
-        var managerId = claims.FirstOrDefault(claim => claim.Type == "ManagerId")?.Value;
+        string? managerId = claims.FirstOrDefault(claim => claim.Type == "ManagerId")?.Value;
 
         return new UserViewModel
         {

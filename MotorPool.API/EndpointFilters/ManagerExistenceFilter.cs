@@ -1,7 +1,6 @@
-﻿using MotorPool.API.EndpointFilters;
-using MotorPool.Persistence;
+﻿using MotorPool.Persistence;
 
-namespace MotorPool.Auth.Manager;
+namespace MotorPool.API.EndpointFilters;
 
 public class ManagerExistenceFilter(AppDbContext dbContext) : IEndpointFilter
 {
@@ -13,8 +12,7 @@ public class ManagerExistenceFilter(AppDbContext dbContext) : IEndpointFilter
 
         if (manager is not null) return await next(context);
 
-        context.HttpContext.Response.StatusCode = 403;
-
+        context.HttpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
         return null;
     }
 

@@ -1,30 +1,20 @@
-using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
-using MotorPool.API;
+using MotorPool.API.EndpointFilters;
 using MotorPool.API.Endpoints;
 using MotorPool.Auth;
-using MotorPool.Auth.Manager;
+using MotorPool.Auth.Services;
 using MotorPool.Persistence;
 using MotorPool.Services.Drivers;
-using MotorPool.Services.Drivers.Services;
 using MotorPool.Services.Enterprise;
-using MotorPool.Services.Enterprise.Models;
-using MotorPool.Services.Enterprise.Services;
-using MotorPool.Services.Manager;
 using MotorPool.Services.VehicleBrand;
-using MotorPool.Services.VehicleBrand.Services;
 using MotorPool.Services.Vehicles;
-using MotorPool.Services.Vehicles.Exceptions;
-using MotorPool.Services.Vehicles.Models;
-using MotorPool.Services.Vehicles.Services;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -39,21 +29,31 @@ builder.Services.AddVehicleServices();
 builder.Services.AddVehicleBrandServices();
 builder.Services.AddEnterpriseServices();
 builder.Services.AddDriverServices();
-builder.Services.AddAuthentication(options => {
+builder.Services.AddAppIdentity(connectionString);
+builder.Services
+       .AddAuthentication(options =>
+       {
            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-       }).AddJwtBearer(options => { options.TokenValidationParameters = new TokenValidationParameters {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig.Key)),
-        ValidIssuer = jwtConfig.Issuer,
-        ValidAudience = jwtConfig.Audience,
-        ValidateIssuer = false,
-        ValidateAudience = false
-    }; });
-builder.Services.AddAuthorization(connectionString);
+       })
+       .AddJwtBearer(options =>
+       {
+           options.TokenValidationParameters = new TokenValidationParameters
+           {
+               ValidateIssuerSigningKey = true,
+               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig.Key)),
+               ValidIssuer = jwtConfig.Issuer,
+               ValidAudience = jwtConfig.Audience,
+               ValidateIssuer = false,
+               ValidateAudience = false
+           };
+       });
+builder.Services.AddAppAuthorization();
+
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options => {
+builder.Services.AddSwaggerGen(options =>
+{
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
 
     OpenApiSecurityScheme jwtSecurityScheme = new ()
@@ -80,10 +80,11 @@ builder.Services.AddSwaggerGen(options => {
     });
 });
 builder.Services.AddProblemDetails();
-builder.Services.ConfigureHttpJsonOptions(o => {
-    o.SerializerOptions.AllowTrailingCommas = true;
-    o.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-    o.SerializerOptions.PropertyNameCaseInsensitive = true;
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.AllowTrailingCommas = true;
+    options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    options.SerializerOptions.PropertyNameCaseInsensitive = true;
 });
 
 WebApplication app = builder.Build();
