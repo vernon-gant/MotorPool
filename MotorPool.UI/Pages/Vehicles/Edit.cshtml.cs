@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using MotorPool.Services.VehicleBrand.Services;
@@ -30,7 +29,7 @@ public class EditModel(VehicleActionService vehicleActionService, VehicleQuerySe
     {
         if (!ModelState.IsValid) return Page();
 
-        await vehicleActionService.UpdateAsync(VehicleViewModel);
+        await vehicleActionService.UpdateAsync(VehicleViewModel, VehicleViewModel.VehicleId);
 
         return RedirectToPage("./Index");
     }
