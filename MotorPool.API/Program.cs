@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using MotorPool.API.EndpointFilters;
 using MotorPool.API.Endpoints;
 using MotorPool.Auth;
+using MotorPool.Auth.Middleware;
 using MotorPool.Auth.Services;
 using MotorPool.Persistence;
 using MotorPool.Services.Drivers;
@@ -95,6 +96,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseAuthentication();
+app.UseUnauthorizedOnNotManagerAccess();
+app.UseAuthorization();
 
 app.MapVehicleBrandEndpoints();
 
