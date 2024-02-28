@@ -1,4 +1,5 @@
-﻿using MotorPool.Services.Vehicles.Models;
+﻿using MotorPool.Services.Manager;
+using MotorPool.Services.Vehicles.Models;
 
 namespace MotorPool.API.EndpointFilters;
 

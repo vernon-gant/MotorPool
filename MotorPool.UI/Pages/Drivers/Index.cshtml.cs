@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-using MotorPool.API.EndpointFilters;
 using MotorPool.Auth;
 using MotorPool.Services.Drivers.Models;
 using MotorPool.Services.Drivers.Services;
+using MotorPool.Services.Manager;
 
 namespace MotorPool.UI.Pages.Drivers;
 

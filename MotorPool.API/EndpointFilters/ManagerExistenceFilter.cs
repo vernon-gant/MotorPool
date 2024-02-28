@@ -1,4 +1,5 @@
 ﻿using MotorPool.Persistence;
+using MotorPool.Services.Manager;
 
 namespace MotorPool.API.EndpointFilters;
 
