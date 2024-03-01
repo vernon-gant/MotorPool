@@ -5,13 +5,13 @@ namespace MotorPool.DatabaseSeeder;
 public interface EnterpriseDataGenerator
 {
 
-    List<Vehicle> GenerateVehicles(int count, int enterpriseId);
+    List<Vehicle> GenerateVehicles(int count, int enterpriseId, List<int> vehicleBrandIds);
 
     List<Driver> GenerateDrivers(int count, int enterpriseId);
 
 }
 
-public class RandomEnterpriseDataGenerator(MotorPoolRandomizer randomizer, List<int> vehicleBrandIds) : EnterpriseDataGenerator
+public class RandomEnterpriseDataGenerator(MotorPoolRandomizer randomizer) : EnterpriseDataGenerator
 {
 
     private readonly List<string> COUNTRIES =
@@ -267,9 +267,12 @@ public class RandomEnterpriseDataGenerator(MotorPoolRandomizer randomizer, List<
         "Perez"
     ];
 
-    public List<Vehicle> GenerateVehicles(int count, int enterpriseId)
+    public List<Vehicle> GenerateVehicles(int count, int enterpriseId, List<int> vehicleBrandIds)
     {
         List<Vehicle> vehicles = new ();
+
+        Console.WriteLine("----------------------------------------------------");
+        Console.WriteLine($"Generating {count} vehicles for enterprise {enterpriseId}...\n");
 
         for (int i = 0; i < count; i++)
         {
@@ -284,7 +287,11 @@ public class RandomEnterpriseDataGenerator(MotorPoolRandomizer randomizer, List<
                 VehicleBrandId = vehicleBrandIds[randomizer.FromRange(0, vehicleBrandIds.Count - 1)]
             };
             vehicles.Add(vehicle);
+            Console.WriteLine($"Generated vehicle {vehicle.MotorVIN}");
         }
+
+        Console.WriteLine("\nVehicles generated successfully!");
+        Console.WriteLine("-".PadRight(50, '-') + "\n\n");
 
         return vehicles;
     }
@@ -292,6 +299,9 @@ public class RandomEnterpriseDataGenerator(MotorPoolRandomizer randomizer, List<
     public List<Driver> GenerateDrivers(int count, int enterpriseId)
     {
         List<Driver> drivers = new ();
+
+        Console.WriteLine("----------------------------------------------------");
+        Console.WriteLine($"Generating {count} drivers for enterprise {enterpriseId}...\n");
 
         for (int i = 0; i < count; i++)
         {
@@ -303,19 +313,13 @@ public class RandomEnterpriseDataGenerator(MotorPoolRandomizer randomizer, List<
                 EnterpriseId = enterpriseId
             };
             drivers.Add(driver);
+            Console.WriteLine($"Generated driver {driver.FirstName} {driver.LastName}");
         }
 
+        Console.WriteLine("\nDrivers generated successfully!");
+        Console.WriteLine("-".PadRight(50, '-') + "\n\n");
+
         return drivers;
-    }
-
-    public void AddDriversToVehicles(List<Driver> drivers, List<Vehicle> vehicles)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void AddActiveDriversToVehicles(List<Driver> drivers, List<Vehicle> vehicles, List<DriverVehicle> driverVehicles)
-    {
-        throw new NotImplementedException();
     }
 
 }

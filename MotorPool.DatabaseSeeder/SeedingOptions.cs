@@ -6,7 +6,7 @@ public class SeedingOptions
 {
 
     [Option('e', "enterprise-ids", Required = true, HelpText = "The ids of the enterprises where vehicles and drivers will be seeded.")]
-    public List<int> EnterpriseIds { get; set; } = new();
+    public IEnumerable<int> EnterpriseIds { get; set; } = Enumerable.Empty<int>();
 
     [Option('v', "vehicles-per-enterprise", Required = true, HelpText = "The number of vehicles to seed per enterprise.")]
     public int VehiclesPerEnterprise { get; set; }
