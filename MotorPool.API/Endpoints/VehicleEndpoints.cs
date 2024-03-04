@@ -4,6 +4,7 @@ using AutoMapper;
 
 using MotorPool.API.EndpointFilters;
 using MotorPool.Services.Manager;
+using MotorPool.Services.Utils;
 using MotorPool.Services.Vehicles.Exceptions;
 using MotorPool.Services.Vehicles.Models;
 using MotorPool.Services.Vehicles.Services;
@@ -56,13 +57,11 @@ public static class VehicleEndpoints
                             .Produces(StatusCodes.Status403Forbidden);
     }
 
-    private static async Task<IResult> GetAll(VehicleQueryService vehicleQueryService, ClaimsPrincipal user)
+    private static async Task<IResult> GetAll(VehicleQueryService vehicleQueryService, ClaimsPrincipal user, [AsParameters] PageOptionsDTO pageOptionsDto)
     {
         int managerId = user.GetManagerId();
 
-        List<VehicleViewModel> vehicles = await vehicleQueryService.GetAllAsync();
-
-        return Results.Ok(vehicles);
+        return Results.Ok(await vehicleQueryService.GetAllAsync(managerId, pageOptionsDto));
     }
 
     private static Task<IResult> GetById(int vehicleId, HttpContext httpContext)

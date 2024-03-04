@@ -1,11 +1,12 @@
-﻿using MotorPool.Services.Vehicles.Models;
+﻿using MotorPool.Services.Utils;
+using MotorPool.Services.Vehicles.Models;
 
 namespace MotorPool.Services.Vehicles.Services;
 
 public interface VehicleQueryService
 {
 
-    ValueTask<List<VehicleViewModel>> GetAllAsync();
+    ValueTask<PagedViewModel<VehicleViewModel>> GetAllAsync(int managerId, PageOptions pageOptions);
 
     ValueTask<VehicleViewModel?> GetByIdAsync(int vehicleId);
 

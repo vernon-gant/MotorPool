@@ -32,7 +32,7 @@ public class DefaultDriverQueryService(AppDbContext dbContext, IMapper mapper) :
 
         return new ()
         {
-            PagesAfter = managerDriversCount / pageOptions.ElementsPerPage - pageOptions.PageNumber - 1,
+            PagesAfter = pageOptions.GetPagesAfter(managerDriversCount),
             Elements = pagedDriverModels
         };
     }
