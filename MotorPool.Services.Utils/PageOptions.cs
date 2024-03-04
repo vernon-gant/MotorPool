@@ -11,6 +11,8 @@ public class PageOptionsDTO
     [NonNegative(CanBeZero = false)]
     public int? ElementsPerPage { get; set; }
 
+    public bool IsEmpty => PageNumber == null && ElementsPerPage == null;
+
     public static implicit operator PageOptions(PageOptionsDTO dto)
     {
         return new ()

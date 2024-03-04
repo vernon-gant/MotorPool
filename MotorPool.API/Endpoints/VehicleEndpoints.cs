@@ -63,6 +63,8 @@ public static class VehicleEndpoints
     {
         int managerId = user.GetManagerId();
 
+        if (pageOptionsDto.IsEmpty) return Results.Ok(await vehicleQueryService.GetAllAsync(managerId));
+
         return Results.Ok(await vehicleQueryService.GetAllAsync(managerId, pageOptionsDto));
     }
 

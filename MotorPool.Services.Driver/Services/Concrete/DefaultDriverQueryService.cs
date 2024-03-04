@@ -14,14 +14,17 @@ namespace MotorPool.Services.Drivers.Services.Concrete;
 public class DefaultDriverQueryService(AppDbContext dbContext, IMapper mapper) : DriverQueryService
 {
 
+    public async ValueTask<List<DriverViewModel>> GetAllAsync(int managerId)
+    {
+        return await DriversWithIncludesQuery()
+                     .ForManager(managerId)
+                     .Select(driver => mapper.Map<DriverViewModel>(driver))
+                     .ToListAsync();
+    }
+
     public async ValueTask<PagedViewModel<DriverViewModel>> GetAllAsync(int managerId, PageOptions pageOptions)
     {
-        IQueryable<Driver> managerDriversQuery = dbContext.Drivers
-                                                      .AsNoTracking()
-                                                      .Include(driver => driver.DriverVehicles)
-                                                      .Include(driver => driver.Enterprise)
-                                                      .Include(driver => driver.Enterprise!.ManagerLinks)
-                                                      .ForManager(managerId);
+        IQueryable<Driver> managerDriversQuery = DriversWithIncludesQuery().ForManager(managerId);
 
         int managerDriversCount = await managerDriversQuery.CountAsync();
 
@@ -35,15 +38,15 @@ public class DefaultDriverQueryService(AppDbContext dbContext, IMapper mapper) :
 
     public async ValueTask<DriverViewModel> GetByIdAsync(int driverId)
     {
-        Driver? driver = await dbContext.Drivers
-                                        .AsNoTracking()
-                                        .Include(driver => driver.DriverVehicles)
-                                        .Include(driver => driver.Enterprise)
-                                        .Include(driver => driver.Enterprise!.ManagerLinks)
-                                        .Include(driver => driver.DriverVehicles)
-                                        .FirstOrDefaultAsync(driver => driver.DriverId == driverId);
+        Driver? driver = await DriversWithIncludesQuery().FirstOrDefaultAsync(driver => driver.DriverId == driverId);
 
         return mapper.Map<DriverViewModel>(driver);
     }
+
+    private IQueryable<Driver> DriversWithIncludesQuery() => dbContext.Drivers
+                                                                      .AsNoTracking()
+                                                                      .Include(driver => driver.DriverVehicles)
+                                                                      .Include(driver => driver.Enterprise)
+                                                                      .Include(driver => driver.Enterprise!.ManagerLinks);
 
 }

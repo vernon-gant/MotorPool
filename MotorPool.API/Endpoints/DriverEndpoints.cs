@@ -25,6 +25,8 @@ public static class DriverEndpoints
     {
         int managerId = principal.GetManagerId();
 
+        if (pageOptions.IsEmpty) return Results.Ok(await driverService.GetAllAsync(managerId));
+
         return Results.Ok(await driverService.GetAllAsync(managerId, pageOptions));
     }
 
