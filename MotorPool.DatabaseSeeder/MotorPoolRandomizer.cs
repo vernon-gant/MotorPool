@@ -40,7 +40,7 @@ public class PseudoMotorPoolRandomizer : MotorPoolRandomizer
 
     public List<T> GetSample<T>(List<T> collection)
     {
-        int sampleSize = FromRange(1, collection.Count - 1);
+        int sampleSize = collection.Count < 1000 ? FromRange(1, collection.Count - 1) : FromRange(1, 500);
         bool[] combination = Combinatorics.GenerateCombination(collection.Count, sampleSize);
 
         return combination.Select((result, index) => (result, index))

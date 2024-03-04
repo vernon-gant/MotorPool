@@ -23,8 +23,6 @@ public class RandomRelationsGenerator(MotorPoolRandomizer randomizer) : Relation
         {
             foreach (Driver driver in randomizer.GetSample(drivers))
             {
-                Console.WriteLine($"Added relation between vehicle {vehicle.MotorVIN} and driver {driver.FirstName} {driver.LastName}");
-
                 DriverVehicle newRelation = new ()
                 {
                     VehicleId = vehicle.VehicleId,

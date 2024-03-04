@@ -287,7 +287,6 @@ public class RandomEnterpriseDataGenerator(MotorPoolRandomizer randomizer) : Ent
                 VehicleBrandId = vehicleBrandIds[randomizer.FromRange(0, vehicleBrandIds.Count - 1)]
             };
             vehicles.Add(vehicle);
-            Console.WriteLine($"Generated vehicle {vehicle.MotorVIN}");
         }
 
         Console.WriteLine("\nVehicles generated successfully!");
@@ -313,7 +312,6 @@ public class RandomEnterpriseDataGenerator(MotorPoolRandomizer randomizer) : Ent
                 EnterpriseId = enterpriseId
             };
             drivers.Add(driver);
-            Console.WriteLine($"Generated driver {driver.FirstName} {driver.LastName}");
         }
 
         Console.WriteLine("\nDrivers generated successfully!");
