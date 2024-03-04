@@ -5,6 +5,6 @@ public class PagedViewModel<T> where T : class
 
     public required int PagesAfter { get; init; }
 
-    public required IEnumerable<T> Elements { get; init; }
+    public required IList<T> Elements { get; init; }
 
 }
