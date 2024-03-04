@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.Manager"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.DatabaseSeeder", "MotorPool.DatabaseSeeder\MotorPool.DatabaseSeeder.csproj", "{49512614-3B36-41AB-8DC2-064166948C0E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.Utils", "MotorPool.Services.Utils\MotorPool.Services.Utils.csproj", "{E9843474-6D72-4099-B34D-F0DD1E298E9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,5 +86,9 @@ Global
 		{49512614-3B36-41AB-8DC2-064166948C0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49512614-3B36-41AB-8DC2-064166948C0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49512614-3B36-41AB-8DC2-064166948C0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9843474-6D72-4099-B34D-F0DD1E298E9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9843474-6D72-4099-B34D-F0DD1E298E9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9843474-6D72-4099-B34D-F0DD1E298E9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9843474-6D72-4099-B34D-F0DD1E298E9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -58,9 +58,11 @@ public static class VehicleEndpoints
 
     private static async Task<IResult> GetAll(VehicleQueryService vehicleQueryService, ClaimsPrincipal user)
     {
+        int managerId = user.GetManagerId();
+
         List<VehicleViewModel> vehicles = await vehicleQueryService.GetAllAsync();
 
-        return Results.Ok(vehicles.ForManager(user.GetManagerId()));
+        return Results.Ok(vehicles);
     }
 
     private static Task<IResult> GetById(int vehicleId, HttpContext httpContext)

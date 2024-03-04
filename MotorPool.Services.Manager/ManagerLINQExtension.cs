@@ -1,16 +1,17 @@
-﻿using MotorPool.Services.Drivers.Models;
-using MotorPool.Services.Enterprise.Models;
-using MotorPool.Services.Vehicles.Models;
+﻿using MotorPool.Domain;
 
 namespace MotorPool.Services.Manager;
 
 public static class ManagerLINQExtension
 {
 
-    public static List<VehicleViewModel> ForManager(this List<VehicleViewModel> vehicles, int managerId) => vehicles.Where(vehicle => vehicle.ManagerIds.Contains(managerId)).ToList();
+    public static IQueryable<Vehicle> ForManager(this IQueryable<Vehicle> vehicles, int managerId) =>
+        vehicles.Where(vehicle => vehicle.Enterprise != null && vehicle.Enterprise.ManagerLinks.Any(managerLink => managerLink.ManagerId == managerId));
 
-    public static List<DriverViewModel> ForManager(this List<DriverViewModel> drivers, int managerId) => drivers.Where(driver => driver.ManagerIds.Contains(managerId)).ToList();
+    public static IQueryable<Driver> ForManager(this IQueryable<Driver> drivers, int managerId) =>
+        drivers.Where(driver => driver.Enterprise != null && driver.Enterprise.ManagerLinks.Any(managerLink => managerLink.ManagerId == managerId));
 
-    public static List<EnterpriseViewModel> ForManager(this List<EnterpriseViewModel> enterprises, int managerId) => enterprises.Where(enterprise => enterprise.ManagerIds.Contains(managerId)).ToList();
+    public static IQueryable<Domain.Enterprise> ForManager(this IQueryable<Domain.Enterprise> enterprises, int managerId) =>
+        enterprises.Where(enterprise => enterprise.ManagerLinks.Any(managerLink => managerLink.ManagerId == managerId));
 
 }
