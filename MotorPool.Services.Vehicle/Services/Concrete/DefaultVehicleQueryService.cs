@@ -26,12 +26,12 @@ public class DefaultVehicleQueryService(AppDbContext dbContext, IMapper mapper) 
     {
         IQueryable<Vehicle> managerVehiclesQuery = VehiclesWithIncludesQuery().ForManager(managerId);
 
-        int managerVehiclesCount = await managerVehiclesQuery.CountAsync();
-
         List<VehicleViewModel> pagedVehicleModels = await managerVehiclesQuery
                                                           .Page(pageOptions)
                                                           .Select(vehicle => mapper.Map<VehicleViewModel>(vehicle))
                                                           .ToListAsync();
+
+        int managerVehiclesCount = await managerVehiclesQuery.CountAsync();
 
         return PagedViewModel<VehicleViewModel>.FromOptionsAndElements(pageOptions, pagedVehicleModels, managerVehiclesCount);
     }

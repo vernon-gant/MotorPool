@@ -26,12 +26,12 @@ public class DefaultDriverQueryService(AppDbContext dbContext, IMapper mapper) :
     {
         IQueryable<Driver> managerDriversQuery = DriversWithIncludesQuery().ForManager(managerId);
 
-        int managerDriversCount = await managerDriversQuery.CountAsync();
-
         List<DriverViewModel> pagedDriverModels = await managerDriversQuery
                                                         .Page(pageOptions)
                                                         .Select(driver => mapper.Map<DriverViewModel>(driver))
                                                         .ToListAsync();
+
+        int managerDriversCount = await managerDriversQuery.CountAsync();
 
         return PagedViewModel<DriverViewModel>.FromOptionsAndElements(pageOptions, pagedDriverModels, managerDriversCount);
     }
