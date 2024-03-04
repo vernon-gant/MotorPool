@@ -14,15 +14,14 @@ public class IndexModel(VehicleQueryService vehicleQueryService) : PageModel
     public async Task OnGetAsync(int? vehicleBrandId)
     {
         List<VehicleViewModel> allVehicles = await vehicleQueryService.GetAllAsync();
-        List<VehicleViewModel> managerVehicles = allVehicles.ForManager(User.GetManagerId());
 
         if (!vehicleBrandId.HasValue)
         {
-            Vehicles = managerVehicles;
+            Vehicles = allVehicles;
             return;
         }
 
-        Vehicles = managerVehicles.Where(vehicle => vehicle.VehicleBrandId == vehicleBrandId).ToList();
+        Vehicles = allVehicles.Where(vehicle => vehicle.VehicleBrandId == vehicleBrandId).ToList();
     }
 
 }

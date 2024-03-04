@@ -55,9 +55,11 @@ public static class EnterpriseEndpoints
 
     private static async Task<IResult> GetAll(EnterpriseQueryService enterpriseService, ClaimsPrincipal user)
     {
+        int managerId = user.GetManagerId();
+
         List<EnterpriseViewModel> allEnterprises = await enterpriseService.GetAllAsync();
 
-        return Results.Ok(allEnterprises.ForManager(user.GetManagerId()));
+        return Results.Ok(allEnterprises);
     }
 
     private static Task<IResult> GetById(int enterpriseId, HttpContext context)

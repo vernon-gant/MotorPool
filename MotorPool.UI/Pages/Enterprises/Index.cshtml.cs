@@ -14,7 +14,7 @@ public class IndexModel(EnterpriseQueryService enterpriseQueryService) : PageMod
     public async Task OnGetAsync()
     {
         List<EnterpriseViewModel> allEnterprises = await enterpriseQueryService.GetAllAsync();
-        Enterprises = allEnterprises.ForManager(User.GetManagerId());
+        Enterprises = allEnterprises;
     }
 
 }

@@ -5,6 +5,7 @@ using MotorPool.Auth;
 using MotorPool.Services.Drivers.Models;
 using MotorPool.Services.Drivers.Services;
 using MotorPool.Services.Manager;
+using MotorPool.Services.Utils;
 
 namespace MotorPool.UI.Pages.Drivers;
 
@@ -15,9 +16,13 @@ public class IndexModel(DriverQueryService driverQueryService, UserManager<Appli
 
     public async Task OnGetAsync()
     {
-        List<DriverViewModel> allDrivers = await driverQueryService.GetAllAsync();
+        PagedViewModel<DriverViewModel> pagedViewModel = await driverQueryService.GetAllAsync(User.GetManagerId(), new PageOptions()
+        {
+            ElementsPerPage = 1,
+            PageNumber = 0
+        });
 
-        Drivers = allDrivers.Where(x => x.EnterpriseId == User.GetManagerId()).ToList();
+        Drivers = pagedViewModel.Elements.Where(x => x.EnterpriseId == User.GetManagerId()).ToList();
     }
 
 }
