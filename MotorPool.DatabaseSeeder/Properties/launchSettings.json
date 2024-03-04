@@ -1,0 +1,12 @@
+﻿{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "MotorPool.DatabaseSeeder": {
+      "commandName": "Project",
+      "commandLineArgs": "-e 1 2 3 -v 5000 -d 5000",
+      "environmentVariables": {
+        
+      }
+    }
+  }
+}

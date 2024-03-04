@@ -18,6 +18,7 @@ public class RandomRelationsGenerator(MotorPoolRandomizer randomizer) : Relation
     {
         Console.WriteLine("-".PadRight(50, '-'));
         Console.WriteLine("Generating relations between vehicles and drivers...\n");
+        int relationsCount = 0;
 
         foreach (Vehicle vehicle in randomizer.GetSample(vehicles))
         {
@@ -30,10 +31,11 @@ public class RandomRelationsGenerator(MotorPoolRandomizer randomizer) : Relation
                 };
                 vehicle.DriverVehicles.Add(newRelation);
                 driver.DriverVehicles.Add(newRelation);
+                relationsCount++;
             }
         }
 
-        Console.WriteLine("\nRelations between vehicles and drivers generated successfully!");
+        Console.WriteLine($"\n{relationsCount} relations between vehicles and drivers have been generated successfully!");
         Console.WriteLine("-".PadRight(50, '-') + "\n\n");
     }
 
@@ -56,12 +58,11 @@ public class RandomRelationsGenerator(MotorPoolRandomizer randomizer) : Relation
             Driver newActiveDriver = potentialActiveDrivers[randomizer.FromRange(0, potentialActiveDrivers.Count - 1)];
             activeDrivers.Add(newActiveDriver);
             newActiveDriver.ActiveVehicleId = vehicle.VehicleId;
-            Console.WriteLine($"Added active driver {newActiveDriver.FirstName} {newActiveDriver.LastName} to vehicle {vehicle.MotorVIN}");
         }
 
         if (activeDrivers.Count == 0) Console.WriteLine("No active drivers added to vehicles.");
 
-        Console.WriteLine("\nActive drivers added to vehicles successfully!");
+        Console.WriteLine($"\n{activeDrivers.Count} active drivers have been added to vehicles successfully!");
         Console.WriteLine("-".PadRight(50, '-') + "\n\n");
     }
 
