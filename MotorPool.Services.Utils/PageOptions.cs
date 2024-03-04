@@ -35,4 +35,6 @@ public class PageOptions
 
     public required int ElementsPerPage { get; set; }
 
+    public int GetPagesAfter(int entitiesCount) => entitiesCount / ElementsPerPage - PageNumber - 1;
+
 }
