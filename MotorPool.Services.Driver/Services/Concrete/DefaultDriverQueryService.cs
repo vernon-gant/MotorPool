@@ -30,11 +30,7 @@ public class DefaultDriverQueryService(AppDbContext dbContext, IMapper mapper) :
                                                         .Select(driver => mapper.Map<DriverViewModel>(driver))
                                                         .ToListAsync();
 
-        return new ()
-        {
-            PagesAfter = pageOptions.GetPagesAfter(managerDriversCount),
-            Elements = pagedDriverModels
-        };
+        return PagedViewModel<DriverViewModel>.FromOptionsAndElements(pageOptions, pagedDriverModels, managerDriversCount);
     }
 
     public async ValueTask<DriverViewModel> GetByIdAsync(int driverId)

@@ -16,6 +16,7 @@ using MotorPool.Services.Drivers;
 using MotorPool.Services.Enterprise;
 using MotorPool.Services.VehicleBrand;
 using MotorPool.Services.Vehicles;
+using MotorPool.Utils;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -90,12 +91,16 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 
 WebApplication app = builder.Build();
 
+app.UseCustomExceptionMiddleware();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseStatusCodePages();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseRouting();
 
 app.UseAuthentication();
 app.UseUnauthorizedOnNotManagerAccess();

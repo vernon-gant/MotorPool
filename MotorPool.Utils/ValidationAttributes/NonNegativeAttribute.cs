@@ -4,7 +4,7 @@ namespace MotorPool.Utils.ValidationAttributes;
 
 public class NonNegativeAttribute : ValidationAttribute
 {
-    public required bool CanBeNull { get; set; } = true;
+    public required bool CanBeZero { get; set; } = true;
 
     protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
     {
@@ -12,7 +12,7 @@ public class NonNegativeAttribute : ValidationAttribute
 
         if (value is not int inputValue) return new ValidationResult("The input values must be an int");
 
-        if (CanBeNull && inputValue >= 0 || !CanBeNull && inputValue >= 1) return ValidationResult.Success;
+        if (CanBeZero && inputValue >= 0 || !CanBeZero && inputValue >= 1) return ValidationResult.Success;
 
         return new ValidationResult("Negative integer or can be null is not satisfied.");
     }

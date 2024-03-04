@@ -16,7 +16,9 @@ public static class VehicleEndpoints
 
     public static void MapVehicleEndpoints(this IEndpointRouteBuilder managerResourcesGroupBuilder)
     {
-        RouteGroupBuilder vehiclesGroupBuilder = managerResourcesGroupBuilder.MapGroup("vehicles");
+        RouteGroupBuilder vehiclesGroupBuilder = managerResourcesGroupBuilder
+                                                 .MapGroup("vehicles")
+                                                 .WithParameterValidation();
 
         vehiclesGroupBuilder.MapGet("", GetAll)
                             .WithName("GetAllVehicles")

@@ -8,6 +8,7 @@ using MotorPool.Persistence.QueryObjects;
 using MotorPool.Services.Manager;
 using MotorPool.Services.Utils;
 using MotorPool.Services.Vehicles.Models;
+using MotorPool.Utils.Exceptions;
 
 namespace MotorPool.Services.Vehicles.Services.Concrete;
 
@@ -31,11 +32,7 @@ public class DefaultVehicleQueryService(AppDbContext dbContext, IMapper mapper) 
                                                            .Select(vehicle => mapper.Map<VehicleViewModel>(vehicle))
                                                            .ToListAsync();
 
-        return new ()
-        {
-            PagesAfter = pageOptions.GetPagesAfter(managerVehiclesCount),
-            Elements = pagedVehicleModels
-        };
+        return PagedViewModel<VehicleViewModel>.FromOptionsAndElements(pageOptions, pagedVehicleModels, managerVehiclesCount);
     }
 
     public async ValueTask<VehicleViewModel?> GetByIdAsync(int vehicleId)
