@@ -28,6 +28,7 @@ public class DefaultDriverQueryService(AppDbContext dbContext, IMapper mapper) :
 
         List<DriverViewModel> pagedDriverModels = await managerDriversQuery
                                                         .Page(pageOptions)
+                                                        .OrderBy(driver => driver.DriverId)
                                                         .Select(driver => mapper.Map<DriverViewModel>(driver))
                                                         .ToListAsync();
 

@@ -28,6 +28,7 @@ public class DefaultVehicleQueryService(AppDbContext dbContext, IMapper mapper) 
 
         List<VehicleViewModel> pagedVehicleModels = await managerVehiclesQuery
                                                           .Page(pageOptions)
+                                                          .OrderBy(vehicle => vehicle.VehicleId)
                                                           .Select(vehicle => mapper.Map<VehicleViewModel>(vehicle))
                                                           .ToListAsync();
 
