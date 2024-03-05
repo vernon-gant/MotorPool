@@ -17,20 +17,20 @@ public static class EnterpriseEndpoints
 
         enterprisesGroupBuilder.MapGet("", GetAll)
                                .WithName("GetAllEnterprises")
-                               .Produces<List<EnterpriseViewModel>>();
+                               .Produces<List<FullEnterpriseViewModel>>();
 
         enterprisesGroupBuilder.MapGet("{enterpriseId:int}", GetById)
                                .AddEndpointFilter<EnterpriseExistsFilter>()
                                .AddEndpointFilter<IsManagerAccessibleEnterpriseFilter>()
                                .WithName("GetEnterpriseById")
-                               .Produces<EnterpriseViewModel>()
+                               .Produces<FullEnterpriseViewModel>()
                                .Produces(StatusCodes.Status404NotFound)
                                .Produces(StatusCodes.Status403Forbidden);
 
         enterprisesGroupBuilder.MapPost("", Create)
                                .WithParameterValidation()
                                .WithName("CreateEnterprise")
-                               .Produces<EnterpriseViewModel>()
+                               .Produces<FullEnterpriseViewModel>()
                                .Produces(StatusCodes.Status400BadRequest)
                                .Produces(StatusCodes.Status201Created);
 
@@ -57,23 +57,23 @@ public static class EnterpriseEndpoints
     {
         int managerId = user.GetManagerId();
 
-        List<EnterpriseViewModel> allEnterprises = await enterpriseService.GetAllAsync();
+        List<FullEnterpriseViewModel> allEnterprises = await enterpriseService.GetAllAsync(managerId);
 
         return Results.Ok(allEnterprises);
     }
 
     private static Task<IResult> GetById(int enterpriseId, HttpContext context)
     {
-        EnterpriseViewModel enterprise = context.Items["Enterprise"] as EnterpriseViewModel ?? throw new InvalidOperationException("No enterprise found in the request.");
+        FullEnterpriseViewModel fullEnterprise = context.Items["Enterprise"] as FullEnterpriseViewModel ?? throw new InvalidOperationException("No enterprise found in the request.");
 
-        return Task.FromResult(Results.Ok(enterprise));
+        return Task.FromResult(Results.Ok(fullEnterprise));
     }
 
     private static async Task<IResult> Create(EnterpriseActionService enterpriseActionService, EnterpriseDTO enterpriseDto, HttpContext httpContext)
     {
         try
         {
-            EnterpriseViewModel result = await enterpriseActionService.CreateAsync(enterpriseDto, httpContext.User.GetManagerId());
+            FullEnterpriseViewModel result = await enterpriseActionService.CreateAsync(enterpriseDto, httpContext.User.GetManagerId());
 
             return Results.Created($"/enterprises/{result.EnterpriseId}", result);
         }

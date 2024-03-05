@@ -35,6 +35,6 @@ public class PageOptions
 
     public required int ElementsPerPage { get; set; }
 
-    public int LastPage(int entitiesCount) => entitiesCount / ElementsPerPage + (entitiesCount % ElementsPerPage == 0 ? 0 : 1);
+    public int TotalPages(int entitiesCount) => entitiesCount / ElementsPerPage + (entitiesCount % ElementsPerPage == 0 ? 0 : 1);
 
 }

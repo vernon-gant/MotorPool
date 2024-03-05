@@ -4,11 +4,14 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Localization;
 
 using MotorPool.Auth;
+using MotorPool.Auth.Middleware;
+using MotorPool.Auth.Middleware.API;
 using MotorPool.Persistence;
 using MotorPool.Services.Drivers;
 using MotorPool.Services.Enterprise;
 using MotorPool.Services.VehicleBrand;
 using MotorPool.Services.Vehicles;
+using MotorPool.Utils;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +23,7 @@ builder.Services.AddVehicleBrandServices();
 builder.Services.AddEnterpriseServices();
 builder.Services.AddDriverServices();
 builder.Services.AddAppIdentity(connectionString);
+
 builder.Services
        .AddAuthentication(options =>
        {
@@ -33,14 +37,19 @@ builder.Services
        });
 builder.Services.AddAppAuthorization();
 
+builder.Services.AddSession();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-var mvcBuilder = builder.Services.AddRazorPages(options =>
-{
-    options.Conventions.AuthorizeFolder("/Brands");
-    options.Conventions.AuthorizeFolder("/Drivers");
-    options.Conventions.AuthorizeFolder("/Enterprises");
-    options.Conventions.AuthorizeFolder("/Vehicles");
-});
+
+var mvcBuilder = builder.Services
+                        .AddRazorPages(options =>
+                        {
+                            options.Conventions.AuthorizeFolder("/Brands");
+                            options.Conventions.AuthorizeFolder("/Drivers");
+                            options.Conventions.AuthorizeFolder("/Enterprises");
+                            options.Conventions.AuthorizeFolder("/Vehicles");
+                        })
+                        .AddSessionStateTempDataProvider();
+
 if (builder.Environment.IsDevelopment()) mvcBuilder.AddRazorRuntimeCompilation();
 
 WebApplication app = builder.Build();
@@ -62,13 +71,18 @@ app.UseRequestLocalization(new RequestLocalizationOptions
     SupportedCultures = new List<CultureInfo> { new ("en-US") },
     SupportedUICultures = new List<CultureInfo> { new ("en-US") }
 });
+
 app.UseStaticFiles();
+
+app.UseSession();
 
 app.UseRouting();
 
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseCustomExceptionUIMiddleware();
 
 app.MapRazorPages();
 

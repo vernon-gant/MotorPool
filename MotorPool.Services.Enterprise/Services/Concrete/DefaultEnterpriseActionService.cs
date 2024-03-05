@@ -12,7 +12,7 @@ namespace MotorPool.Services.Enterprise.Services.Concrete;
 public class DefaultEnterpriseActionService(AppDbContext dbContext, IMapper mapper) : EnterpriseActionService
 {
 
-    public async ValueTask<EnterpriseViewModel> CreateAsync(EnterpriseDTO enterpriseDTO, int managerId)
+    public async ValueTask<FullEnterpriseViewModel> CreateAsync(EnterpriseDTO enterpriseDTO, int managerId)
     {
         await EnsureNameAndVATAreUniqueAsync(enterpriseDTO.Name, enterpriseDTO.VAT);
 
@@ -24,7 +24,7 @@ public class DefaultEnterpriseActionService(AppDbContext dbContext, IMapper mapp
 
         await dbContext.SaveChangesAsync();
 
-        return mapper.Map<EnterpriseViewModel>(newEnterprise);
+        return mapper.Map<FullEnterpriseViewModel>(newEnterprise);
     }
 
     public async ValueTask UpdateAsync(EnterpriseDTO enterpriseDTO, int enterpriseId)

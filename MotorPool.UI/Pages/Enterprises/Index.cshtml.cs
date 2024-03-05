@@ -9,12 +9,11 @@ namespace MotorPool.UI.Pages.Enterprises;
 public class IndexModel(EnterpriseQueryService enterpriseQueryService) : PageModel
 {
 
-    public IList<EnterpriseViewModel> Enterprises { get; set; } = new List<EnterpriseViewModel>();
+    public IList<SimpleEnterpriseViewModel> Enterprises { get; set; } = new List<SimpleEnterpriseViewModel>();
 
     public async Task OnGetAsync()
     {
-        List<EnterpriseViewModel> allEnterprises = await enterpriseQueryService.GetAllAsync();
-        Enterprises = allEnterprises;
+        Enterprises = await enterpriseQueryService.GetAllSimpleAsync(User.GetManagerId());
     }
 
 }

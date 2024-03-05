@@ -5,8 +5,10 @@ namespace MotorPool.Services.Enterprise.Services;
 public interface EnterpriseQueryService
 {
 
-    ValueTask<List<EnterpriseViewModel>> GetAllAsync();
+    ValueTask<List<FullEnterpriseViewModel>> GetAllAsync(int managerId);
 
-    ValueTask<EnterpriseViewModel?> GetByIdAsync(int enterpriseId);
+    ValueTask<List<SimpleEnterpriseViewModel>> GetAllSimpleAsync(int managerId);
+
+    ValueTask<FullEnterpriseViewModel?> GetByIdAsync(int enterpriseId);
 
 }

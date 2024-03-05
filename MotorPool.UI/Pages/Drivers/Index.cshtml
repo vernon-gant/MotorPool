@@ -57,6 +57,13 @@
     </table>
 </div>
 
+@await Html.PartialAsync("_Paging", new PagingModel
+{
+    CurrentPage = Model.CurrentPage,
+    TotalPages = Model.TotalPages,
+    PagesDisplayRange = PagedModel.PAGES_DISPLAY_RANGE
+})
+
 <div class="row w-100 py-3">
     <div class="col-12 d-flex justify-content-center align-items-center">
         <a asp-page="/Index" class="text-decoration-none admin-back-link">

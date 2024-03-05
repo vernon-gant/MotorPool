@@ -4,38 +4,27 @@ using Microsoft.EntityFrameworkCore;
 
 using MotorPool.Persistence;
 using MotorPool.Services.Enterprise.Models;
+using MotorPool.Services.Manager;
 
 namespace MotorPool.Services.Enterprise.Services.Concrete;
 
 public class DefaultEnterpriseQueryService(AppDbContext dbContext, IMapper mapper) : EnterpriseQueryService
 {
 
-    public async ValueTask<List<EnterpriseViewModel>> GetAllAsync()
-    {
-        var rawEnterprises = await dbContext.Enterprises
-                                            .AsNoTracking()
-                                            .Include(enterprise => enterprise.ManagerLinks)
-                                            .Include(enterprise => enterprise.Vehicles)
-                                            .Include(enterprise => enterprise.Drivers)
-                                            .Include(enterprise => enterprise.Vehicles)
-                                            .Include(enterprise => enterprise.Drivers)
-                                            .ToListAsync();
+    public async ValueTask<List<FullEnterpriseViewModel>> GetAllAsync(int managerId) =>
+        await FullRelationEnterpriseQuery().ForManager(managerId).Select(enterprise => mapper.Map<FullEnterpriseViewModel>(enterprise)).ToListAsync();
 
-        return mapper.Map<List<EnterpriseViewModel>>(rawEnterprises);
-    }
+    public async ValueTask<List<SimpleEnterpriseViewModel>> GetAllSimpleAsync(int managerId) =>
+        await BaseEnterpriseQuery().ForManager(managerId).Select(enterprise => mapper.Map<SimpleEnterpriseViewModel>(enterprise)).ToListAsync();
 
-    public async ValueTask<EnterpriseViewModel?> GetByIdAsync(int enterpriseId)
-    {
-        var rawEnterprise = await dbContext.Enterprises
-                                          .AsNoTracking()
-                                          .Include(enterprise => enterprise.ManagerLinks)
-                                          .Include(enterprise => enterprise.Vehicles)
-                                          .Include(enterprise => enterprise.Drivers)
-                                          .Include(enterprise => enterprise.Vehicles)
-                                          .Include(enterprise => enterprise.Drivers)
-                                          .FirstOrDefaultAsync(enterprise => enterprise.EnterpriseId == enterpriseId);
+    public async ValueTask<FullEnterpriseViewModel?> GetByIdAsync(int enterpriseId) => await FullRelationEnterpriseQuery()
+                                                                                             .Select(enterprise => mapper.Map<FullEnterpriseViewModel>(enterprise))
+                                                                                             .FirstOrDefaultAsync(enterprise => enterprise.EnterpriseId == enterpriseId);
 
-        return mapper.Map<EnterpriseViewModel?>(rawEnterprise);
-    }
+    private IQueryable<Domain.Enterprise> BaseEnterpriseQuery() => dbContext.Enterprises.AsNoTracking().Include(enterprise => enterprise.ManagerLinks);
+
+    private IQueryable<Domain.Enterprise> FullRelationEnterpriseQuery() => BaseEnterpriseQuery()
+                                                                           .Include(enterprise => enterprise.Vehicles)
+                                                                           .Include(enterprise => enterprise.Drivers);
 
 }

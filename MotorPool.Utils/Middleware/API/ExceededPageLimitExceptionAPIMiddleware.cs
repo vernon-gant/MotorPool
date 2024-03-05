@@ -1,13 +1,12 @@
 ﻿using System.Text.Json;
 
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using MotorPool.Utils.Exceptions;
 
-namespace MotorPool.Utils.Middleware;
+namespace MotorPool.Utils.Middleware.API;
 
-public class ExceededPageLimitExceptionMiddleware(RequestDelegate next)
+public class ExceededPageLimitExceptionAPIMiddleware(RequestDelegate next)
 {
 
     public async Task InvokeAsync(HttpContext context)

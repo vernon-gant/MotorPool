@@ -1,28 +1,28 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-
-using MotorPool.Auth;
 using MotorPool.Services.Drivers.Models;
 using MotorPool.Services.Drivers.Services;
 using MotorPool.Services.Manager;
 using MotorPool.Services.Utils;
+using MotorPool.UI.Pages.Shared;
 
 namespace MotorPool.UI.Pages.Drivers;
 
-public class IndexModel(DriverQueryService driverQueryService, UserManager<ApplicationUser> userManager) : PageModel
+public class IndexModel(DriverQueryService driverQueryService) : PagedModel
 {
 
     public IList<DriverViewModel> Drivers { get; set; } = default!;
 
-    public async Task OnGetAsync()
+    public async Task OnGetAsync(int? currentPage)
     {
-        PagedViewModel<DriverViewModel> pagedViewModel = await driverQueryService.GetAllAsync(User.GetManagerId(), new PageOptions()
+        CurrentPage = currentPage ?? 1;
+
+        PagedViewModel<DriverViewModel> pagedViewModel = await driverQueryService.GetAllAsync(User.GetManagerId(), new ()
         {
-            ElementsPerPage = 1,
-            PageNumber = 0
+            ElementsPerPage = ELEMENTS_PER_PAGE,
+            PageNumber = CurrentPage
         });
 
-        Drivers = pagedViewModel.Elements.Where(x => x.EnterpriseId == User.GetManagerId()).ToList();
+        TotalPages = pagedViewModel.TotalPages;
+        Drivers = pagedViewModel.Elements;
     }
 
 }

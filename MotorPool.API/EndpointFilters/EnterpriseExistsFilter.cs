@@ -10,7 +10,7 @@ public class EnterpriseExistsFilter(EnterpriseQueryService enterpriseQueryServic
     {
         int enterpriseId = int.Parse(context.HttpContext.Request.RouteValues["enterpriseId"]!.ToString());
 
-        EnterpriseViewModel? enterprise = await enterpriseQueryService.GetByIdAsync(enterpriseId);
+        FullEnterpriseViewModel? enterprise = await enterpriseQueryService.GetByIdAsync(enterpriseId);
 
         if (enterprise is not null)
         {

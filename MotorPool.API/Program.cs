@@ -10,6 +10,7 @@ using MotorPool.API.EndpointFilters;
 using MotorPool.API.Endpoints;
 using MotorPool.Auth;
 using MotorPool.Auth.Middleware;
+using MotorPool.Auth.Middleware.API;
 using MotorPool.Auth.Services;
 using MotorPool.Persistence;
 using MotorPool.Services.Drivers;
@@ -91,7 +92,7 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 
 WebApplication app = builder.Build();
 
-app.UseCustomExceptionMiddleware();
+app.UseCustomExceptionAPIMiddleware();
 
 if (app.Environment.IsDevelopment())
 {

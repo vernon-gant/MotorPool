@@ -2,7 +2,7 @@
 
 using MotorPool.Services.Manager;
 
-namespace MotorPool.Auth.Middleware;
+namespace MotorPool.Auth.Middleware.API;
 
 public class SetUnauthorizedOnNotManagerAccessMiddleware(RequestDelegate next)
 {
