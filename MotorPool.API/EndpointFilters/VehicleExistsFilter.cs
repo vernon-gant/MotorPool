@@ -8,7 +8,8 @@ public class VehicleExistsFilter(VehicleQueryService vehicleQueryService) : IEnd
 
     public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
     {
-        int vehicleId = int.Parse(context.HttpContext.Request.RouteValues["vehicleId"]!.ToString());
+        string vehicleIdString = context.HttpContext.Request.RouteValues["vehicleId"]?.ToString() ?? throw new InvalidOperationException("VehicleId is not found in route data");
+        int vehicleId = int.Parse(vehicleIdString);
 
         VehicleViewModel? vehicle = await vehicleQueryService.GetByIdAsync(vehicleId);
 

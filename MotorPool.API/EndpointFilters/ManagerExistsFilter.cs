@@ -3,7 +3,7 @@ using MotorPool.Services.Manager;
 
 namespace MotorPool.API.EndpointFilters;
 
-public class ManagerExistenceFilter(AppDbContext dbContext) : IEndpointFilter
+public class ManagerExistsFilter(AppDbContext dbContext) : IEndpointFilter
 {
 
     public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)

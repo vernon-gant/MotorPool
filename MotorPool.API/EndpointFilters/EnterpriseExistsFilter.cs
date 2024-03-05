@@ -8,7 +8,8 @@ public class EnterpriseExistsFilter(EnterpriseQueryService enterpriseQueryServic
 
     public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
     {
-        int enterpriseId = int.Parse(context.HttpContext.Request.RouteValues["enterpriseId"]!.ToString());
+        string enterpriseIdString = context.HttpContext.Request.RouteValues["enterpriseId"]?.ToString() ?? throw new InvalidOperationException("EnterpriseId is not found in route data");
+        int enterpriseId = int.Parse(enterpriseIdString);
 
         FullEnterpriseViewModel? enterprise = await enterpriseQueryService.GetByIdAsync(enterpriseId);
 

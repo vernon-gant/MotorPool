@@ -35,7 +35,6 @@ public static class VehicleEndpoints
         vehiclesGroupBuilder.MapPost("", Create)
                             .WithParameterValidation()
                             .WithName("CreateVehicle")
-                            .AddEndpointFilter<EnterpriseIsManagerAccessibleFilter>()
                             .Produces<VehicleViewModel>()
                             .Produces(StatusCodes.Status400BadRequest)
                             .Produces(StatusCodes.Status201Created);

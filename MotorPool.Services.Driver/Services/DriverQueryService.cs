@@ -9,6 +9,6 @@ public interface DriverQueryService
 
     ValueTask<PagedViewModel<DriverViewModel>> GetAllAsync(int managerId, PageOptions pageOptions);
 
-    ValueTask<DriverViewModel> GetByIdAsync(int driverId);
+    ValueTask<DriverViewModel?> GetByIdAsync(int driverId);
 
 }

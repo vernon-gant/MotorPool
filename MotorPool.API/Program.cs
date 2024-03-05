@@ -113,7 +113,7 @@ app.MapAuthEndpoints();
 
 RouteGroupBuilder managerResourcesGroupBuilder = app.MapGroup("/")
                                                     .RequireAuthorization()
-                                                    .AddEndpointFilter<ManagerExistenceFilter>();
+                                                    .AddEndpointFilter<ManagerExistsFilter>();
 
 managerResourcesGroupBuilder.MapVehicleEndpoints();
 

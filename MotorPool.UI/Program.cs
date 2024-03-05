@@ -2,6 +2,7 @@ using System.Globalization;
 
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
 
 using MotorPool.Auth;
 using MotorPool.Auth.Middleware;
@@ -11,6 +12,8 @@ using MotorPool.Services.Drivers;
 using MotorPool.Services.Enterprise;
 using MotorPool.Services.VehicleBrand;
 using MotorPool.Services.Vehicles;
+using MotorPool.Services.Vehicles.Services;
+using MotorPool.UI.PageFilters;
 using MotorPool.Utils;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -47,6 +50,21 @@ var mvcBuilder = builder.Services
                             options.Conventions.AuthorizeFolder("/Drivers");
                             options.Conventions.AuthorizeFolder("/Enterprises");
                             options.Conventions.AuthorizeFolder("/Vehicles");
+
+                            options.Conventions.AddFolderApplicationModelConvention("/Vehicles", model =>
+                            {
+                                model.Filters.Add<VehicleExistsPageFilter>();
+                            });
+
+                            options.Conventions.AddFolderApplicationModelConvention("/Drivers", model =>
+                            {
+                                model.Filters.Add<DriverExistsPageFilter>();
+                            });
+
+                            options.Conventions.AddFolderApplicationModelConvention("/Enterprises", model =>
+                            {
+                                model.Filters.Add<EnterpriseExistsPageFilter>();
+                            });
                         })
                         .AddSessionStateTempDataProvider();
 

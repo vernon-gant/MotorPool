@@ -37,12 +37,9 @@ public class DefaultDriverQueryService(AppDbContext dbContext, IMapper mapper) :
         return PagedViewModel<DriverViewModel>.FromOptionsAndElements(pageOptions, pagedDriverModels, managerDriversCount);
     }
 
-    public async ValueTask<DriverViewModel> GetByIdAsync(int driverId)
-    {
-        Driver? driver = await DriversWithIncludesQuery().FirstOrDefaultAsync(driver => driver.DriverId == driverId);
-
-        return mapper.Map<DriverViewModel>(driver);
-    }
+    public async ValueTask<DriverViewModel?> GetByIdAsync(int driverId) => await DriversWithIncludesQuery()
+                                                                                 .Select(driver => mapper.Map<DriverViewModel>(driver))
+                                                                                 .FirstOrDefaultAsync(driver => driver.DriverId == driverId);
 
     private IQueryable<Driver> DriversWithIncludesQuery() => dbContext.Drivers
                                                                       .AsNoTracking()

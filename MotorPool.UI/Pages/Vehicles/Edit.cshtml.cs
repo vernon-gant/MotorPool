@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MotorPool.Services.VehicleBrand.Services;
 using MotorPool.Services.Vehicles.Models;
 using MotorPool.Services.Vehicles.Services;
+using MotorPool.UI.PageFilters;
 
 namespace MotorPool.UI.Pages.Vehicles;
 
@@ -12,11 +13,11 @@ public class EditModel(VehicleActionService vehicleActionService, VehicleQuerySe
     [BindProperty]
     public VehicleViewModel VehicleViewModel { get; set; } = default!;
 
-    public async Task<IActionResult> OnGetAsync(int id)
+    public async Task<IActionResult> OnGetAsync(int vehicleId)
     {
         await PopulateVehicleBrandsDropDownList(vehicleBrandService);
 
-        VehicleViewModel? foundVehicle = await vehicleQueryService.GetByIdAsync(id);
+        VehicleViewModel? foundVehicle = await vehicleQueryService.GetByIdAsync(vehicleId);
 
         if (foundVehicle == null) return NotFound();
 
