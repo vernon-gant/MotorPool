@@ -9,7 +9,7 @@ namespace MotorPool.UI.Pages.Vehicles;
 public class VehicleBrandsSelectListPageModel : PageModel
 {
 
-    public SelectList VehicleBrandSelectList { get; set; }
+    public SelectList VehicleBrandSelectList { get; set; } = new (new List<VehicleBrandSignatureWithId>());
 
     public async Task PopulateVehicleBrandsDropDownList(VehicleBrandService vehicleBrandService, object? selectedVehicleBrand = null)
     {

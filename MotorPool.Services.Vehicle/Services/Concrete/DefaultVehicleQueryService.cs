@@ -22,9 +22,11 @@ public class DefaultVehicleQueryService(AppDbContext dbContext, IMapper mapper) 
                      .ToListAsync();
     }
 
-    public async ValueTask<PagedViewModel<VehicleViewModel>> GetAllAsync(int managerId, PageOptions pageOptions)
+    public async ValueTask<PagedViewModel<VehicleViewModel>> GetAllAsync(int managerId, PageOptions pageOptions, int? vehicleBrandId)
     {
         IQueryable<Vehicle> managerVehiclesQuery = VehiclesWithIncludesQuery().ForManager(managerId);
+
+        if (vehicleBrandId.HasValue) managerVehiclesQuery = managerVehiclesQuery.Where(vehicle => vehicle.VehicleBrandId == vehicleBrandId);
 
         List<VehicleViewModel> pagedVehicleModels = await managerVehiclesQuery
                                                           .Page(pageOptions)

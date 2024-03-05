@@ -76,7 +76,8 @@
                     <td class="text-nowrap">
                         @await Html.PartialAsync("_Actions", new ActionsModel
                         {
-                            Id = vehicleBrand.VehicleBrandId,
+                            IdRouteParameterName = "vehicleBrandId",
+                            IdValue = vehicleBrand.VehicleBrandId,
                             HasChangeAccess = User.IsManager()
                         })
                         <a asp-page="/Vehicles/Index" asp-route-vehicleBrandId="@vehicleBrand.VehicleBrandId" class="text-decoration-none">

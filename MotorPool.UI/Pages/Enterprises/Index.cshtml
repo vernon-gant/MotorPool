@@ -59,7 +59,8 @@
                 <td class="text-nowrap">
                     @await Html.PartialAsync("_Actions", new ActionsModel
                     {
-                        Id = enterpriseViewModel.EnterpriseId,
+                        IdRouteParameterName = "enterpriseId",
+                        IdValue = enterpriseViewModel.EnterpriseId,
                         HasChangeAccess = User.IsManager()
                     })
                 </td>

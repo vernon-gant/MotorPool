@@ -3,7 +3,9 @@
 public class ActionsModel
 {
 
-    public int Id { get; set; }
+    public required string IdRouteParameterName { get; set; } = string.Empty;
+
+    public required int IdValue { get; set; }
 
     public bool HasChangeAccess { get; set; }
 

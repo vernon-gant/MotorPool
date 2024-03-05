@@ -1,4 +1,4 @@
-@page "{vehicleBrandId:int?}"
+@page
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using MotorPool.Services.Manager
 @using MotorPool.Services.Vehicles.Models
@@ -72,7 +72,8 @@
                 <td class="text-nowrap">
                     @await Html.PartialAsync("_Actions", new ActionsModel
                     {
-                        Id = vehicleViewModel.VehicleId,
+                        IdRouteParameterName = "vehicleId",
+                        IdValue = vehicleViewModel.VehicleId,
                         HasChangeAccess = User.IsManager()
                     })
                 </td>

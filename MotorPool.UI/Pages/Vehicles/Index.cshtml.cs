@@ -19,17 +19,10 @@ public class IndexModel(VehicleQueryService vehicleQueryService) : PagedModel
         {
             ElementsPerPage = ELEMENTS_PER_PAGE,
             PageNumber = CurrentPage
-        });
+        }, vehicleBrandId);
 
         TotalPages = allVehicles.TotalPages;
-
-        if (!vehicleBrandId.HasValue)
-        {
-            Vehicles = allVehicles.Elements;
-            return;
-        }
-
-        Vehicles = allVehicles.Elements.Where(vehicle => vehicle.VehicleBrandId == vehicleBrandId).ToList();
+        Vehicles = allVehicles.Elements;
     }
 
 }

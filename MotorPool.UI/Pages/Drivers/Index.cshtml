@@ -47,7 +47,8 @@
                 <td>
                     @await Html.PartialAsync("_Actions", new ActionsModel
                     {
-                        Id = driverViewModel.DriverId,
+                        IdRouteParameterName = "driverId",
+                        IdValue = driverViewModel.DriverId,
                         HasChangeAccess = User.IsManager()
                     })
                 </td>
