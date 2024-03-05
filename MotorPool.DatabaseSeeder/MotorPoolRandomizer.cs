@@ -24,7 +24,7 @@ public class PseudoMotorPoolRandomizer : MotorPoolRandomizer
 
     private readonly Random random = new MersenneTwister();
 
-    public int FromRange(int min, int max) => min + random.Next() % (max + 1);
+    public int FromRange(int min, int max) => min + random.Next() % (max - min + 1);
 
     public string MotorVIN()
     {
