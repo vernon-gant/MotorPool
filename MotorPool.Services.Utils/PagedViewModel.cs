@@ -9,16 +9,16 @@ public class PagedViewModel<T> where T : class
 
     public IList<T> Elements { get; private set; }
 
-    public static PagedViewModel<T> FromOptionsAndElements(PageOptions pageOptions, IList<T> elements, int allElementsCount)
+    public static PagedViewModel<T> FromOptionsAndElements(PageOptions pageOptions, IList<T> pagedElements, int allElementsCount)
     {
         int lastPossiblePage = pageOptions.TotalPages(allElementsCount);
 
-        if (elements.Count == 0 && pageOptions.PageNumber > 1) throw new ExceededPageLimitException(pageOptions.PageNumber, lastPossiblePage);
+        if (pagedElements.Count == 0 && pageOptions.CurrentPage > 1) throw new ExceededPageLimitException(pageOptions.CurrentPage, lastPossiblePage);
 
         return new PagedViewModel<T>
         {
             TotalPages = lastPossiblePage,
-            Elements = elements
+            Elements = pagedElements
         };
     }
 

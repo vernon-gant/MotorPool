@@ -10,6 +10,7 @@ using MotorPool.Auth.Middleware.API;
 using MotorPool.Persistence;
 using MotorPool.Services.Drivers;
 using MotorPool.Services.Enterprise;
+using MotorPool.Services.Manager;
 using MotorPool.Services.VehicleBrand;
 using MotorPool.Services.Vehicles;
 using MotorPool.Services.Vehicles.Services;
@@ -26,6 +27,7 @@ builder.Services.AddVehicleBrandServices();
 builder.Services.AddEnterpriseServices();
 builder.Services.AddDriverServices();
 builder.Services.AddAppIdentity(connectionString);
+builder.Services.AddManagerServices();
 
 builder.Services
        .AddAuthentication(options =>
@@ -53,6 +55,7 @@ var mvcBuilder = builder.Services
 
                             options.Conventions.AddFolderApplicationModelConvention("/Vehicles", model =>
                             {
+                                model.Filters.Add<IsManagerAccessibleVehicleFilter>();
                                 model.Filters.Add<VehicleExistsPageFilter>();
                             });
 

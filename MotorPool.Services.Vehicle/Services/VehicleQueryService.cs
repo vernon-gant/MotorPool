@@ -5,9 +5,10 @@ namespace MotorPool.Services.Vehicles.Services;
 
 public interface VehicleQueryService
 {
-    ValueTask<List<VehicleViewModel>> GetAllAsync(int managerId);
 
-    ValueTask<PagedViewModel<VehicleViewModel>> GetAllAsync(int managerId, PageOptions pageOptions, int? vehicleBrandId = null);
+    ValueTask<List<VehicleViewModel>> GetAllAsync(VehicleQueryOptions? queryOptions = null);
+
+    ValueTask<PagedViewModel<VehicleViewModel>> GetAllAsync(PageOptions pageOptions, VehicleQueryOptions? queryOptions = null);
 
     ValueTask<VehicleViewModel?> GetByIdAsync(int vehicleId);
 

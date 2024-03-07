@@ -10,7 +10,19 @@
 }
 
 <div class="header-with-icon mb-4">
-    <h1 class="text-center">Vehicles</h1>
+    <h1 class="text-center">
+        All
+        @if (Model.VehicleBrandSignature != null)
+        {
+            <span class="text-decoration-underline">@Model.VehicleBrandSignature</span>
+        }
+        Vehicles
+        @if (Model.EnterpriseName != null)
+        {
+            <span> in </span>
+            <span class="text-decoration-underline">@Model.EnterpriseName</span>
+        }
+    </h1>
     <a asp-page="./Create">
         <i class="fa-solid fa-plus icon-plus"></i>
     </a>
@@ -87,14 +99,14 @@
 {
     CurrentPage = Model.CurrentPage,
     TotalPages = Model.TotalPages,
-    PagesDisplayRange = PagedModel.PAGES_DISPLAY_RANGE
+    PagesDisplayRange = Model.PAGES_DISPLAY_RANGE
 })
 
 <div class="row w-100 py-3">
     <div class="col-12 d-flex flex-column justify-content-center align-items-center">
         <a asp-page="/Index" class="text-decoration-none admin-back-link">
             <i class="fa-solid fa-arrow-left fa-2x me-2"></i>
-            <span class="fw-bold" style="position: relative; bottom: 7px;">Back to manager panel</span>
+            <span class="fw-bold" style="position: relative; bottom: 7px;">Back to enterprises</span>
         </a>
         @if (RouteData.Values["vehicleBrandId"] != null)
         {

@@ -7,7 +7,7 @@
 }
 
 <div class="header-with-icon mb-4">
-    <a asp-page="./Index">
+    <a href="@(HttpContext.Session.GetString("VehicleIndexReturnUrl") ?? "/Vehicles")" class="btn btn-link">
         <i class="fa-solid fa-arrow-left fa-2x me-2"></i>
     </a>
     <h1 class="text-center">Edit Vehicle</h1>

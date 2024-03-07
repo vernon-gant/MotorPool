@@ -14,39 +14,35 @@ namespace MotorPool.Services.Vehicles.Services.Concrete;
 public class DefaultVehicleQueryService(AppDbContext dbContext, IMapper mapper) : VehicleQueryService
 {
 
-    public async ValueTask<List<VehicleViewModel>> GetAllAsync(int managerId)
+    public async ValueTask<List<VehicleViewModel>> GetAllAsync(VehicleQueryOptions? queryOptions)
     {
-        return await VehiclesWithIncludesQuery()
-                     .ForManager(managerId)
-                     .Select(vehicle => mapper.Map<VehicleViewModel>(vehicle))
-                     .ToListAsync();
+        IQueryable<Vehicle> allVehiclesQuery = VehicleQueryBase().WithQueryOptions(queryOptions);
+
+        return await allVehiclesQuery.Select(vehicle => mapper.Map<VehicleViewModel>(vehicle)).ToListAsync();
     }
 
-    public async ValueTask<PagedViewModel<VehicleViewModel>> GetAllAsync(int managerId, PageOptions pageOptions, int? vehicleBrandId)
+    public async ValueTask<PagedViewModel<VehicleViewModel>> GetAllAsync(PageOptions pageOptions, VehicleQueryOptions? queryOptions)
     {
-        IQueryable<Vehicle> managerVehiclesQuery = VehiclesWithIncludesQuery().ForManager(managerId);
+        IQueryable<Vehicle> allVehiclesQuery = VehicleQueryBase().WithQueryOptions(queryOptions);
 
-        if (vehicleBrandId.HasValue) managerVehiclesQuery = managerVehiclesQuery.Where(vehicle => vehicle.VehicleBrandId == vehicleBrandId);
-
-        List<VehicleViewModel> pagedVehicleModels = await managerVehiclesQuery
+        List<VehicleViewModel> pagedVehicleModels = await allVehiclesQuery
                                                           .Page(pageOptions)
-                                                          .OrderBy(vehicle => vehicle.VehicleId)
                                                           .Select(vehicle => mapper.Map<VehicleViewModel>(vehicle))
                                                           .ToListAsync();
 
-        int managerVehiclesCount = await managerVehiclesQuery.CountAsync();
+        int allVehiclesQueryCount = await allVehiclesQuery.CountAsync();
 
-        return PagedViewModel<VehicleViewModel>.FromOptionsAndElements(pageOptions, pagedVehicleModels, managerVehiclesCount);
+        return PagedViewModel<VehicleViewModel>.FromOptionsAndElements(pageOptions, pagedVehicleModels, allVehiclesQueryCount);
     }
 
     public async ValueTask<VehicleViewModel?> GetByIdAsync(int vehicleId)
     {
-        Vehicle? foundVehicle = await VehiclesWithIncludesQuery().FirstOrDefaultAsync(vehicle => vehicle.VehicleId == vehicleId);
+        Vehicle? foundVehicle = await VehicleQueryBase().FirstOrDefaultAsync(vehicle => vehicle.VehicleId == vehicleId);
 
         return mapper.Map<VehicleViewModel>(foundVehicle);
     }
 
-    private IQueryable<Vehicle> VehiclesWithIncludesQuery() => dbContext.Vehicles
+    private IQueryable<Vehicle> VehicleQueryBase() => dbContext.Vehicles
                                                                         .AsNoTracking()
                                                                         .Include(vehicle => vehicle.VehicleBrand)
                                                                         .Include(vehicle => vehicle.DriverVehicles)

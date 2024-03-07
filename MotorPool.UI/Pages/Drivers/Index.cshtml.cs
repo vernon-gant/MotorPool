@@ -18,7 +18,7 @@ public class IndexModel(DriverQueryService driverQueryService) : PagedModel
         PagedViewModel<DriverViewModel> pagedViewModel = await driverQueryService.GetAllAsync(User.GetManagerId(), new ()
         {
             ElementsPerPage = ELEMENTS_PER_PAGE,
-            PageNumber = CurrentPage
+            CurrentPage = CurrentPage
         });
 
         TotalPages = pagedViewModel.TotalPages;

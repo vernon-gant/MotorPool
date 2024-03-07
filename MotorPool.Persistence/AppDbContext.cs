@@ -19,6 +19,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     public DbSet<Manager> Managers { get; set; }
 
+    public DbSet<EnterpriseManager> EnterpriseManagers { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
@@ -26,12 +28,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.Entity<VehicleBrand>().HasData(SeedingData.VehicleBrands);
 
         modelBuilder.Entity<Enterprise>().HasData(SeedingData.Enterprises);
-
-        modelBuilder.Entity<Vehicle>().HasData(SeedingData.Vehicles);
-
-        modelBuilder.Entity<Driver>().HasData(SeedingData.Drivers);
-
-        modelBuilder.Entity<DriverVehicle>().HasData(SeedingData.GenerateDriverVehicleAssignments());
 
         modelBuilder.Entity<Manager>().HasData(SeedingData.Managers);
 

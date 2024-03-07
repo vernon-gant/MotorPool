@@ -3,11 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using MotorPool.Services.VehicleBrand.Services;
 using MotorPool.Services.Vehicles.Models;
 using MotorPool.Services.Vehicles.Services;
-using MotorPool.UI.PageFilters;
 
 namespace MotorPool.UI.Pages.Vehicles;
 
-public class EditModel(VehicleActionService vehicleActionService, VehicleQueryService vehicleQueryService, VehicleBrandService vehicleBrandService) : VehicleBrandsSelectListPageModel
+public class EditModel(VehicleActionService vehicleActionService, VehicleBrandService vehicleBrandService) : VehicleBrandsSelectListPageModel
 {
 
     [BindProperty]
@@ -17,11 +16,7 @@ public class EditModel(VehicleActionService vehicleActionService, VehicleQuerySe
     {
         await PopulateVehicleBrandsDropDownList(vehicleBrandService);
 
-        VehicleViewModel? foundVehicle = await vehicleQueryService.GetByIdAsync(vehicleId);
-
-        if (foundVehicle == null) return NotFound();
-
-        VehicleViewModel = foundVehicle;
+        VehicleViewModel = HttpContext.Items["Vehicle"] as VehicleViewModel ?? throw new InvalidOperationException();
 
         return Page();
     }

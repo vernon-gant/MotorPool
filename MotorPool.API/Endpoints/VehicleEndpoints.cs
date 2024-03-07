@@ -5,6 +5,7 @@ using AutoMapper;
 using MotorPool.API.EndpointFilters;
 using MotorPool.Services.Manager;
 using MotorPool.Services.Utils;
+using MotorPool.Services.Vehicles;
 using MotorPool.Services.Vehicles.Exceptions;
 using MotorPool.Services.Vehicles.Models;
 using MotorPool.Services.Vehicles.Services;
@@ -62,9 +63,7 @@ public static class VehicleEndpoints
     {
         int managerId = user.GetManagerId();
 
-        if (pageOptionsDto.IsEmpty) return Results.Ok(await vehicleQueryService.GetAllAsync(managerId));
-
-        return Results.Ok(await vehicleQueryService.GetAllAsync(managerId, pageOptionsDto));
+        return Results.Ok(await vehicleQueryService.GetAllAsync(pageOptionsDto.ToPageOptions(), new VehicleQueryOptions { ManagerId = managerId }));
     }
 
     private static Task<IResult> GetById(int vehicleId, HttpContext httpContext)

@@ -6,21 +6,16 @@ public class PageOptionsDTO
 {
 
     [NonNegative(CanBeZero = false)]
-    public int? PageNumber { get; set; }
+    public int? CurrentPage { get; set; }
 
     [NonNegative(CanBeZero = false)]
     public int? ElementsPerPage { get; set; }
 
-    public bool IsEmpty => PageNumber == null && ElementsPerPage == null;
-
-    public static implicit operator PageOptions(PageOptionsDTO dto)
+    public PageOptions ToPageOptions(int? defaultElementsPerPage = null) => new ()
     {
-        return new ()
-        {
-            PageNumber = dto.PageNumber ?? PageOptions.DEFAULT_PAGE_NUMBER,
-            ElementsPerPage = dto.ElementsPerPage ?? PageOptions.DEFAULT_ELEMENTS_PER_PAGE_AMOUNT
-        };
-    }
+        CurrentPage = CurrentPage ?? PageOptions.DEFAULT_PAGE_NUMBER,
+        ElementsPerPage = ElementsPerPage ?? defaultElementsPerPage ?? PageOptions.DEFAULT_ELEMENTS_PER_PAGE_AMOUNT
+    };
 
 }
 
@@ -29,9 +24,9 @@ public class PageOptions
 
     public static readonly int DEFAULT_PAGE_NUMBER = 1;
 
-    public static readonly int DEFAULT_ELEMENTS_PER_PAGE_AMOUNT = 100;
+    public static readonly int DEFAULT_ELEMENTS_PER_PAGE_AMOUNT = 30;
 
-    public required int PageNumber { get; set; }
+    public required int CurrentPage { get; set; }
 
     public required int ElementsPerPage { get; set; }
 
