@@ -80,6 +80,7 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Error");
+    app.UseStatusCodePagesWithReExecute("/Error/Status", "?statusCode={0}");
     app.UseHsts();
 }
 
