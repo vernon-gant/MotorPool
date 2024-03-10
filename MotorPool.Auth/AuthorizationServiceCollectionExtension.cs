@@ -29,6 +29,7 @@ public static class AuthorizationServiceCollectionExtension
     {
         services.AddAuthorization(options =>
         {
+            options.AddPolicy("IsAuthenticated", policy => policy.RequireAuthenticatedUser());
             options.AddPolicy("IsManager", policy => policy.RequireClaim("ManagerId"));
 
             options.DefaultPolicy = new AuthorizationPolicyBuilder()

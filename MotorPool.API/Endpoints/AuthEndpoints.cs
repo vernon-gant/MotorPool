@@ -24,7 +24,7 @@ public static class AuthEndpoints
                         .Produces(StatusCodes.Status400BadRequest);
 
         authGroupBuilder.MapGet("me", Me)
-                        .RequireAuthorization()
+                        .RequireAuthorization("IsAuthenticated")
                         .Produces(StatusCodes.Status200OK)
                         .Produces(StatusCodes.Status401Unauthorized)
                         .Produces<UserViewModel>();
