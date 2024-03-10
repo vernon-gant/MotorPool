@@ -38,7 +38,7 @@
                     <form asp-page="./Delete" asp-route-vehicleId="@Model.Vehicle.VehicleId" method="post">
                         <button type="submit" class="btn btn-danger">Confirm Delete</button>
                     </form>
-                    <a asp-page="./Index" class="btn btn-secondary">
+                    <a href="@(HttpContext.Session.GetString("VehicleIndexReturnUrl") ?? "/Vehicles")" class="btn btn-secondary">
                         <i class="fas fa-arrow-left me-2"></i>Cancel
                     </a>
                 </div>

@@ -2,18 +2,14 @@ using System.Globalization;
 
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
 
 using MotorPool.Auth;
-using MotorPool.Auth.Middleware;
-using MotorPool.Auth.Middleware.API;
 using MotorPool.Persistence;
 using MotorPool.Services.Drivers;
 using MotorPool.Services.Enterprise;
 using MotorPool.Services.Manager;
 using MotorPool.Services.VehicleBrand;
 using MotorPool.Services.Vehicles;
-using MotorPool.Services.Vehicles.Services;
 using MotorPool.UI.PageFilters;
 using MotorPool.Utils;
 
