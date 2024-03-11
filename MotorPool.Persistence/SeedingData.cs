@@ -41,7 +41,7 @@ public static class SeedingData
         new Enterprise { EnterpriseId = 3, Name = "Microsoft", City = "Chicago", Street = "Michigan Avenue", VAT = "US123789456", TimeZoneId = "America/Chicago", FoundedOn = DateOnly.FromDateTime(new DateTime(2000, 4, 4)) },
         new Enterprise { EnterpriseId = 4, Name = "Amazon", City = "Houston", Street = "Texas Avenue", VAT = "US456123789", TimeZoneId = "America/Chicago", FoundedOn = DateOnly.FromDateTime(new DateTime(1994, 7, 5)) },
         new Enterprise { EnterpriseId = 5, Name = "Tochmash", City = "Vladimir", Street = "Severnaya Street", VAT = "RU789456123", TimeZoneId = "Europe/Moscow", FoundedOn = DateOnly.FromDateTime(new DateTime(1950, 1, 1)) },
-        new Enterprise { EnterpriseId = 6, Name = "SAP", City = "Berlin", Street = "Wehlistrasse", VAT = "DE3242354325", TimeZoneId = "UCT", FoundedOn = DateOnly.FromDateTime(new DateTime(1990, 4, 1)) }
+        new Enterprise { EnterpriseId = 6, Name = "SAP", City = "Berlin", Street = "Wehlistrasse", VAT = "DE3242354325", TimeZoneId = "Etc/UTC", FoundedOn = DateOnly.FromDateTime(new DateTime(1990, 4, 1)) }
     ];
 
     public static List<Manager> Managers =>

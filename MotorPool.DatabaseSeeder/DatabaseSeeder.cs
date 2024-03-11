@@ -3,7 +3,7 @@ using MotorPool.Persistence;
 
 namespace MotorPool.DatabaseSeeder;
 
-public class DatabaseSeeder(EnterpriseDataGenerator dataGenerator, RelationsGenerator relationsGenerator, AppDbContext dbContext)
+public class DatabaseSeeder(VehicleDriversGenerator dataGenerator, RelationsGenerator relationsGenerator, AppDbContext dbContext)
 {
 
     public void Seed(SeedingOptions options)

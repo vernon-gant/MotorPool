@@ -2,7 +2,7 @@
 
 namespace MotorPool.Utils.ValidationAttributes;
 
-public class DateRangeAttribute : ValidationAttribute
+public class YearRangeAttribute : ValidationAttribute
 {
 
     public required int MinYear { get; init; }

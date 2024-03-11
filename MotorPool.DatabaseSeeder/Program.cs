@@ -28,7 +28,7 @@ AppDbContext dbContext = new (new DbContextOptionsBuilder<AppDbContext>().UseSql
 
 MotorPoolRandomizer randomizer = new PseudoMotorPoolRandomizer();
 
-EnterpriseDataGenerator dataGenerator = new RandomEnterpriseDataGenerator(randomizer);
+VehicleDriversGenerator dataGenerator = new RandomVehicleDriversGenerator(randomizer);
 
 RelationsGenerator relationsGenerator = new RandomRelationsGenerator(randomizer);
 

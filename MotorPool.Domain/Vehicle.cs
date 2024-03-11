@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MotorPool.Domain;
 
@@ -24,13 +25,26 @@ public class Vehicle
     [Required]
     public decimal Mileage { get; set; }
 
+    public DateTime AcquiredOn { get; set; }
+
+    [NotMapped]
+    public DateTime AcquiredOnInEnterpriseTimeZone
+    {
+        get
+        {
+            string enterpriseTimeZoneId = Enterprise?.TimeZoneId ?? throw new InvalidOperationException("Enterprise is not set.");
+            TimeZoneInfo enterpriseTimeZone = TimeZoneInfo.FindSystemTimeZoneById(enterpriseTimeZoneId);
+            return TimeZoneInfo.ConvertTimeFromUtc(AcquiredOn, enterpriseTimeZone);
+        }
+    }
+
     public int VehicleBrandId { get; set; }
 
     public VehicleBrand VehicleBrand { get; set; }
 
-    public int? EnterpriseId { get; set; }
+    public int EnterpriseId { get; set; }
 
-    public Enterprise Enterprise { get; set; } = default!;
+    public Enterprise? Enterprise { get; set; }
 
     public List<DriverVehicle> DriverVehicles { get; set; } = new ();
 

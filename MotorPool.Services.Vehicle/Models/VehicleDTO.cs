@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-using MotorPool.Abstractions;
 using MotorPool.Utils.ValidationAttributes;
 
 namespace MotorPool.Services.Vehicles.Models;
 
-public class VehicleDTO : EnterpriseOwned
+public class VehicleDTO
 {
 
     [MinLength(17)]
@@ -19,7 +18,7 @@ public class VehicleDTO : EnterpriseOwned
     public decimal Cost { get; set; }
 
     [Display(Name = "Manufacture year")]
-    [DateRange(MinYear = 2000)]
+    [YearRange(MinYear = 2000)]
     [Required]
     public int ManufactureYear { get; set; }
 
@@ -32,10 +31,14 @@ public class VehicleDTO : EnterpriseOwned
     [Range(0, 1000000)]
     public decimal Mileage { get; set; }
 
+    [Required]
+    [ValidUTCDateTime]
+    [Display(Name = "Acquired on")]
+    [DisplayFormat(DataFormatString = "{0:dddd d MMMM, yyyy HH:mm}", ApplyFormatInEditMode = true)]
+    public DateTime AcquiredOn { get; set; }
+
     [Display(Name = "Vehicle brand")]
     [Required]
     public int VehicleBrandId { get; set; }
-
-    public int? EnterpriseId { get; set; }
 
 }

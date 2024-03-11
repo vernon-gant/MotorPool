@@ -1,7 +1,5 @@
 ﻿using System.Text.Json.Serialization;
 
-using MotorPool.Abstractions;
-
 namespace MotorPool.Services.Drivers.Models;
 
 public class DriverViewModel : DriverDTO

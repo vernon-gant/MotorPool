@@ -1,8 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-using MotorPool.Abstractions;
-
 namespace MotorPool.Services.Vehicles.Models;
 
 public class VehicleViewModel : VehicleDTO
