@@ -31,6 +31,8 @@
                         <p class="card-text">@Html.DisplayNameFor(_ => enterpriseViewModel.City): <strong>@enterpriseViewModel.City</strong></p>
                         <p class="card-text">@Html.DisplayNameFor(_ => enterpriseViewModel.Street): <strong>@enterpriseViewModel.Street</strong></p>
                         <p class="card-text">@Html.DisplayNameFor(_ => enterpriseViewModel.VAT): <strong>@enterpriseViewModel.VAT</strong></p>
+                        <p class="card-text">@Html.DisplayNameFor(_ => enterpriseViewModel.TimeZoneId): <strong>@enterpriseViewModel.TimeZoneId</strong></p>
+                        <p class="card-text">Managed by: <strong>@enterpriseViewModel.ManagerIds.Count</strong> manager(s)</p>
                         <p class="card-text">@Html.DisplayNameFor(_ => enterpriseViewModel.FoundedOn): <strong>@enterpriseViewModel.FoundedOn.ToShortDateString()</strong></p>
                     </div>
                     <div class="card-footer bg-transparent">
