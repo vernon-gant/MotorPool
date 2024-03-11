@@ -30,7 +30,7 @@ public class Vehicle
 
     public int? EnterpriseId { get; set; }
 
-    public Enterprise? Enterprise { get; set; }
+    public Enterprise Enterprise { get; set; } = default!;
 
     public List<DriverVehicle> DriverVehicles { get; set; } = new ();
 

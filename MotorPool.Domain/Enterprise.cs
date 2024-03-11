@@ -20,7 +20,10 @@ public class Enterprise
     [MaxLength(100)]
     public string VAT { get; set; } = null!;
 
-    public DateTime FoundedOn { get; set; }
+    [MaxLength(100)]
+    public string TimeZoneId { get; set; } = string.Empty;
+
+    public DateOnly FoundedOn { get; set; }
 
     public List<Vehicle> Vehicles { get; set; } = new ();
 

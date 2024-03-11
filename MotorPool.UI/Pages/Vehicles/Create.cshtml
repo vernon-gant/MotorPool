@@ -53,3 +53,16 @@
         </form>
     </div>
 </div>
+
+<script>
+document.getElementById("vehicleForm").addEventListener("submit", function(event) {
+    var localTimeElement = document.getElementById("purchaseTimeLocal");
+    var utcTimeElement = document.getElementById("purchaseTimeUtc");
+
+    var localTime = new Date(localTimeElement.value);
+    utcTimeElement.value = localTime.toISOString();
+
+    // Prevents the local time field from being submitted.
+    localTimeElement.name = '';
+});
+</script>

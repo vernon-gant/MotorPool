@@ -36,11 +36,12 @@ public static class SeedingData
 
     public static List<Enterprise> Enterprises =>
     [
-        new Enterprise { EnterpriseId = 1, Name = "MotorPool", City = "New York", Street = "5th Avenue", VAT = "US123456789" },
-        new Enterprise { EnterpriseId = 2, Name = "MotorPool", City = "Los Angeles", Street = "Hollywood Boulevard", VAT = "US987654321" },
-        new Enterprise { EnterpriseId = 3, Name = "MotorPool", City = "Chicago", Street = "Michigan Avenue", VAT = "US123789456" },
-        new Enterprise { EnterpriseId = 4, Name = "MotorPool", City = "Houston", Street = "Texas Avenue", VAT = "US456123789" },
-        new Enterprise { EnterpriseId = 5, Name = "MotorPool", City = "Philadelphia", Street = "Benjamin Franklin Parkway", VAT = "US789456123" }
+        new Enterprise { EnterpriseId = 1, Name = "Garosh industries", City = "New York", Street = "5th Avenue", VAT = "US123456789", TimeZoneId = "America/New_York", FoundedOn = DateOnly.FromDateTime(new DateTime(2012, 1, 1)) },
+        new Enterprise { EnterpriseId = 2, Name = "Apple", City = "Los Angeles", Street = "Hollywood Boulevard", VAT = "US987654321", TimeZoneId = "America/Los_Angeles", FoundedOn = DateOnly.FromDateTime(new DateTime(2006, 4, 1)) },
+        new Enterprise { EnterpriseId = 3, Name = "Microsoft", City = "Chicago", Street = "Michigan Avenue", VAT = "US123789456", TimeZoneId = "America/Chicago", FoundedOn = DateOnly.FromDateTime(new DateTime(2000, 4, 4)) },
+        new Enterprise { EnterpriseId = 4, Name = "Amazon", City = "Houston", Street = "Texas Avenue", VAT = "US456123789", TimeZoneId = "America/Chicago", FoundedOn = DateOnly.FromDateTime(new DateTime(1994, 7, 5)) },
+        new Enterprise { EnterpriseId = 5, Name = "Tochmash", City = "Vladimir", Street = "Severnaya Street", VAT = "RU789456123", TimeZoneId = "Europe/Moscow", FoundedOn = DateOnly.FromDateTime(new DateTime(1950, 1, 1)) },
+        new Enterprise { EnterpriseId = 6, Name = "SAP", City = "Berlin", Street = "Wehlistrasse", VAT = "DE3242354325", TimeZoneId = "Europe/Berlin", FoundedOn = DateOnly.FromDateTime(new DateTime(1990, 4, 1)) }
     ];
 
     public static List<Manager> Managers =>

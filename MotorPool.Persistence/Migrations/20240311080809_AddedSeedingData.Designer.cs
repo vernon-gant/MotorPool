@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MotorPool.Persistence;
 
@@ -11,9 +12,11 @@ using MotorPool.Persistence;
 namespace MotorPool.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240311080809_AddedSeedingData")]
+    partial class AddedSeedingData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,8 +90,8 @@ namespace MotorPool.Persistence.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateOnly>("FoundedOn")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("FoundedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -125,7 +128,7 @@ namespace MotorPool.Persistence.Migrations
                         {
                             EnterpriseId = 1,
                             City = "New York",
-                            FoundedOn = new DateOnly(2012, 1, 1),
+                            FoundedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Garosh industries",
                             Street = "5th Avenue",
                             TimeZoneId = "America/New_York",
@@ -135,7 +138,7 @@ namespace MotorPool.Persistence.Migrations
                         {
                             EnterpriseId = 2,
                             City = "Los Angeles",
-                            FoundedOn = new DateOnly(2006, 4, 1),
+                            FoundedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Apple",
                             Street = "Hollywood Boulevard",
                             TimeZoneId = "America/Los_Angeles",
@@ -145,7 +148,7 @@ namespace MotorPool.Persistence.Migrations
                         {
                             EnterpriseId = 3,
                             City = "Chicago",
-                            FoundedOn = new DateOnly(2000, 4, 4),
+                            FoundedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Microsoft",
                             Street = "Michigan Avenue",
                             TimeZoneId = "America/Chicago",
@@ -155,7 +158,7 @@ namespace MotorPool.Persistence.Migrations
                         {
                             EnterpriseId = 4,
                             City = "Houston",
-                            FoundedOn = new DateOnly(1994, 7, 5),
+                            FoundedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Amazon",
                             Street = "Texas Avenue",
                             TimeZoneId = "America/Chicago",
@@ -165,7 +168,7 @@ namespace MotorPool.Persistence.Migrations
                         {
                             EnterpriseId = 5,
                             City = "Vladimir",
-                            FoundedOn = new DateOnly(1950, 1, 1),
+                            FoundedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Tochmash",
                             Street = "Severnaya Street",
                             TimeZoneId = "Europe/Moscow",
@@ -175,7 +178,7 @@ namespace MotorPool.Persistence.Migrations
                         {
                             EnterpriseId = 6,
                             City = "Berlin",
-                            FoundedOn = new DateOnly(1990, 4, 1),
+                            FoundedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "SAP",
                             Street = "Wehlistrasse",
                             TimeZoneId = "Europe/Berlin",

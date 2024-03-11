@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MotorPool.Persistence;
 
@@ -11,9 +12,11 @@ using MotorPool.Persistence;
 namespace MotorPool.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240311075121_AddedTimeZoneId_Enterprise")]
+    partial class AddedTimeZoneId_Enterprise
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,8 +90,8 @@ namespace MotorPool.Persistence.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateOnly>("FoundedOn")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("FoundedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -125,61 +128,51 @@ namespace MotorPool.Persistence.Migrations
                         {
                             EnterpriseId = 1,
                             City = "New York",
-                            FoundedOn = new DateOnly(2012, 1, 1),
-                            Name = "Garosh industries",
+                            FoundedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "MotorPool",
                             Street = "5th Avenue",
-                            TimeZoneId = "America/New_York",
+                            TimeZoneId = "",
                             VAT = "US123456789"
                         },
                         new
                         {
                             EnterpriseId = 2,
                             City = "Los Angeles",
-                            FoundedOn = new DateOnly(2006, 4, 1),
-                            Name = "Apple",
+                            FoundedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "MotorPool",
                             Street = "Hollywood Boulevard",
-                            TimeZoneId = "America/Los_Angeles",
+                            TimeZoneId = "",
                             VAT = "US987654321"
                         },
                         new
                         {
                             EnterpriseId = 3,
                             City = "Chicago",
-                            FoundedOn = new DateOnly(2000, 4, 4),
-                            Name = "Microsoft",
+                            FoundedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "MotorPool",
                             Street = "Michigan Avenue",
-                            TimeZoneId = "America/Chicago",
+                            TimeZoneId = "",
                             VAT = "US123789456"
                         },
                         new
                         {
                             EnterpriseId = 4,
                             City = "Houston",
-                            FoundedOn = new DateOnly(1994, 7, 5),
-                            Name = "Amazon",
+                            FoundedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "MotorPool",
                             Street = "Texas Avenue",
-                            TimeZoneId = "America/Chicago",
+                            TimeZoneId = "",
                             VAT = "US456123789"
                         },
                         new
                         {
                             EnterpriseId = 5,
-                            City = "Vladimir",
-                            FoundedOn = new DateOnly(1950, 1, 1),
-                            Name = "Tochmash",
-                            Street = "Severnaya Street",
-                            TimeZoneId = "Europe/Moscow",
-                            VAT = "RU789456123"
-                        },
-                        new
-                        {
-                            EnterpriseId = 6,
-                            City = "Berlin",
-                            FoundedOn = new DateOnly(1990, 4, 1),
-                            Name = "SAP",
-                            Street = "Wehlistrasse",
-                            TimeZoneId = "Europe/Berlin",
-                            VAT = "DE3242354325"
+                            City = "Philadelphia",
+                            FoundedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "MotorPool",
+                            Street = "Benjamin Franklin Parkway",
+                            TimeZoneId = "",
+                            VAT = "US789456123"
                         });
                 });
 
