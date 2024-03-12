@@ -11,7 +11,7 @@ public class Vehicle
     [MinLength(17)]
     [MaxLength(17)]
     [Required]
-    public string MotorVIN { get; set; }
+    public string MotorVIN { get; set; } = string.Empty;
 
     [DisplayFormat(DataFormatString = "{0:C}")]
     public decimal Cost { get; set; }
@@ -20,7 +20,7 @@ public class Vehicle
     public int ManufactureYear { get; set; }
 
     [MaxLength(100)]
-    public string ManufactureLand { get; set; }
+    public string ManufactureLand { get; set; } = string.Empty;
 
     [Required]
     public decimal Mileage { get; set; }
@@ -28,19 +28,21 @@ public class Vehicle
     public DateTime AcquiredOn { get; set; }
 
     [NotMapped]
-    public DateTime AcquiredOnInEnterpriseTimeZone
+    public string AcquiredOnInEnterpriseTimeZone
     {
         get
         {
             string enterpriseTimeZoneId = Enterprise?.TimeZoneId ?? throw new InvalidOperationException("Enterprise is not set.");
             TimeZoneInfo enterpriseTimeZone = TimeZoneInfo.FindSystemTimeZoneById(enterpriseTimeZoneId);
-            return TimeZoneInfo.ConvertTimeFromUtc(AcquiredOn, enterpriseTimeZone);
+            DateTime acquiredOnInEnterpriseZone = TimeZoneInfo.ConvertTimeFromUtc(AcquiredOn, enterpriseTimeZone);
+
+            return new DateTimeOffset(acquiredOnInEnterpriseZone, enterpriseTimeZone.GetUtcOffset(AcquiredOn)).ToString("o");
         }
     }
 
     public int VehicleBrandId { get; set; }
 
-    public VehicleBrand VehicleBrand { get; set; }
+    public VehicleBrand? VehicleBrand { get; set; }
 
     public int EnterpriseId { get; set; }
 

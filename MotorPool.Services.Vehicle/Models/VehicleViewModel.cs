@@ -13,6 +13,9 @@ public class VehicleViewModel : VehicleDTO
     [Display(Name = "Model name")]
     public required string ModelName { get; set; }
 
+    [Display(Name = "Acquired on")]
+    public string AcquiredOn { get; set; }
+
     public List<int> DriverIds { get; set; } = new ();
 
     [JsonIgnore]

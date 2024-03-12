@@ -33,8 +33,6 @@ public class VehicleDTO
 
     [Required]
     [ValidUTCDateTime]
-    [Display(Name = "Acquired on")]
-    [DisplayFormat(DataFormatString = "{0:dddd d MMMM, yyyy HH:mm}", ApplyFormatInEditMode = true)]
     public DateTime AcquiredOn { get; set; }
 
     [Display(Name = "Vehicle brand")]

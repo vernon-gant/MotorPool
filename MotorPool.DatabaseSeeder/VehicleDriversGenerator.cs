@@ -35,7 +35,7 @@ public class RandomVehicleDriversGenerator(MotorPoolRandomizer randomizer) : Veh
                 Mileage = randomizer.FromRange(0, 1000000),
                 EnterpriseId = enterpriseId,
                 VehicleBrandId = vehicleBrandIds[randomizer.FromRange(0, vehicleBrandIds.Count - 1)],
-                AcquiredOn = _faker.Date.Between(new DateTime(2005,1,1),DateTime.Now)
+                AcquiredOn = _faker.Date.Between(new DateTime(2005,1,1,0,0,0,0,DateTimeKind.Utc),DateTime.Now)
             };
             vehicles.Add(vehicle);
         }
