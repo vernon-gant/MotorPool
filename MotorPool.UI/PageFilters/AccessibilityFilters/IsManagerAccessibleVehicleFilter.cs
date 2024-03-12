@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 using MotorPool.Services.Manager;
 
-namespace MotorPool.UI.PageFilters;
+namespace MotorPool.UI.PageFilters.AccessibilityFilters;
 
 public class IsManagerAccessibleVehicleFilter(ManagerPermissionService managerPermissionService) : IAsyncPageFilter
 {

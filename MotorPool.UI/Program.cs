@@ -11,6 +11,7 @@ using MotorPool.Services.Manager;
 using MotorPool.Services.VehicleBrand;
 using MotorPool.Services.Vehicles;
 using MotorPool.UI.PageFilters;
+using MotorPool.UI.PageFilters.AccessibilityFilters;
 using MotorPool.Utils;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
