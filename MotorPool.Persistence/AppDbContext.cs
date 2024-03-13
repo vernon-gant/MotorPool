@@ -21,6 +21,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     public DbSet<EnterpriseManager> EnterpriseManagers { get; set; }
 
+    public DbSet<GeoPoint> GeoPoints { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
@@ -32,6 +34,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.Entity<Manager>().HasData(SeedingData.Managers);
 
         modelBuilder.Entity<EnterpriseManager>().HasData(SeedingData.EnterpriseManagers);
+
+        modelBuilder.Entity<GeoPoint>().HasData(SeedingData.GeoPoints);
     }
 
 }
