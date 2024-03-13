@@ -121,18 +121,13 @@ public static class VehicleEndpoints
 
     private static async Task<IResult> GetGeoPoints(GeoQueryService geoQueryService, [AsParameters] GetGeoPointsParameters parameters, HttpContext httpContext)
     {
-        parameters.Format ??= GeoPointFormat.JSON;
+        if (!parameters.IsValid) return Results.BadRequest("Invalid date range");
 
         List<GeoPointViewModel> geoPoints = await geoQueryService.GetVehicleGeopoints(parameters.VehicleId, parameters.StartDateTime, parameters.EndDateTime);
 
         if (geoPoints.Count == 0) return Results.NoContent();
 
-        return parameters.Format switch
-        {
-            GeoPointFormat.JSON => Results.Ok(geoPoints),
-            GeoPointFormat.GeoJSON => Results.Ok(geoPoints.ToGeoJSON()),
-            _ => throw new InvalidOperationException("Invalid GeoPointFormat")
-        };
+        return parameters.ReturnGeoJSON.HasValue && parameters.ReturnGeoJSON.Value ? Results.Ok(geoPoints.ToGeoJSON()) : Results.Ok(geoPoints);
     }
 
     private class GetGeoPointsParameters
@@ -144,16 +139,9 @@ public static class VehicleEndpoints
 
         public DateTime EndDateTime { get; set; }
 
-        public GeoPointFormat? Format { get; set; } = GeoPointFormat.JSON;
+        public bool? ReturnGeoJSON { get; set; }
 
-    }
-
-    private enum GeoPointFormat
-    {
-
-        JSON,
-
-        GeoJSON
+        public bool IsValid => StartDateTime < EndDateTime;
 
     }
 

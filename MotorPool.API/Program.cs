@@ -90,7 +90,6 @@ builder.Services.ConfigureHttpJsonOptions(options =>
     options.SerializerOptions.AllowTrailingCommas = true;
     options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     options.SerializerOptions.PropertyNameCaseInsensitive = true;
-    options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
 WebApplication app = builder.Build();
