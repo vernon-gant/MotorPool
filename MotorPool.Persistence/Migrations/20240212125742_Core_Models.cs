@@ -97,11 +97,11 @@ namespace MotorPool.Persistence.Migrations
                 columns: new[] { "EnterpriseId", "City", "FoundedOn", "Name", "Street", "VAT" },
                 values: new object[,]
                 {
-                    { 1, "New York", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "MotorPool", "5th Avenue", "US123456789" },
-                    { 2, "Los Angeles", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "MotorPool", "Hollywood Boulevard", "US987654321" },
-                    { 3, "Chicago", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "MotorPool", "Michigan Avenue", "US123789456" },
-                    { 4, "Houston", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "MotorPool", "Texas Avenue", "US456123789" },
-                    { 5, "Philadelphia", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "MotorPool", "Benjamin Franklin Parkway", "US789456123" }
+                    { 1, "New York", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "MotorPool1", "5th Avenue", "US123456789" },
+                    { 2, "Los Angeles", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "MotorPool2", "Hollywood Boulevard", "US987654321" },
+                    { 3, "Chicago", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "MotorPool3", "Michigan Avenue", "US123789456" },
+                    { 4, "Houston", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "MotorPool4", "Texas Avenue", "US456123789" },
+                    { 5, "Philadelphia", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "MotorPool5", "Benjamin Franklin Parkway", "US789456123" }
                 });
 
             migrationBuilder.UpdateData(

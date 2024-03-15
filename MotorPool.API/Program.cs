@@ -15,6 +15,7 @@ using MotorPool.Auth.Services;
 using MotorPool.Persistence;
 using MotorPool.Services.Drivers;
 using MotorPool.Services.Enterprise;
+using MotorPool.Services.Geo;
 using MotorPool.Services.VehicleBrand;
 using MotorPool.Services.Vehicles;
 using MotorPool.Utils;
@@ -32,6 +33,7 @@ builder.Services.AddVehicleServices();
 builder.Services.AddVehicleBrandServices();
 builder.Services.AddEnterpriseServices();
 builder.Services.AddDriverServices();
+builder.Services.AddGeoServices();
 builder.Services.AddAppIdentity(connectionString);
 builder.Services
        .AddAuthentication(options =>

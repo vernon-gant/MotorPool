@@ -28,7 +28,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.DatabaseSeeder", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.Utils", "MotorPool.Services.Utils\MotorPool.Services.Utils.csproj", "{E9843474-6D72-4099-B34D-F0DD1E298E9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.TrackGenerator", "MotorPool.TrackGenerator\MotorPool.TrackGenerator.csproj", "{4B35D5E3-181D-4139-A903-DEDB893E6FDC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.Geo", "MotorPool.Services.Geo\MotorPool.Services.Geo.csproj", "{3C94B63D-A5EF-4CD8-BD4C-A9ABFF09A767}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -92,9 +92,9 @@ Global
 		{E9843474-6D72-4099-B34D-F0DD1E298E9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9843474-6D72-4099-B34D-F0DD1E298E9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9843474-6D72-4099-B34D-F0DD1E298E9B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4B35D5E3-181D-4139-A903-DEDB893E6FDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4B35D5E3-181D-4139-A903-DEDB893E6FDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4B35D5E3-181D-4139-A903-DEDB893E6FDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4B35D5E3-181D-4139-A903-DEDB893E6FDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C94B63D-A5EF-4CD8-BD4C-A9ABFF09A767}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C94B63D-A5EF-4CD8-BD4C-A9ABFF09A767}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C94B63D-A5EF-4CD8-BD4C-A9ABFF09A767}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C94B63D-A5EF-4CD8-BD4C-A9ABFF09A767}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

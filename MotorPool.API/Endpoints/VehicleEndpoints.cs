@@ -1,8 +1,9 @@
 ﻿using System.Security.Claims;
 
-using AutoMapper;
-
 using MotorPool.API.EndpointFilters;
+using MotorPool.Services.Geo;
+using MotorPool.Services.Geo.Models;
+using MotorPool.Services.Geo.Services;
 using MotorPool.Services.Manager;
 using MotorPool.Services.Utils;
 using MotorPool.Services.Vehicles;
@@ -21,42 +22,44 @@ public static class VehicleEndpoints
                                                  .MapGroup("vehicles")
                                                  .WithParameterValidation();
 
+        RouteGroupBuilder vehicleWithIdGroupBuilder = vehiclesGroupBuilder.MapGroup("{vehicleId:int}")
+                                                                          .AddEndpointFilter<VehicleExistsFilter>()
+                                                                          .AddEndpointFilter<IsManagerAccessibleVehicleFilter>();
+
         vehiclesGroupBuilder.MapGet("", GetAll)
                             .WithName("GetAllVehicles")
                             .Produces<List<VehicleViewModel>>();
 
-        vehiclesGroupBuilder.MapGet("{vehicleId:int}", GetById)
-                            .AddEndpointFilter<VehicleExistsFilter>()
-                            .AddEndpointFilter<IsManagerAccessibleVehicleFilter>()
-                            .WithName("GetVehicleById")
-                            .Produces<VehicleViewModel>()
-                            .Produces(StatusCodes.Status404NotFound)
-                            .Produces(StatusCodes.Status403Forbidden);
-
         vehiclesGroupBuilder.MapPost("", Create)
-                            .WithParameterValidation()
                             .WithName("CreateVehicle")
                             .Produces<VehicleViewModel>()
                             .Produces(StatusCodes.Status400BadRequest)
                             .Produces(StatusCodes.Status201Created);
 
-        vehiclesGroupBuilder.MapPut("{vehicleId:int}", Update)
-                            .WithParameterValidation()
-                            .AddEndpointFilter<VehicleExistsFilter>()
-                            .AddEndpointFilter<IsManagerAccessibleVehicleFilter>()
-                            .WithName("UpdateVehicle")
-                            .Produces(StatusCodes.Status400BadRequest)
-                            .Produces(StatusCodes.Status204NoContent)
-                            .Produces(StatusCodes.Status404NotFound)
-                            .Produces(StatusCodes.Status403Forbidden);
+        vehicleWithIdGroupBuilder.MapGet("", GetById)
+                                 .WithName("GetVehicleById")
+                                 .Produces<VehicleViewModel>()
+                                 .Produces(StatusCodes.Status404NotFound)
+                                 .Produces(StatusCodes.Status403Forbidden);
 
-        vehiclesGroupBuilder.MapDelete("{vehicleId:int}", Delete)
-                            .AddEndpointFilter<VehicleExistsFilter>()
-                            .AddEndpointFilter<IsManagerAccessibleVehicleFilter>()
-                            .WithName("DeleteVehicle")
-                            .Produces(StatusCodes.Status204NoContent)
-                            .Produces(StatusCodes.Status404NotFound)
-                            .Produces(StatusCodes.Status403Forbidden);
+        vehicleWithIdGroupBuilder.MapPut("", Update)
+                                 .WithName("UpdateVehicle")
+                                 .Produces(StatusCodes.Status400BadRequest)
+                                 .Produces(StatusCodes.Status204NoContent)
+                                 .Produces(StatusCodes.Status404NotFound)
+                                 .Produces(StatusCodes.Status403Forbidden);
+
+        vehicleWithIdGroupBuilder.MapDelete("", Delete)
+                                 .WithName("DeleteVehicle")
+                                 .Produces(StatusCodes.Status204NoContent)
+                                 .Produces(StatusCodes.Status404NotFound)
+                                 .Produces(StatusCodes.Status403Forbidden);
+
+        vehicleWithIdGroupBuilder.MapGet("geoPoints/{startDateTime:datetime}/{endDateTime:datetime}", GetGeoPoints)
+                                 .WithName("GetGeoPoints")
+                                 .Produces(StatusCodes.Status204NoContent)
+                                 .Produces(StatusCodes.Status404NotFound)
+                                 .Produces(StatusCodes.Status403Forbidden);
     }
 
     private static async Task<IResult> GetAll(VehicleQueryService vehicleQueryService, ClaimsPrincipal user, [AsParameters] PageOptionsDTO pageOptionsDto)
@@ -114,6 +117,32 @@ public static class VehicleEndpoints
         await vehicleActionService.DeleteAsync(vehicleId);
 
         return Results.NoContent();
+    }
+
+    private static async Task<IResult> GetGeoPoints(GeoQueryService geoQueryService, [AsParameters] GetGeoPointsParameters parameters, HttpContext httpContext)
+    {
+        if (!parameters.IsValid) return Results.BadRequest("Invalid date range");
+
+        List<GeoPointViewModel> geoPoints = await geoQueryService.GetVehicleGeopoints(parameters.VehicleId, parameters.StartDateTime, parameters.EndDateTime);
+
+        if (geoPoints.Count == 0) return Results.NoContent();
+
+        return parameters.ReturnGeoJSON.HasValue && parameters.ReturnGeoJSON.Value ? Results.Ok(geoPoints.ToGeoJSON()) : Results.Ok(geoPoints);
+    }
+
+    private class GetGeoPointsParameters
+    {
+
+        public int VehicleId { get; set; }
+
+        public DateTime StartDateTime { get; set; }
+
+        public DateTime EndDateTime { get; set; }
+
+        public bool? ReturnGeoJSON { get; set; }
+
+        public bool IsValid => StartDateTime < EndDateTime;
+
     }
 
 }
