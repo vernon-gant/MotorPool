@@ -98,5 +98,7 @@ Global
 		{3C94B63D-A5EF-4CD8-BD4C-A9ABFF09A767}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C94B63D-A5EF-4CD8-BD4C-A9ABFF09A767}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C94B63D-A5EF-4CD8-BD4C-A9ABFF09A767}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C94B63D-A5EF-4CD8-BD4C-A9ABFF09A757}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C94B63D-A5EF-4CD8-BD4C-A9ABFF09A757}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal

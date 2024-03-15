@@ -1,5 +1,9 @@
-﻿namespace MotorPool.TrackGenerator;
-public class Point(double latitude, double longitude)
+﻿using System.Globalization;
+
+using MotorPool.Domain;
+
+namespace MotorPool.TrackGenerator;
+public struct Point(double latitude, double longitude)
 {
 
     public double Latitude { get; set; } = latitude;
@@ -9,8 +13,23 @@ public class Point(double latitude, double longitude)
     public static Point FromString(string pointString)
     {
         string[] coordinates = pointString.Split(',');
-        coordinates = coordinates.Select(c => c.Replace(".", ",")).ToArray();
-        return new Point(double.Parse(coordinates[0]), double.Parse(coordinates[1]));
+        return new Point(double.Parse(coordinates[0], NumberStyles.Any, CultureInfo.CurrentCulture), double.Parse(coordinates[1], NumberStyles.Any, CultureInfo.CurrentCulture));
+    }
+
+    public GeoPoint ToGeoPoint(DateTime recordedAt, int vehicleId)
+    {
+        return new GeoPoint
+        {
+            Latitude = Latitude,
+            Longitude = Longitude,
+            VehicleId = vehicleId,
+            RecordedAt = recordedAt
+        };
+    }
+
+    public override string ToString()
+    {
+        return $"{Latitude},{Longitude}";
     }
 
 }

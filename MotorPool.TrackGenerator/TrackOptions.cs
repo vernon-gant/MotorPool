@@ -27,7 +27,10 @@ public class TrackOptions
 
     public Point EndPoint => Point.FromString(_endPointString);
 
-    [Option('a', "average-speed", HelpText = "The average speed of the vehicles.", Default = (double)60.0)]
-    public double AverageSpeed { get; set; }
+    [Option('a', "average-speed", HelpText = "The average speed of the vehicles.", Default = 60.0)]
+    public double AverageSpeed_kmh { get; set; }
+
+    [Option('v', "vehicle-id", Required = true, HelpText = "The ID of the vehicle that will be used to generate the track.")]
+    public int VehicleId { get; set; }
 
 }
