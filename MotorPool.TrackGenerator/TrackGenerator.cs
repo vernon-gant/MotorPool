@@ -23,8 +23,8 @@ public class TrackGenerator(AppDbContext dbContext, GraphHopperClient graphHoppe
 
     private (int, double) GetNextHopIndexWithDelay(Point currentLocation, int nextHopIndex)
     {
-        double distance_m = graphHopperClient.GetPointsDistance(currentLocation, _wholeTrack[nextHopIndex]);
-        for (;GetDrivingTime_s(distance_m) < MINIMAL_DRIVING_TIME_s; distance_m = graphHopperClient.GetPointsDistance(currentLocation, _wholeTrack[nextHopIndex]))
+        double distance_m = Haversine.GetPointsDistance(currentLocation, _wholeTrack[nextHopIndex]);
+        for (;GetDrivingTime_s(distance_m) < MINIMAL_DRIVING_TIME_s; distance_m = Haversine.GetPointsDistance(currentLocation, _wholeTrack[nextHopIndex]))
         {
             if (nextHopIndex == _wholeTrack.Count - 1) break;
 
