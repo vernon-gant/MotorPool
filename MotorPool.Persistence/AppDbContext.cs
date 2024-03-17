@@ -34,8 +34,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.Entity<Manager>().HasData(SeedingData.Managers);
 
         modelBuilder.Entity<EnterpriseManager>().HasData(SeedingData.EnterpriseManagers);
-
-        modelBuilder.Entity<GeoPoint>().HasData(SeedingData.GeoPoints);
     }
 
 }

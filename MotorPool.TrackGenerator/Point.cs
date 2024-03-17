@@ -13,7 +13,7 @@ public struct Point(double latitude, double longitude)
     public static Point FromString(string pointString)
     {
         string[] coordinates = pointString.Split(',');
-        return new Point(double.Parse(coordinates[0], NumberStyles.Any, CultureInfo.CurrentCulture), double.Parse(coordinates[1], NumberStyles.Any, CultureInfo.CurrentCulture));
+        return new Point(double.Parse(coordinates[0], NumberStyles.Any, CultureInfo.InvariantCulture), double.Parse(coordinates[1], NumberStyles.Any, CultureInfo.InvariantCulture));
     }
 
     public GeoPoint ToGeoPoint(DateTime recordedAt, int vehicleId)
@@ -29,7 +29,7 @@ public struct Point(double latitude, double longitude)
 
     public override string ToString()
     {
-        return $"{Latitude},{Longitude}";
+        return $"{Latitude.ToString(CultureInfo.InvariantCulture)},{Longitude.ToString(CultureInfo.InvariantCulture)}";
     }
 
 }

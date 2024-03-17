@@ -17,7 +17,7 @@ public class GraphHopperClient(string apiKey)
 
     public GraphHopperResponse GetTrack(Point start, Point end)
     {
-        string url = $"{_baseUrl}?point={start.Latitude},{start.Longitude}&point={end.Latitude},{end.Longitude}&profile=car&key={apiKey}&calc_points=true&instructions=false&points_encoded=false";
+        string url = $"{_baseUrl}?point={start}&point={end}&profile=car&key={apiKey}&calc_points=true&instructions=false&points_encoded=false";
         HttpResponseMessage response = _httpClient.GetAsync(url).Result;
         response.EnsureSuccessStatusCode();
         string responseBody = response.Content.ReadAsStringAsync().Result;
