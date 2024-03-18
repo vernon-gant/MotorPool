@@ -40,7 +40,7 @@ public class TrackGenerator(AppDbContext dbContext, GraphHopperClient graphHoppe
         Console.WriteLine($"Generating track for vehicle {track.VehicleId} from {track.StartPoint} to {track.EndPoint}.");
         Console.WriteLine("#".PadRight(50, '#'));
         Console.WriteLine("\n\n");
-        GeoPoint currentGeoPoint = track.StartPoint.ToGeoPoint(DateTime.UtcNow, track.VehicleId);
+        GeoPoint currentGeoPoint = track.StartPoint.ToGeoPoint(track.StartTime, track.VehicleId);
         for (int i = 0; i < _wholeTrack.Count - 1;)
         {
             SaveGeoPoint(currentGeoPoint);

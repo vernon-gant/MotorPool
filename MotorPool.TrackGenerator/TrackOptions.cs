@@ -1,4 +1,6 @@
-﻿using CommandLine;
+﻿using System.Globalization;
+
+using CommandLine;
 
 namespace MotorPool.TrackGenerator;
 
@@ -32,5 +34,16 @@ public class TrackOptions
 
     [Option('v', "vehicle-id", Required = true, HelpText = "The ID of the vehicle that will be used to generate the track.")]
     public int VehicleId { get; set; }
+
+    public string _startTimeString = string.Empty;
+
+    [Option('t', "start-time", Required = false)]
+    public string StartTimeString
+    {
+        get => throw new InvalidOperationException("The use of this property is restricted");
+        set => _startTimeString = value;
+    }
+
+    public DateTime StartTime => string.IsNullOrEmpty(_startTimeString) ? DateTime.UtcNow : DateTime.ParseExact(_startTimeString, "yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture);
 
 }

@@ -3,7 +3,7 @@
     "profiles": {
         "MotorPool.TrackGenerator": {
             "commandName": "Project",
-            "commandLineArgs": "-s 56.102882,40.438456 -e 56.353167,41.319694 -v 10033 -a 60",
+            "commandLineArgs": "-s 56.312754,44.004272 -e 53.260772,34.420837 -v 8033 -a 60 -t 2015-11-12T22:11:12Z",
             "environmentVariables": {
             }
         }

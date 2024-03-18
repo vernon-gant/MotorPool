@@ -8,6 +8,8 @@ public struct Track
 
     public Point EndPoint { get; set; }
 
+    public DateTime StartTime { get; set; }
+
     public int VehicleId { get; set; }
 
     public static Track FromGraphHopperResponseWithOptions(GraphHopperResponse response, TrackOptions options)
@@ -15,6 +17,7 @@ public struct Track
         return new Track
         {
             VehicleId = options.VehicleId,
+            StartTime = options.StartTime,
             StartPoint = options.StartPoint,
             EndPoint = options.EndPoint,
             AverageSpeed_kmh = options.AverageSpeed_kmh,
