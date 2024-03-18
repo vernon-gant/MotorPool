@@ -27,9 +27,6 @@ public struct Point(double latitude, double longitude)
         };
     }
 
-    public override string ToString()
-    {
-        return $"{Latitude.ToString(CultureInfo.InvariantCulture)},{Longitude.ToString(CultureInfo.InvariantCulture)}";
-    }
+    public override string ToString() => $"{Latitude.ToString(CultureInfo.InvariantCulture)},{Longitude.ToString(CultureInfo.InvariantCulture)}";
 
 }
