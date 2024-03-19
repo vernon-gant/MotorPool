@@ -11,7 +11,7 @@ public static class GeoServiceCollectionExtension
     public static void AddGeoServices(this IServiceCollection services)
     {
         services.AddAutoMapper(typeof(GeoServiceCollectionExtension));
-        services.AddScoped<GeoQueryService, DefaultGeoQueryService>();
+        services.AddScoped<TripQueryService, DefaultTripQueryService>();
     }
 
 }

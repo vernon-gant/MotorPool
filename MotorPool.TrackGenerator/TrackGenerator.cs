@@ -21,6 +21,15 @@ public class TrackGenerator(AppDbContext dbContext, GraphHopperClient graphHoppe
         Console.WriteLine($"----- Recorded point: {geoPoint} -----\n\n");
     }
 
+    private void LogStage(string stageText)
+    {
+        Console.WriteLine("\n");
+        Console.WriteLine("#".PadRight(50, '#'));
+        Console.WriteLine(stageText);
+        Console.WriteLine("#".PadRight(50, '#'));
+        Console.WriteLine("\n\n");
+    }
+
     private (int, double) GetNextHopIndexWithDelay(Point currentLocation, int nextHopIndex)
     {
         double distance_m = Haversine.GetPointsDistance(currentLocation, _wholeTrack[nextHopIndex]);
@@ -35,11 +44,7 @@ public class TrackGenerator(AppDbContext dbContext, GraphHopperClient graphHoppe
 
     public void Generate()
     {
-        Console.WriteLine("\n");
-        Console.WriteLine("#".PadRight(50, '#'));
-        Console.WriteLine($"Generating track for vehicle {track.VehicleId} from {track.StartPoint} to {track.EndPoint}.");
-        Console.WriteLine("#".PadRight(50, '#'));
-        Console.WriteLine("\n\n");
+        LogStage($"Generating trip for vehicle {track.VehicleId} from {track.StartPoint} to {track.EndPoint}.");
         GeoPoint currentGeoPoint = track.StartPoint.ToGeoPoint(track.StartTime, track.VehicleId);
         for (int i = 0; i < _wholeTrack.Count - 1;)
         {
@@ -49,10 +54,7 @@ public class TrackGenerator(AppDbContext dbContext, GraphHopperClient graphHoppe
             currentGeoPoint = _wholeTrack[i].ToGeoPoint(currentGeoPoint.RecordedAt.AddSeconds(drivingTime_s), track.VehicleId);
         }
         SaveGeoPoint(currentGeoPoint);
-        Console.WriteLine("\n");
-        Console.WriteLine("#".PadRight(50, '#'));
-        Console.WriteLine($"Track for vehicle {track.VehicleId} has been generated.");
-        Console.WriteLine("#".PadRight(50, '#'));
+        LogStage($"Trip for vehicle {track.VehicleId} has been generated.");
     }
 
 }

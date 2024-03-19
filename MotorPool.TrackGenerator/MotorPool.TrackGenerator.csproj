@@ -6,6 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <UserSecretsId>c1f39e06-a00d-43e4-8c32-da1485072a1c</UserSecretsId>
+        <RootNamespace>MotorPool.TrackGenerator</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

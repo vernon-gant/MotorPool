@@ -119,11 +119,11 @@ public static class VehicleEndpoints
         return Results.NoContent();
     }
 
-    private static async Task<IResult> GetGeoPoints(GeoQueryService geoQueryService, [AsParameters] GetGeoPointsParameters parameters, HttpContext httpContext)
+    private static async Task<IResult> GetGeoPoints(TripQueryService tripQueryService, [AsParameters] GetGeoPointsParameters parameters, HttpContext httpContext)
     {
         if (!parameters.IsValid) return Results.BadRequest("Invalid date range");
 
-        List<GeoPointViewModel> geoPoints = await geoQueryService.GetVehicleGeopoints(parameters.VehicleId, parameters.StartDateTime, parameters.EndDateTime);
+        List<GeoPointViewModel> geoPoints = await tripQueryService.GetVehicleTrip(parameters.VehicleId, parameters.StartDateTime, parameters.EndDateTime);
 
         if (geoPoints.Count == 0) return Results.NoContent();
 

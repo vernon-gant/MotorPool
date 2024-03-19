@@ -9,4 +9,6 @@ public class GeoPointViewModel
 
     public DateTime RecordedAt { get; set; }
 
+    public int VehicleId { get; set; }
+
 }

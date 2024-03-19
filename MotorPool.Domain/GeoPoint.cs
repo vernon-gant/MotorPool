@@ -30,9 +30,6 @@ public class GeoPoint
         }
     }
 
-    public override string ToString()
-    {
-        return $"GeoPointId: {GeoPointId}, Latitude: {Latitude}, Longitude: {Longitude}, VehicleId: {VehicleId}, RecordedAt: {RecordedAt}";
-    }
+    public override string ToString() => $"GeoPointId: {GeoPointId}, Latitude: {Latitude}, Longitude: {Longitude}, VehicleId: {VehicleId}, RecordedAt: {RecordedAt}";
 
 }
