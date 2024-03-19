@@ -123,8 +123,6 @@ managerResourcesGroupBuilder.MapDriverEndpoints();
 
 managerResourcesGroupBuilder.MapEnterpriseEndpoints();
 
-managerResourcesGroupBuilder.MapTripEndpoints();
-
 await app.SetupDatabaseAsync();
 
 app.Run();

@@ -57,7 +57,13 @@ public static class VehicleEndpoints
 
         vehicleWithIdGroupBuilder.MapGet("geoPoints/{startDateTime:datetime}/{endDateTime:datetime}", GetGeoPoints)
                                  .WithName("GetGeoPoints")
-                                 .Produces(StatusCodes.Status204NoContent)
+                                 .Produces<List<GeoPointViewModel>>()
+                                 .Produces(StatusCodes.Status404NotFound)
+                                 .Produces(StatusCodes.Status403Forbidden);
+
+        vehicleWithIdGroupBuilder.MapGet("trips/{startDateTime:datetime}/{endDateTime:datetime}/points", GetTripsInDateRange)
+                                 .WithName("Get vehicle trips within a data range")
+                                 .Produces<List<GeoPointViewModel>>()
                                  .Produces(StatusCodes.Status404NotFound)
                                  .Produces(StatusCodes.Status403Forbidden);
     }
@@ -119,18 +125,25 @@ public static class VehicleEndpoints
         return Results.NoContent();
     }
 
-    private static async Task<IResult> GetGeoPoints(TripQueryService tripQueryService, [AsParameters] GetGeoPointsParameters parameters, HttpContext httpContext)
+    private static async Task<IResult> GetGeoPoints(TripQueryService tripQueryService, [AsParameters] GetGeoPointsParameters parameters)
     {
         if (!parameters.IsValid) return Results.BadRequest("Invalid date range");
 
-        List<GeoPointViewModel> geoPoints = await tripQueryService.GetVehicleTrip(parameters.VehicleId, parameters.StartDateTime, parameters.EndDateTime);
-
-        if (geoPoints.Count == 0) return Results.NoContent();
+        List<GeoPointViewModel> geoPoints = await tripQueryService.GetVehicleGeoPoints(parameters.VehicleId, parameters.StartDateTime, parameters.EndDateTime);
 
         return parameters.ReturnGeoJSON.HasValue && parameters.ReturnGeoJSON.Value ? Results.Ok(geoPoints.ToGeoJSON()) : Results.Ok(geoPoints);
     }
 
-    private class GetGeoPointsParameters
+    private static async Task<IResult> GetTripsInDateRange(TripQueryService tripQueryService, [AsParameters] GetTripsInDateRangeParameters parameters)
+    {
+        if (!parameters.IsValid) return Results.BadRequest("Invalid date range");
+
+        List<GeoPointViewModel> geoPoints = await tripQueryService.GetVehicleTripsInGeoPoints(parameters.VehicleId, parameters.StartDateTime, parameters.EndDateTime);
+
+        return Results.Ok(geoPoints);
+    }
+
+    private class GetTripsInDateRangeParameters
     {
 
         public int VehicleId { get; set; }
@@ -139,9 +152,14 @@ public static class VehicleEndpoints
 
         public DateTime EndDateTime { get; set; }
 
-        public bool? ReturnGeoJSON { get; set; }
-
         public bool IsValid => StartDateTime < EndDateTime;
+
+    }
+
+    private class GetGeoPointsParameters : GetTripsInDateRangeParameters
+    {
+
+        public bool? ReturnGeoJSON { get; set; }
 
     }
 
