@@ -36,18 +36,33 @@ public class DefaultTripQueryService(AppDbContext dbContext, IMapper mapper) : T
     {
         if (startTime > endTime) throw new ArgumentException("Start date cannot be greater than end date");
 
-        if (startTime.Kind != DateTimeKind.Utc || endTime.Kind != DateTimeKind.Utc) throw new ArgumentException();
+        var tripsWithEnterpriseZoneId = await dbContext.Trips
+                                                       .Include(trip => trip.Vehicle)
+                                                       .Include(trip => trip.Vehicle!.Enterprise)
+                                                       .Select(trip => new { Trip = trip, trip.Vehicle!.Enterprise.TimeZoneId })
+                                                       .ToListAsync();
 
-        return await dbContext.Trips
-                              .Where(trip => trip.StartTime >= startTime && trip.EndTime <= endTime)
-                              .SelectMany(trip => dbContext.GeoPoints
-                                                           .Include(geoPoint => geoPoint.Vehicle)
-                                                           .Include(geoPoint => geoPoint.Vehicle!.Enterprise)
-                                                           .Where(geoPoint => geoPoint.VehicleId == trip.VehicleId &&
-                                                                              geoPoint.RecordedAt >= trip.StartTime &&
-                                                                              geoPoint.RecordedAt <= trip.EndTime))
-                              .Select(geoPoint => mapper.Map<GeoPointViewModel>(geoPoint))
-                              .ToListAsync();
+        return tripsWithEnterpriseZoneId
+               .Where(tripZoneId => IsTripBetweenEnterpriseTimeZonedStartAndEndTime(tripZoneId.Trip, tripZoneId.TimeZoneId, startTime, endTime))
+               .Select(tripZoneId => tripZoneId.Trip)
+               .OrderBy(trip => trip.StartTime)
+               .SelectMany(trip => dbContext.GeoPoints
+                                            .Include(geoPoint => geoPoint.Vehicle)
+                                            .Include(geoPoint => geoPoint.Vehicle!.Enterprise)
+                                            .Where(geoPoint => geoPoint.VehicleId == trip.VehicleId &&
+                                                               geoPoint.RecordedAt >= trip.StartTime &&
+                                                               geoPoint.RecordedAt <= trip.EndTime)
+                                            .OrderBy(geoPoint => geoPoint.RecordedAt))
+               .Select(mapper.Map<GeoPointViewModel>)
+               .ToList();
+    }
+
+    private bool IsTripBetweenEnterpriseTimeZonedStartAndEndTime(Trip trip, string zoneId, DateTime startTime, DateTime endTime)
+    {
+        TimeZoneInfo enterpriseTimeZone = TimeZoneInfo.FindSystemTimeZoneById(zoneId);
+
+        return trip.StartTime >= TimeZoneInfo.ConvertTimeToUtc(startTime, enterpriseTimeZone) &&
+               trip.EndTime <= TimeZoneInfo.ConvertTimeToUtc(endTime, enterpriseTimeZone);
     }
 
 }
