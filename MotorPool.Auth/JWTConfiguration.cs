@@ -1,6 +1,6 @@
 ﻿namespace MotorPool.Auth;
 
-public class JWTConfig
+public class JWTConfiguration
 {
 
     public string Key { get; set; }

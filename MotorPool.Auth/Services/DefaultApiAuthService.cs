@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace MotorPool.Auth.Services;
 
-public class DefaultApiAuthService(UserManager<ApplicationUser> userManager, JWTConfig jwtConfig) : ApiAuthService
+public class DefaultApiAuthService(UserManager<ApplicationUser> userManager, JWTConfiguration jwtConfiguration) : ApiAuthService
 {
 
     public async ValueTask<AuthResult> LoginAsync(LoginDTO loginDTO)
@@ -27,10 +27,10 @@ public class DefaultApiAuthService(UserManager<ApplicationUser> userManager, JWT
         IList<Claim> userClaims = await userManager.GetClaimsAsync(user);
         claims.AddRange(userClaims);
 
-        SymmetricSecurityKey key = new (Encoding.UTF8.GetBytes(jwtConfig.Key));
+        SymmetricSecurityKey key = new (Encoding.UTF8.GetBytes(jwtConfiguration.Key));
         SigningCredentials signingCredentials = new (key, SecurityAlgorithms.HmacSha256);
 
-        JwtSecurityToken token = new (jwtConfig.Issuer, jwtConfig.Audience, claims, expires: DateTime.Now.AddHours(2), signingCredentials: signingCredentials);
+        JwtSecurityToken token = new (jwtConfiguration.Issuer, jwtConfiguration.Audience, claims, expires: DateTime.Now.AddHours(2), signingCredentials: signingCredentials);
 
         return AuthResult.Success(new JwtSecurityTokenHandler().WriteToken(token));
     }

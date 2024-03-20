@@ -44,6 +44,6 @@ public class TrackOptions
         set => _startTimeString = value;
     }
 
-    public DateTime StartTime => string.IsNullOrEmpty(_startTimeString) ? DateTime.UtcNow : DateTime.ParseExact(_startTimeString, "yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture);
+    public DateTime StartTime => string.IsNullOrEmpty(_startTimeString) ? DateTime.UtcNow : DateTime.ParseExact(_startTimeString, "yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture);
 
 }

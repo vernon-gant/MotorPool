@@ -1,5 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Net.Http.Headers;
 
+using AutoMapper;
+
+using Microsoft.Extensions.DependencyInjection;
+
+using MotorPool.Services.Geo.GraphHopper;
 using MotorPool.Services.Geo.Services;
 using MotorPool.Services.Geo.Services.Concrete;
 
@@ -12,6 +17,13 @@ public static class GeoServiceCollectionExtension
     {
         services.AddAutoMapper(typeof(GeoServiceCollectionExtension));
         services.AddScoped<TripQueryService, DefaultTripQueryService>();
+
+        services.AddHttpClient<GraphHopperClient>()
+                .ConfigureHttpClient((provider, client) =>
+                {
+                    GraphHopperConfiguration graphHopperConfiguration = provider.GetRequiredService<GraphHopperConfiguration>();
+                    client.BaseAddress = new Uri(graphHopperConfiguration.BaseUrl);
+                });
     }
 
 }

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 
 namespace MotorPool.Domain;
 
@@ -29,6 +30,8 @@ public class GeoPoint
             return TimeZoneInfo.ConvertTimeFromUtc(RecordedAt, enterpriseTimeZone);
         }
     }
+
+    public string Coordinates => $"{Latitude.ToString(CultureInfo.InvariantCulture)},{Longitude.ToString(CultureInfo.InvariantCulture)}";
 
     public override string ToString() => $"GeoPointId: {GeoPointId}, Latitude: {Latitude}, Longitude: {Longitude}, VehicleId: {VehicleId}, RecordedAt: {RecordedAt}";
 

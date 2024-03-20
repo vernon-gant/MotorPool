@@ -16,6 +16,7 @@ using MotorPool.Persistence;
 using MotorPool.Services.Drivers;
 using MotorPool.Services.Enterprise;
 using MotorPool.Services.Geo;
+using MotorPool.Services.Geo.GraphHopper;
 using MotorPool.Services.VehicleBrand;
 using MotorPool.Services.Vehicles;
 using MotorPool.Utils;
@@ -23,11 +24,16 @@ using MotorPool.Utils;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-JWTConfig jwtConfig = new ();
-builder.Configuration.GetSection("JWTConfig").Bind(jwtConfig);
-builder.Services.AddSingleton(jwtConfig);
-builder.Services.AddScoped<ApiAuthService, DefaultApiAuthService>();
 
+JWTConfiguration jwtConfiguration = new ();
+builder.Configuration.GetSection("JWTConfig").Bind(jwtConfiguration);
+builder.Services.AddSingleton(jwtConfiguration);
+
+GraphHopperConfiguration graphHopperConfiguration = new ();
+builder.Configuration.GetSection("GraphHopper").Bind(graphHopperConfiguration);
+builder.Services.AddSingleton(graphHopperConfiguration);
+
+builder.Services.AddScoped<ApiAuthService, DefaultApiAuthService>();
 builder.Services.AddPersistenceServices(connectionString);
 builder.Services.AddVehicleServices();
 builder.Services.AddVehicleBrandServices();
@@ -46,9 +52,9 @@ builder.Services
            options.TokenValidationParameters = new TokenValidationParameters
            {
                ValidateIssuerSigningKey = true,
-               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig.Key)),
-               ValidIssuer = jwtConfig.Issuer,
-               ValidAudience = jwtConfig.Audience,
+               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfiguration.Key)),
+               ValidIssuer = jwtConfiguration.Issuer,
+               ValidAudience = jwtConfiguration.Audience,
                ValidateIssuer = false,
                ValidateAudience = false
            };

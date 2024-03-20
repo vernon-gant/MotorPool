@@ -8,7 +8,7 @@ namespace MotorPool.Services.Geo;
 public static class GeoExtensions
 {
 
-    public static FeatureCollection ToGeoJSON(this List<GeoPointViewModel> geoPoints)
+    public static FeatureCollection ToGeoJSON(this IEnumerable<GeoPointViewModel> geoPoints)
     {
         FeatureCollection featureCollection = new ();
 
