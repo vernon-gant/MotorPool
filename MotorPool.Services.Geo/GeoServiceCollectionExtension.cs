@@ -1,8 +1,4 @@
-﻿using System.Net.Http.Headers;
-
-using AutoMapper;
-
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 using MotorPool.Services.Geo.GraphHopper;
 using MotorPool.Services.Geo.Services;
