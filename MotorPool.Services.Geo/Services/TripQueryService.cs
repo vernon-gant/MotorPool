@@ -11,4 +11,6 @@ public interface TripQueryService
 
     ValueTask<IEnumerable<TripViewModel>> GetVehicleTrips(int vehicleId, DateTime startTime, DateTime endTime);
 
+    ValueTask<IEnumerable<(TripViewModel, List<GeoPointViewModel>)>> GetTripsWithRoutes(int vehicleId, IEnumerable<int> tripIds);
+
 }

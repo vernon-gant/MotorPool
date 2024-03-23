@@ -65,3 +65,33 @@ body {
 footer {
     background-color: #f8f9fa;
 }
+
+.list-group-item {
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.list-group-item-action:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.btn-success {
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.text-primary {
+    font-size: 1.1rem;
+}
+
+.font-weight-bold {
+    font-weight: 600;
+}
+
+.form-check-input {
+    margin-top: 0;
+    margin-right: 10px;
+    cursor: pointer;
+}

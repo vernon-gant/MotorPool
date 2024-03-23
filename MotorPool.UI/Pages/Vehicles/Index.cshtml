@@ -40,6 +40,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Vehicles[0].MotorVIN)
+                <input data-filter-entity="vehicle" data-filter-property="vin" type="search"/>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Vehicles[0].ManufactureYear)
@@ -62,14 +63,14 @@
         <tbody>
         @foreach (VehicleViewModel vehicleViewModel in Model.Vehicles)
         {
-            <tr>
+            <tr data-entity="vehicle">
                 <td>
                     @Html.DisplayFor(modelItem => vehicleViewModel.CompanyName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => vehicleViewModel.ModelName)
                 </td>
-                <td>
+                <td data-property="vin">
                     @Html.DisplayFor(modelItem => vehicleViewModel.MotorVIN)
                 </td>
                 <td>

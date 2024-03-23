@@ -31,7 +31,7 @@ public class GeoPoint
         }
     }
 
-    public string Coordinates => $"{Latitude.ToString(CultureInfo.InvariantCulture)},{Longitude.ToString(CultureInfo.InvariantCulture)}";
+    public string Coordinates => $"{Latitude.ToString("F6", CultureInfo.InvariantCulture)},{Longitude.ToString("F6", CultureInfo.InvariantCulture)}";
 
     public override string ToString() => $"GeoPointId: {GeoPointId}, Latitude: {Latitude}, Longitude: {Longitude}, VehicleId: {VehicleId}, RecordedAt: {RecordedAt}";
 

@@ -6,7 +6,7 @@
 }
 
 <div class="container mx-auto mt-4 row">
-    <div class="col-sm-8 col-md-6 col-lg-5 mx-auto">
+    <div class="col-sm-8 col-md-6 mx-auto">
         <div class="card p-3 shadow-lg rounded-3">
             <div class="card-header">
                 <h2 class="card-title">@Html.DisplayFor(model => model.Vehicle.CompanyName) - @Html.DisplayFor(model => model.Vehicle.ModelName)</h2>
@@ -35,6 +35,63 @@
                     <dd class="col-sm-6 enterprise-entity-date">@Html.DisplayFor(model => model.Vehicle.AcquiredOn)</dd>
                 </dl>
             </div>
+
+            <section>
+                <div class="container mt-5">
+                    <h3 class="text-center mb-4">Trips</h3>
+
+                    <div class="row justify-content-md-center">
+                        <div class="col-md-6">
+                            <form method="get">
+                                <div class="mb-3">
+                                    <label for="StartDate" class="form-label">Start Date</label>
+                                    <input type="date" class="form-control" id="StartDate" name="StartDate" asp-for="StartDate">
+                                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                                </div>
+                                <div class="mb-4">
+                                    <label for="EndDate" class="form-label">End Date</label>
+                                    <input type="date" class="form-control" id="EndDate" name="EndDate" asp-for="EndDate">
+                                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Search</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="mt-5">
+                        @if (Model.VehicleTrips.Any())
+                        {
+                            <form asp-page="./Map" method="get" asp class="d-flex flex-column align-items-center">
+                                <div class="list-group mb-4 shadow">
+                                    @foreach(var trip in Model.VehicleTrips) {
+                                        <label class="list-group-item list-group-item-action" aria-current="true">
+                                            <input required="required" class="form-check-input me-1" name="selectedTrips" type="checkbox" value="@trip.TripId">
+                                            <div class="d-flex w-100 justify-content-between align-items-center">
+                                                <h5 class="mb-1 text-primary font-weight-bold">Trip @trip.TripId</h5>
+                                                <small class="text-muted">@trip.StartTime.ToString("g") - @trip.EndTime.ToString("g")</small>
+                                            </div>
+                                            <p class="mb-1 text-dark"><span class="fw-bold">From: </span><span class="text-secondary">@trip.StartPointDescription</span></p>
+                                            <p class="mb-1 text-dark"><span class="fw-bold">To: </span><span class="text-secondary">@trip.EndPointDescription</span></p>
+                                            <div class="d-flex flex-row justify-content-between px-4">
+                                                <p class="text-dark"><span class="fw-bold">Start : </span><span class="text-info">@trip.StartPoint</span></p>
+                                                <i class="fas fa-arrow"></i>
+                                                <p class="text-dark"><span class="fw-bold">End : </span><span class="text-info">@trip.EndPoint</span></p>
+                                            </div>
+                                        </label>
+                                    }
+                                </div>
+                                <input hidden="hidden" name="vehicleId" value="@Model.Vehicle.VehicleId"/>
+                                <button type="submit" class="btn btn-success">Show on map</button>
+                            </form>
+                            return;
+                        }
+                        @if (Model.NoTripsFound())
+                        {
+                            <h3 class="text-center mb-5">No trips found in the specified range.</h3>
+                        }
+                    </div>
+                </div>
+            </section>
 
             <div class="card-footer text-muted d-flex justify-content-between">
                 <a href="@Url.Page("./Edit", new { vehicleId = Model.Vehicle.VehicleId })" class="btn btn-primary d-flex align-items-center">

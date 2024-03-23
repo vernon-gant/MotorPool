@@ -4,6 +4,7 @@
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>4c0d8be2-b3a1-4489-a4b6-b831a4c79e80</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
@@ -22,6 +23,7 @@
         <ProjectReference Include="..\MotorPool.Persistence\MotorPool.Persistence.csproj"/>
         <ProjectReference Include="..\MotorPool.Services.Driver\MotorPool.Services.Driver.csproj"/>
         <ProjectReference Include="..\MotorPool.Services.Enterprise\MotorPool.Services.Enterprise.csproj"/>
+        <ProjectReference Include="..\MotorPool.Services.Geo\MotorPool.Services.Geo.csproj" />
         <ProjectReference Include="..\MotorPool.Services.Manager\MotorPool.Services.Manager.csproj" />
         <ProjectReference Include="..\MotorPool.Services.VehicleBrand\MotorPool.Services.VehicleBrand.csproj"/>
         <ProjectReference Include="..\MotorPool.Services.Vehicle\MotorPool.Services.Vehicle.csproj"/>

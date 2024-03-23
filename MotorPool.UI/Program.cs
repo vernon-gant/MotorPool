@@ -7,6 +7,8 @@ using MotorPool.Auth;
 using MotorPool.Persistence;
 using MotorPool.Services.Drivers;
 using MotorPool.Services.Enterprise;
+using MotorPool.Services.Geo;
+using MotorPool.Services.Geo.GraphHopper;
 using MotorPool.Services.Manager;
 using MotorPool.Services.VehicleBrand;
 using MotorPool.Services.Vehicles;
@@ -18,6 +20,10 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
+GraphHopperConfiguration graphHopperConfiguration = new ();
+builder.Configuration.GetSection("GraphHopper").Bind(graphHopperConfiguration);
+builder.Services.AddSingleton(graphHopperConfiguration);
+
 builder.Services.AddPersistenceServices(connectionString);
 builder.Services.AddVehicleServices();
 builder.Services.AddVehicleBrandServices();
@@ -25,6 +31,7 @@ builder.Services.AddEnterpriseServices();
 builder.Services.AddDriverServices();
 builder.Services.AddAppIdentity(connectionString);
 builder.Services.AddManagerServices();
+builder.Services.AddGeoServices();
 
 builder.Services
        .AddAuthentication(options =>
