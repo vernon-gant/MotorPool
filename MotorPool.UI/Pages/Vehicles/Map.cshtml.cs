@@ -9,15 +9,15 @@ namespace MotorPool.UI.Pages.Vehicles;
 public class MapModel(TripQueryService tripQueryService) : PageModel
 {
 
-    [BindProperty(SupportsGet = true)]
+    [BindProperty]
     public int[] SelectedTrips { get; set; } = Array.Empty<int>();
 
-    [BindProperty(SupportsGet = true)]
+    [BindProperty]
     public int VehicleId { get; set; }
 
     public IEnumerable<(TripViewModel, List<GeoPointViewModel>)> TripsWithRoutes { get; set; } = default!;
 
-    public async Task OnGetAsync()
+    public async Task OnPostAsync()
     {
         TripsWithRoutes = await tripQueryService.GetTripsWithRoutes(VehicleId, SelectedTrips);
     }

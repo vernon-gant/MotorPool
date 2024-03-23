@@ -61,7 +61,7 @@
                     <div class="mt-5">
                         @if (Model.VehicleTrips.Any())
                         {
-                            <form asp-page="./Map" method="get" asp class="d-flex flex-column align-items-center">
+                            <form asp-page="./Map" method="post" asp class="d-flex flex-column align-items-center">
                                 <div class="list-group mb-4 shadow">
                                     @foreach(var trip in Model.VehicleTrips) {
                                         <label class="list-group-item list-group-item-action" aria-current="true">
