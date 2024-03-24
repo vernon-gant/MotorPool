@@ -45,12 +45,12 @@
                             <form method="get">
                                 <div class="mb-3">
                                     <label for="StartDate" class="form-label">Start Date</label>
-                                    <input type="date" class="form-control" id="StartDate" name="StartDate" asp-for="StartDate">
+                                    <input required="required" type="date" class="form-control" id="StartDate" name="StartDate" asp-for="StartDate">
                                     <span asp-validation-for="StartDate" class="text-danger"></span>
                                 </div>
                                 <div class="mb-4">
                                     <label for="EndDate" class="form-label">End Date</label>
-                                    <input type="date" class="form-control" id="EndDate" name="EndDate" asp-for="EndDate">
+                                    <input required="required" type="date" class="form-control" id="EndDate" name="EndDate" asp-for="EndDate">
                                     <span asp-validation-for="EndDate" class="text-danger"></span>
                                 </div>
                                 <button type="submit" class="btn btn-primary w-100">Search</button>

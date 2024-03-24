@@ -3,12 +3,10 @@
 public class GeoPointViewModel
 {
 
-    public double Latitude { get; set; }
+    public PointViewModel Point { get; init; } = default!;
 
-    public double Longitude { get; set; }
+    public DateTime RecordedAt { get; init; }
 
-    public DateTime RecordedAt { get; set; }
-
-    public int VehicleId { get; set; }
+    public int VehicleId { get; init; }
 
 }

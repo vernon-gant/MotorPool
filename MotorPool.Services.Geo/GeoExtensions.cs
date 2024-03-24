@@ -12,7 +12,7 @@ public static class GeoExtensions
     {
         FeatureCollection featureCollection = new ();
 
-        geoPoints.Select(geoPoint => new { Point = new Point(new Position(geoPoint.Latitude, geoPoint.Longitude)), geoPoint.RecordedAt })
+        geoPoints.Select(geoPoint => new { Point = new Point(new Position(geoPoint.Point.Latitude, geoPoint.Point.Longitude)), geoPoint.RecordedAt })
                  .ToList()
                  .ForEach(pointTuple => featureCollection.Features.Add(new Feature(pointTuple.Point, new Dictionary<string, object>
                  {
