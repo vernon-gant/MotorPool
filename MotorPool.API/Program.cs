@@ -17,6 +17,7 @@ using MotorPool.Services.Drivers;
 using MotorPool.Services.Enterprise;
 using MotorPool.Services.Geo;
 using MotorPool.Services.Geo.GraphHopper;
+using MotorPool.Services.Reporting;
 using MotorPool.Services.VehicleBrand;
 using MotorPool.Services.Vehicles;
 using MotorPool.Utils;
@@ -40,6 +41,8 @@ builder.Services.AddVehicleBrandServices();
 builder.Services.AddEnterpriseServices();
 builder.Services.AddDriverServices();
 builder.Services.AddGeoServices();
+builder.Services.AddReporting();
+
 builder.Services.AddAppIdentity(connectionString);
 builder.Services
        .AddAuthentication(options =>
@@ -96,6 +99,7 @@ builder.Services.ConfigureHttpJsonOptions(options =>
     options.SerializerOptions.AllowTrailingCommas = true;
     options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     options.SerializerOptions.PropertyNameCaseInsensitive = true;
+    options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
 WebApplication app = builder.Build();
@@ -128,6 +132,8 @@ managerResourcesGroupBuilder.MapVehicleEndpoints();
 managerResourcesGroupBuilder.MapDriverEndpoints();
 
 managerResourcesGroupBuilder.MapEnterpriseEndpoints();
+
+managerResourcesGroupBuilder.MapReportEndpoints();
 
 await app.SetupDatabaseAsync();
 

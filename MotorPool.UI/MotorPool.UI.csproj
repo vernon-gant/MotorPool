@@ -25,6 +25,7 @@
         <ProjectReference Include="..\MotorPool.Services.Enterprise\MotorPool.Services.Enterprise.csproj"/>
         <ProjectReference Include="..\MotorPool.Services.Geo\MotorPool.Services.Geo.csproj" />
         <ProjectReference Include="..\MotorPool.Services.Manager\MotorPool.Services.Manager.csproj" />
+        <ProjectReference Include="..\MotorPool.Services.Reporting\MotorPool.Services.Reporting.csproj" />
         <ProjectReference Include="..\MotorPool.Services.VehicleBrand\MotorPool.Services.VehicleBrand.csproj"/>
         <ProjectReference Include="..\MotorPool.Services.Vehicle\MotorPool.Services.Vehicle.csproj"/>
     </ItemGroup>

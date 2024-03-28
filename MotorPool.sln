@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.Geo", "M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.TrackGenerator", "MotorPool.TrackGenerator\MotorPool.TrackGenerator.csproj", "{3C94B63D-A5EF-4CD8-BD4C-A9ABFF09A757}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.Reporting", "MotorPool.Services.Reporting\MotorPool.Services.Reporting.csproj", "{9354B71B-9B3F-42F8-8CDD-AD600AA01EF6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -100,5 +102,9 @@ Global
 		{3C94B63D-A5EF-4CD8-BD4C-A9ABFF09A767}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3C94B63D-A5EF-4CD8-BD4C-A9ABFF09A757}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3C94B63D-A5EF-4CD8-BD4C-A9ABFF09A757}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9354B71B-9B3F-42F8-8CDD-AD600AA01EF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9354B71B-9B3F-42F8-8CDD-AD600AA01EF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9354B71B-9B3F-42F8-8CDD-AD600AA01EF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9354B71B-9B3F-42F8-8CDD-AD600AA01EF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

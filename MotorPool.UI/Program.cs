@@ -10,6 +10,7 @@ using MotorPool.Services.Enterprise;
 using MotorPool.Services.Geo;
 using MotorPool.Services.Geo.GraphHopper;
 using MotorPool.Services.Manager;
+using MotorPool.Services.Reporting;
 using MotorPool.Services.VehicleBrand;
 using MotorPool.Services.Vehicles;
 using MotorPool.UI.PageFilters;
@@ -32,6 +33,7 @@ builder.Services.AddDriverServices();
 builder.Services.AddAppIdentity(connectionString);
 builder.Services.AddManagerServices();
 builder.Services.AddGeoServices();
+builder.Services.AddReporting();
 
 builder.Services
        .AddAuthentication(options =>

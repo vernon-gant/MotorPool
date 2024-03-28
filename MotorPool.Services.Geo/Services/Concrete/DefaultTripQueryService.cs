@@ -122,9 +122,9 @@ public class DefaultTripQueryService(AppDbContext dbContext, IMapper mapper, Gra
         TripViewModel tripViewModel = mapper.Map<TripViewModel>(trip, options => { options.Items["EnterpriseTimeZone"] = enterpriseTimeZone; });
 
         tripViewModel.StartPoint = new () { LatitudeDouble = startPoint.Latitude, LongitudeDouble = startPoint.Longitude };
-        tripViewModel.StartPointDescription = await graphHopperClient.GetPointTextualAddress(startPoint);
+        tripViewModel.StartPointDescription = await graphHopperClient.GetReverseGeocodingAsync(startPoint);
         tripViewModel.EndPoint = new () { LatitudeDouble = endPoint.Latitude, LongitudeDouble = endPoint.Longitude };
-        tripViewModel.EndPointDescription = await graphHopperClient.GetPointTextualAddress(endPoint);
+        tripViewModel.EndPointDescription = await graphHopperClient.GetReverseGeocodingAsync(endPoint);
 
         return tripViewModel;
     }
