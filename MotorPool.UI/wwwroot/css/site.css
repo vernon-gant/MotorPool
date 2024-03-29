@@ -112,3 +112,50 @@ footer {
     text-align: center;
     font-family: 'Open Sans', sans-serif;
 }
+
+.shadow.rounded {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #dee2e6;
+    padding: 20px;
+}
+
+.cool-link {
+    color: #051742;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.cool-link:hover, .cool-link:focus {
+    color: #0056b3;
+    text-decoration: underline;
+    transform: scale(1.05);
+}
+
+.card:hover {
+    transform: scale(1.05);
+    transition: transform .3s ease-in-out;
+}
+
+.report-card {
+    transition: transform .3s ease, box-shadow .3s ease; /* Smooth transitions for hover effects */
+    cursor: pointer; /* Change cursor to indicate clickable */
+}
+
+.report-card:hover {
+    transform: translateY(-5px); /* Slightly lift the card on hover */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, .2); /* Enhanced shadow on hover for a "lifted" effect */
+}
+
+.report-title {
+    font-size: 1.5rem; /* Larger font size for the report title */
+}
+
+.report-link {
+    color: inherit; /* Ensure the link color matches the card title color, might adjust based on your theme */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.report-link:hover {
+    text-decoration: none; /* Remove underline from links on hover too */
+}

@@ -58,6 +58,7 @@ var mvcBuilder = builder.Services
                             options.Conventions.AuthorizeFolder("/Drivers");
                             options.Conventions.AuthorizeFolder("/Enterprises");
                             options.Conventions.AuthorizeFolder("/Vehicles");
+                            options.Conventions.AuthorizeFolder("/Reports");
 
                             options.Conventions.AddFolderApplicationModelConvention("/Vehicles", model =>
                             {

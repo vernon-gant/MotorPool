@@ -67,7 +67,7 @@ public class VehicleMileageReportGenerator(AppDbContext dbContext, GraphHopperCl
     {
         for (int currentYear = report.StartTime.Year; currentYear <= report.EndTime.Year; currentYear++)
         {
-            List<Trip> yearTrips = await dbContext.Trips.Where(trip => trip.StartTime.Year == currentYear || trip.EndTime.Month == currentYear && trip.VehicleId == report.VehicleId).ToListAsync();
+            List<Trip> yearTrips = await dbContext.Trips.Where(trip => (trip.StartTime.Year == currentYear || trip.EndTime.Month == currentYear) && trip.VehicleId == report.VehicleId).ToListAsync();
 
             if (yearTrips.Count == 0) continue;
 

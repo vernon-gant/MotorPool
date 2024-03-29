@@ -7,10 +7,6 @@
     ViewData["Title"] = "Manager panel";
 }
 
-@section Styles {
-    <link rel="stylesheet" href="~/css/Admin/styles.css"/>
-}
-
 <div class="container py-4">
     @if (!User.IsManager())
     {

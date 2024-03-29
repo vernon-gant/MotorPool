@@ -99,7 +99,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="wwwroot\css\Admin\styles.css"/>
         <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map"/>
         <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css"/>
         <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map"/>
@@ -143,8 +142,6 @@
     <ItemGroup>
         <Folder Include="Pages\Drivers\"/>
         <Folder Include="Pages\Enterprises\"/>
-        <Folder Include="wwwroot\css\Admin\Brands\"/>
-        <Folder Include="wwwroot\css\Admin\Vehicles\"/>
     </ItemGroup>
 
     <ItemGroup>
