@@ -39,4 +39,23 @@ public static class AuthorizationServiceCollectionExtension
         });
     }
 
+    public static async Task SetupAuthDatabaseAsync(this IHost webHost)
+    {
+        using var freshScope = webHost.Services.CreateScope();
+        var appDbContext = freshScope.ServiceProvider.GetRequiredService<AuthDbContext>();
+        var loggerFactory = freshScope.ServiceProvider.GetRequiredService<ILoggerFactory>();
+        var logger = loggerFactory.CreateLogger("test");
+
+        try
+        {
+            logger.LogInformation("Migrating the user database...");
+            await appDbContext.Database.MigrateAsync();
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Error while migrating the database...");
+            throw;
+        }
+    }
+
 }

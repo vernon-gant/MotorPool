@@ -137,4 +137,6 @@ managerResourcesGroupBuilder.MapReportEndpoints();
 
 await app.SetupDatabaseAsync();
 
+await app.SetupAuthDatabaseAsync();
+
 app.Run();

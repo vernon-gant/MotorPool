@@ -23,7 +23,6 @@ public static class DatabaseSetupExtension
         catch (Exception e)
         {
             logger.LogError(e, "Error while migrating the database...");
-
             throw;
         }
     }

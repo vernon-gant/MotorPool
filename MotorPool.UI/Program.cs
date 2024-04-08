@@ -117,4 +117,6 @@ app.MapRazorPages();
 
 await app.SetupDatabaseAsync();
 
+await app.SetupAuthDatabaseAsync();
+
 app.Run();
