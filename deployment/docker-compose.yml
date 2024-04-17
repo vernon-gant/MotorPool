@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  motor-pool-app:
+    build:
+      context: .
+      dockerfile: src/MotorPool.UI/Dockerfile
+    ports:
+      - "5000:80"
+    environment:
+      - ASPNETCORE_HTTP_PORTS=5000
+    depends_on:
+      - motor-pool-db
+
+  motor-pool-db:
+    build:
+      dockerfile: Dockerfile.db
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
