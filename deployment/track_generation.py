@@ -35,7 +35,7 @@ def generate_route_arguments(vehicle_id: int) -> str:
 def generate_track_utility_commands(track_generator_executable):
     first_vehicle_id = 21
     last_vehicle_id = 15020
-    vehicles_sample_size = 1000
+    vehicles_sample_size = 200
     routes_per_vehicle = 20
 
     random_vehicle_ids = [random.randint(first_vehicle_id, last_vehicle_id) for _ in range(vehicles_sample_size)]
