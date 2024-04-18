@@ -57,6 +57,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Vehicles[0].AcquiredOn)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicles[0].TotalTripsCount)
+            </th>
             <th></th>
         </tr>
         </thead>
@@ -87,6 +90,9 @@
                 </td>
                 <td class="enterprise-entity-date">
                     @Html.DisplayFor(modelItem => vehicleViewModel.AcquiredOn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => vehicleViewModel.TotalTripsCount)
                 </td>
                 <td class="text-nowrap">
                     @await Html.PartialAsync("_Actions", new ActionsModel

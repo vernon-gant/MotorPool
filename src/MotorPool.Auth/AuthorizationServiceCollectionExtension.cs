@@ -48,12 +48,13 @@ public static class AuthorizationServiceCollectionExtension
 
         try
         {
-            logger.LogInformation("Migrating the user database...");
-            await appDbContext.Database.MigrateAsync();
+            logger.LogInformation("Migrating the user database");
+            await appDbContext.Database.EnsureCreatedAsync();
+            if ((await appDbContext.Database.GetPendingMigrationsAsync()).Any()) await appDbContext.Database.MigrateAsync();
         }
         catch (Exception e)
         {
-            logger.LogError(e, "Error while migrating the database...");
+            logger.LogError(e, "Error while migrating the database");
             throw;
         }
     }

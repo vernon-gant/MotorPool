@@ -94,7 +94,7 @@ public class DefaultTripQueryService(AppDbContext dbContext, IMapper mapper, Gra
                                                                                                            .Include(geoPoint => geoPoint.Vehicle!.Enterprise)
                                                                                                            .Where(geoPoint =>
                                                                                                                       geoPoint.RecordedAt >= trip.StartTime &&
-                                                                                                                      geoPoint.RecordedAt <= trip.EndTime)
+                                                                                                                      geoPoint.RecordedAt <= trip.EndTime && geoPoint.VehicleId == trip.VehicleId)
                                                                                                            .OrderBy(geoPoint => geoPoint.RecordedAt)
                                                                                                            .ToList()))
                                                                            .ToList();

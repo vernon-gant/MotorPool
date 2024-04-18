@@ -11,7 +11,7 @@ public class TripConfiguration : IEntityTypeConfiguration<Trip>
     public void Configure(EntityTypeBuilder<Trip> builder)
     {
         builder.HasOne(trip => trip.Vehicle)
-               .WithMany()
+               .WithMany(vehicle => vehicle.Trips)
                .HasForeignKey(trip => trip.VehicleId)
                .OnDelete(DeleteBehavior.Cascade);
     }

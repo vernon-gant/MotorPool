@@ -10,19 +10,21 @@ public static class DatabaseSetupExtension
 
     public static async Task SetupDatabaseAsync(this IHost webHost)
     {
-        using var freshScope = webHost.Services.CreateScope();
-        var appDbContext = freshScope.ServiceProvider.GetRequiredService<AppDbContext>();
-        var loggerFactory = freshScope.ServiceProvider.GetRequiredService<ILoggerFactory>();
-        var logger = loggerFactory.CreateLogger("test");
+        using IServiceScope freshScope = webHost.Services.CreateScope();
+        AppDbContext appDbContext = freshScope.ServiceProvider.GetRequiredService<AppDbContext>();
+        ILoggerFactory loggerFactory = freshScope.ServiceProvider.GetRequiredService<ILoggerFactory>();
+        ILogger logger = loggerFactory.CreateLogger("test");
 
         try
         {
-            logger.LogInformation("Migrating the database...");
-            await appDbContext.Database.MigrateAsync();
+            logger.LogInformation("Migrating the database");
+            await appDbContext.Database.EnsureCreatedAsync();
+            if ((await appDbContext.Database.GetPendingMigrationsAsync()).Any())
+                await appDbContext.Database.MigrateAsync();
         }
         catch (Exception e)
         {
-            logger.LogError(e, "Error while migrating the database...");
+            logger.LogError(e, "Error while migrating the database");
             throw;
         }
     }

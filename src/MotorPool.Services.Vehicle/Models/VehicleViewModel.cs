@@ -16,6 +16,9 @@ public class VehicleViewModel : VehicleDTO
     [Display(Name = "Acquired on")]
     public string AcquiredOn { get; set; }
 
+    [Display(Name = "All trips amount")]
+    public int TotalTripsCount { get; set; }
+
     public List<int> DriverIds { get; set; } = new ();
 
     [JsonIgnore]

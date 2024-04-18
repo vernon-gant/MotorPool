@@ -1,26 +1,33 @@
 ﻿using System.Net.Http.Json;
-
+using Microsoft.Extensions.Logging;
 using MotorPool.Domain;
 
 namespace MotorPool.Services.Geo.GraphHopper;
 
-public class GraphHopperClient(HttpClient httpClient, GraphHopperConfiguration graphHopperConfiguration)
+public class GraphHopperClient(HttpClient httpClient, GraphHopperConfiguration graphHopperConfiguration, ILogger<GraphHopperClient> logger)
 {
     public async ValueTask<string> GetReverseGeocodingAsync(GeoPoint geoPoint)
     {
-        HttpResponseMessage response = await httpClient.GetAsync($"geocode?reverse=true&point={geoPoint.Coordinates}&key={graphHopperConfiguration.ApiKey}");
-        response.EnsureSuccessStatusCode();
-        ReverseGeocodingResponse? responseBody = await response.Content.ReadFromJsonAsync<ReverseGeocodingResponse>();
+        try
+        {
+            HttpResponseMessage response = await httpClient.GetAsync($"geocode?reverse=true&point={geoPoint.Coordinates}&key={graphHopperConfiguration.ApiKey}");
+            response.EnsureSuccessStatusCode();
+            ReverseGeocodingResponse? responseBody = await response.Content.ReadFromJsonAsync<ReverseGeocodingResponse>();
 
-        if (responseBody is null) return "Address not found";
+            if (responseBody is null) return "Address not found";
 
-        return responseBody.Hits.First().ToString();
+            return responseBody.Hits.First().ToString();
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Error while fetching geocoding");
+            return "Address not found";
+        }
     }
 
     public async ValueTask<decimal> GetDistanceAsync_m(GeoPoint start, GeoPoint end)
     {
-        string url =
-            $"route?point={start.Coordinates}&point={end.Coordinates}&profile=car&key={graphHopperConfiguration.ApiKey}&calc_points=true&instructions=false&points_encoded=false";
+        string url = $"route?point={start.Coordinates}&point={end.Coordinates}&profile=car&key={graphHopperConfiguration.ApiKey}&calc_points=true&instructions=false&points_encoded=false";
         HttpResponseMessage response = await httpClient.GetAsync(url);
         response.EnsureSuccessStatusCode();
         RouteResponse responseBody = await response.Content.ReadFromJsonAsync<RouteResponse>();
@@ -63,10 +70,9 @@ internal class AddressHit
 
     public string Street { get; set; } = string.Empty;
 
-    public int Postcode { get; set; }
+    public string Postcode { get; set; } = string.Empty;
 
     private string FormatValue(string value, bool isEnd = false) => string.IsNullOrEmpty(value) ? "" : value + (isEnd ? "" : ", ");
 
-    public override string ToString() =>
-        $"{FormatValue(Country)}{FormatValue(State)}{FormatValue(City)}{FormatValue(Street)}{FormatValue(Name)}{FormatValue(Postcode.ToString(), true)}";
+    public override string ToString() => $"{FormatValue(Country)}{FormatValue(State)}{FormatValue(City)}{FormatValue(Street)}{FormatValue(Name)}{FormatValue(Postcode, true)}";
 }

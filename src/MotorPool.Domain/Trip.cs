@@ -2,7 +2,6 @@
 
 public class Trip
 {
-
     public int TripId { get; set; }
 
     public DateTime StartTime { get; set; }
@@ -12,5 +11,4 @@ public class Trip
     public int VehicleId { get; set; }
 
     public Vehicle? Vehicle { get; set; }
-
 }

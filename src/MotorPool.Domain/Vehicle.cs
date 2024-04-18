@@ -5,7 +5,6 @@ namespace MotorPool.Domain;
 
 public class Vehicle
 {
-
     public int VehicleId { get; set; }
 
     [MinLength(17)]
@@ -16,14 +15,11 @@ public class Vehicle
     [DisplayFormat(DataFormatString = "{0:C}")]
     public decimal Cost { get; set; }
 
-    [Required]
-    public int ManufactureYear { get; set; }
+    [Required] public int ManufactureYear { get; set; }
 
-    [MaxLength(100)]
-    public string ManufactureLand { get; set; } = string.Empty;
+    [MaxLength(100)] public string ManufactureLand { get; set; } = string.Empty;
 
-    [Required]
-    public decimal Mileage { get; set; }
+    [Required] public decimal Mileage { get; set; }
 
     public DateTime AcquiredOn { get; set; }
 
@@ -48,6 +44,7 @@ public class Vehicle
 
     public Enterprise? Enterprise { get; set; }
 
-    public List<DriverVehicle> DriverVehicles { get; set; } = new ();
+    public List<DriverVehicle> DriverVehicles { get; set; } = new();
 
+    public List<Trip> Trips { get; set; } = new();
 }

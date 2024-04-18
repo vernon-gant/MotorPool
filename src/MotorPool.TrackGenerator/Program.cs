@@ -40,6 +40,6 @@ GraphHopperResponse response = graphHopperClient.GetTrack(options.StartPoint, op
 
 Track track = Track.FromGraphHopperResponseWithOptions(response, options);
 
-new TrackGenerator(dbContext, graphHopperClient, track).Generate();
+new TrackGenerator(dbContext, track).Generate();
 
 internal partial class Program { }
