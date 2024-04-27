@@ -22,7 +22,7 @@ Copy-Item -Path $EnvFilePath -Destination $CygwinEnvFilePath -Force
 Copy-Item -Path $LocalScriptPath -Destination $CygwinScriptPath -Force
 
 # Prepare the command to run in Cygwin
-$ScriptCommand = "./deployment.sh $ServerIP $ServerPassword .env"
+$ScriptCommand = "./deployment.sh $ServerIP $ServerPassword ./.env"
 
 # Output the command to the user
 Write-Host "Open Cygwin and run the following command:"

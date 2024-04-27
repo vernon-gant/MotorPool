@@ -22,7 +22,7 @@ $SSH_PREFIX 'which docker-compose || (echo "Installing Docker Compose..."; curl 
 
 # Set up the deployment directory
 DEPLOY_DIR="/var/www/motor-pool"
-$SSH_PREFIX "rm -rf $DEPLOY_DIR/* || true"
+$SSH_PREFIX "rm -rf $DEPLOY_DIR/* $DEPLOY_DIR/.* || true"
 $SSH_PREFIX "mkdir -p $DEPLOY_DIR"
 
 # Clone the repository
@@ -32,7 +32,11 @@ $SSH_PREFIX "git clone $REPO_URL $DEPLOY_DIR"
 
 # Copy the environment file
 echo "Copying environment variables..."
-scp -o StrictHostKeyChecking=no $ENV_FILE_PATH root@$SERVER_IP:$DEPLOY_DIR/.env
+scp -o StrictHostKeyChecking=no $ENV_FILE_PATH root@$SERVER_IP:$DEPLOY_DIR/deployment/.env
+
+# Stop and remove current Docker Compose containers, networks, and volumes
+echo "Stopping existing Docker Compose containers..."
+$SSH_PREFIX "cd '$DEPLOY_DIR/deployment' && docker-compose down"
 
 # Start the app with Docker Compose
 echo "Starting the application with Docker Compose..."
