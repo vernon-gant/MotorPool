@@ -34,13 +34,13 @@ $SSH_PREFIX "git clone $REPO_URL $DEPLOY_DIR"
 echo "Copying environment variables..."
 scp -o StrictHostKeyChecking=no $ENV_FILE_PATH root@$SERVER_IP:$DEPLOY_DIR/deployment/.env
 
-# Pull the latest images from Docker Hub
-echo "Pulling the latest Docker images..."
-$SSH_PREFIX "cd '$DEPLOY_DIR/deployment' && docker-compose pull"
-
 # Stop and remove current Docker Compose containers, networks, and volumes
 echo "Stopping existing Docker Compose containers..."
 $SSH_PREFIX "cd '$DEPLOY_DIR/deployment' && docker-compose down"
+
+# Pull the latest images from Docker Hub
+echo "Pulling the latest Docker images..."
+$SSH_PREFIX "cd '$DEPLOY_DIR/deployment' && docker-compose pull"
 
 # Rebuild and force recreate Docker Compose containers
 echo "Rebuilding all Docker Compose images and forcing recreation of containers..."
