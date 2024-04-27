@@ -2,7 +2,8 @@ version: '3.8'
 services:
   motorpool-app:
     build:
-      context: ../src/MotorPool.UI
+      context: ../src
+      dockerfile: ../src/MotorPool.UI/Dockerfile
     ports:
       - "80:5000"
     environment:
