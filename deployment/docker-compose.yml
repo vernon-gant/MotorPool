@@ -3,7 +3,7 @@ services:
   motorpool-app:
     build:
       context: ../
-      dockerfile: ../src/MotorPool.UI/Dockerfile
+      dockerfile: src/MotorPool.UI/Dockerfile
     ports:
       - "80:5000"
     environment:
