@@ -11,7 +11,7 @@ public class VehicleDTO
     [MaxLength(17)]
     [Display(Name = "VIN")]
     [Required]
-    public string MotorVIN { get; set; }
+    public string MotorVIN { get; set; } = string.Empty;
 
     [Required]
     [Range(1, 1000000)]
@@ -25,7 +25,7 @@ public class VehicleDTO
     [Display(Name = "Manufacture land")]
     [Required]
     [ExistingCounty]
-    public string ManufactureLand { get; set; }
+    public string ManufactureLand { get; set; } = string.Empty;
 
     [Display(Name = "Mileage (km)")]
     [Range(0, 1000000)]

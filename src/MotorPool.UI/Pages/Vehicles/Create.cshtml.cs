@@ -1,13 +1,13 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-
+using MotorPool.Domain;
+using MotorPool.Repository.Vehicle;
 using MotorPool.Services.VehicleBrand.Services;
 using MotorPool.Services.Vehicles.Models;
-using MotorPool.Services.Vehicles.Services;
 
 namespace MotorPool.UI.Pages.Vehicles;
 
-public class CreateModel(VehicleActionService vehicleActionService, VehicleBrandService vehicleBrandService) : VehicleBrandsSelectListPageModel
+public class CreateModel(VehicleChangeRepository vehicleChangeRepository, VehicleBrandService vehicleBrandService, IMapper mapper) : VehicleBrandsSelectListPageModel
 {
 
     [BindProperty]
@@ -24,7 +24,7 @@ public class CreateModel(VehicleActionService vehicleActionService, VehicleBrand
     {
         if (!ModelState.IsValid) return Page();
 
-        await vehicleActionService.CreateAsync(VehicleDto);
+        await vehicleChangeRepository.CreateAsync(mapper.Map<Vehicle>(VehicleDto));
 
         return RedirectToPage("./Index");
     }

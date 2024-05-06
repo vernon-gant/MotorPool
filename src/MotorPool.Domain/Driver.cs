@@ -24,6 +24,6 @@ public class Driver
 
     public int? ActiveVehicleId { get; set; }
 
-    public Vehicle ActiveVehicle { get; set; }
+    public Vehicle? ActiveVehicle { get; set; }
 
 }

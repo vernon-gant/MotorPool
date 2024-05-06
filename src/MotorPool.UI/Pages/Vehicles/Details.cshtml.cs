@@ -1,13 +1,14 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
+using MotorPool.Domain;
 using MotorPool.Services.Geo.Models;
 using MotorPool.Services.Geo.Services;
 using MotorPool.Services.Vehicles.Models;
 
 namespace MotorPool.UI.Pages.Vehicles;
 
-public class DetailsModel(TripQueryService tripQueryService) : PageModel
+public class DetailsModel(TripQueryService tripQueryService, IMapper mapper) : PageModel
 {
 
     [BindProperty(SupportsGet = true)]
@@ -16,13 +17,15 @@ public class DetailsModel(TripQueryService tripQueryService) : PageModel
     [BindProperty(SupportsGet = true)]
     public DateTime? EndDate { get; set; }
 
-    public VehicleViewModel Vehicle { get; set; } = default!;
+    public VehicleViewModel VehicleViewModel { get; set; } = default!;
 
     public IEnumerable<TripViewModel> VehicleTrips { get; set; } = new List<TripViewModel>();
 
     public async Task OnGetAsync(int vehicleId)
     {
-        Vehicle = HttpContext.Items["Vehicle"] as VehicleViewModel ?? throw new InvalidOperationException("Vehicle not found");
+        Vehicle requestVehicle = HttpContext.Items["Vehicle"] as Vehicle ?? throw new InvalidOperationException();
+
+        VehicleViewModel = mapper.Map<VehicleViewModel>(requestVehicle);
 
         if (StartDate is null && EndDate is null)
         {

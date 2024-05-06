@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using MotorPool.Domain;
+using MotorPool.Repository.Driver;
 
-using MotorPool.Services.Drivers.Models;
-using MotorPool.Services.Drivers.Services;
+namespace MotorPool.UI.PageFilters.ExistenceFilters;
 
-namespace MotorPool.UI.PageFilters;
-
-public class DriverExistsPageFilter(DriverQueryService driverQueryService) : IAsyncPageFilter
+public class DriverExistsPageFilter(DriverQueryRepository driverQueryRepository) : IAsyncPageFilter
 {
 
     public Task OnPageHandlerSelectionAsync(PageHandlerSelectedContext context)
@@ -26,12 +25,11 @@ public class DriverExistsPageFilter(DriverQueryService driverQueryService) : IAs
 
         int driverId = int.Parse(driverIdString);
 
-        DriverViewModel? driver = await driverQueryService.GetByIdAsync(driverId);
+        Driver? driver = await driverQueryRepository.GetByIdAsync(driverId);
 
         if (driver == null)
         {
             context.Result = new RedirectToPageResult("/Error/NotFound");
-
             return;
         }
 

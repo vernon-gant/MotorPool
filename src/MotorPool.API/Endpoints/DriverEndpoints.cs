@@ -1,9 +1,8 @@
 ﻿using System.Security.Claims;
-
+using MotorPool.Persistence.QueryObjects;
+using MotorPool.Repository.Driver;
 using MotorPool.Services.Drivers.Models;
-using MotorPool.Services.Drivers.Services;
 using MotorPool.Services.Manager;
-using MotorPool.Services.Utils;
 
 namespace MotorPool.API.Endpoints;
 
@@ -21,11 +20,11 @@ public static class DriverEndpoints
                            .Produces<List<DriverViewModel>>();
     }
 
-    private static async Task<IResult> GetAll(DriverQueryService driverService, ClaimsPrincipal principal, [AsParameters] PageOptionsDTO pageOptions)
+    private static async Task<IResult> GetAll(DriverQueryRepository driverQueryRepository, ClaimsPrincipal principal, [AsParameters] PageOptionsDTO pageOptions)
     {
         int managerId = principal.GetManagerId();
 
-        return Results.Ok(await driverService.GetAllAsync(managerId, pageOptions.ToPageOptions()));
+        return Results.Ok(await driverQueryRepository.GetAllAsync(managerId, pageOptions.ToPageOptions()));
     }
 
 }

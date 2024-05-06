@@ -1,9 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-
-using MotorPool.Domain;
-using MotorPool.Persistence;
 using MotorPool.Services.VehicleBrand.Models;
 using MotorPool.Services.VehicleBrand.Services;
 

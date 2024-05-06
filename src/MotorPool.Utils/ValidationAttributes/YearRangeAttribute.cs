@@ -4,7 +4,6 @@ namespace MotorPool.Utils.ValidationAttributes;
 
 public class YearRangeAttribute : ValidationAttribute
 {
-
     public required int MinYear { get; init; }
 
     public override bool IsValid(object? value)
@@ -13,5 +12,4 @@ public class YearRangeAttribute : ValidationAttribute
 
         return year >= MinYear && year <= DateTime.Now.Year;
     }
-
 }

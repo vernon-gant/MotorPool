@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MotorPool.Auth;
+namespace MotorPool.Auth.User;
 
 public class RegisterDTO
 {
-
     [Required]
     public required string FirstName { get; set; }
 
@@ -22,5 +21,4 @@ public class RegisterDTO
 
     [Required]
     public required string ConfirmPassword { get; set; }
-
 }

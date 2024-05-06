@@ -14,7 +14,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\MotorPool.Domain\MotorPool.Domain.csproj"/>
-        <ProjectReference Include="..\MotorPool.Services.Utils\MotorPool.Services.Utils.csproj" />
+        <ProjectReference Include="..\MotorPool.Utils\MotorPool.Utils.csproj"/>
     </ItemGroup>
 
     <ItemGroup>

@@ -1,9 +1,9 @@
-﻿using MotorPool.Services.Enterprise.Models;
-using MotorPool.Services.Enterprise.Services;
+﻿using MotorPool.Domain;
+using MotorPool.Repository.Enterprise;
 
 namespace MotorPool.API.EndpointFilters;
 
-public class EnterpriseExistsFilter(EnterpriseQueryService enterpriseQueryService) : IEndpointFilter
+public class EnterpriseExistsFilter(EnterpriseQueryRepository enterpriseQueryRepository) : IEndpointFilter
 {
 
     public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
@@ -11,7 +11,7 @@ public class EnterpriseExistsFilter(EnterpriseQueryService enterpriseQueryServic
         string enterpriseIdString = context.HttpContext.Request.RouteValues["enterpriseId"]?.ToString() ?? throw new InvalidOperationException("EnterpriseId is not found in route data");
         int enterpriseId = int.Parse(enterpriseIdString);
 
-        FullEnterpriseViewModel? enterprise = await enterpriseQueryService.GetByIdAsync(enterpriseId);
+        Enterprise? enterprise = await enterpriseQueryRepository.GetByIdAsync(enterpriseId);
 
         if (enterprise is not null)
         {

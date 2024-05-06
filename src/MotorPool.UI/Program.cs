@@ -1,11 +1,10 @@
 using System.Globalization;
-
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Localization;
-
 using MotorPool.Auth;
 using MotorPool.Persistence;
+using MotorPool.Repository;
 using MotorPool.Services.Drivers;
 using MotorPool.Services.Enterprise;
 using MotorPool.Services.Geo;
@@ -14,8 +13,8 @@ using MotorPool.Services.Manager;
 using MotorPool.Services.Reporting;
 using MotorPool.Services.VehicleBrand;
 using MotorPool.Services.Vehicles;
-using MotorPool.UI.PageFilters;
 using MotorPool.UI.PageFilters.AccessibilityFilters;
+using MotorPool.UI.PageFilters.ExistenceFilters;
 using MotorPool.Utils;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -35,6 +34,7 @@ builder.Services.AddAppIdentity(connectionString);
 builder.Services.AddManagerServices();
 builder.Services.AddGeoServices();
 builder.Services.AddReporting();
+builder.Services.AddRepository();
 
 builder.Services
        .AddAuthentication(options =>

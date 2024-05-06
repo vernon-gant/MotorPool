@@ -1,15 +1,15 @@
 ﻿using System.Security.Claims;
-
+using AutoMapper;
 using MotorPool.API.EndpointFilters;
+using MotorPool.Domain;
+using MotorPool.Persistence.QueryObjects;
+using MotorPool.Repository.Vehicle;
 using MotorPool.Services.Geo;
 using MotorPool.Services.Geo.Models;
 using MotorPool.Services.Geo.Services;
 using MotorPool.Services.Manager;
-using MotorPool.Services.Utils;
-using MotorPool.Services.Vehicles;
 using MotorPool.Services.Vehicles.Exceptions;
 using MotorPool.Services.Vehicles.Models;
-using MotorPool.Services.Vehicles.Services;
 
 namespace MotorPool.API.Endpoints;
 
@@ -74,11 +74,13 @@ public static class VehicleEndpoints
                                  .Produces(StatusCodes.Status403Forbidden);
     }
 
-    private static async Task<IResult> GetAll(VehicleQueryService vehicleQueryService, ClaimsPrincipal user, [AsParameters] PageOptionsDTO pageOptionsDto)
+    private static async Task<IResult> GetAll(VehicleQueryRepository vehicleQueryRepository, IMapper mapper, ClaimsPrincipal user, [AsParameters] PageOptionsDTO pageOptionsDto)
     {
         int managerId = user.GetManagerId();
 
-        return Results.Ok(await vehicleQueryService.GetAllAsync(pageOptionsDto.ToPageOptions(), new VehicleQueryOptions { ManagerId = managerId }));
+        var vehicles = await vehicleQueryRepository.GetAllAsync(pageOptionsDto.ToPageOptions(), new VehicleQueryOptions { ManagerId = managerId });
+
+        return Results.Ok(mapper.Map<List<VehicleViewModel>>(vehicles));
     }
 
     private static Task<IResult> GetById(int vehicleId, HttpContext httpContext)
@@ -88,13 +90,15 @@ public static class VehicleEndpoints
         return Task.FromResult(Results.Ok(vehicle));
     }
 
-    private static async Task<IResult> Create(VehicleActionService vehicleActionService, VehicleDTO vehicleDTO)
+    private static async Task<IResult> Create(VehicleChangeRepository vehicleChangeRepository, IMapper mapper, VehicleDTO vehicleDTO)
     {
         try
         {
-            VehicleViewModel result = await vehicleActionService.CreateAsync(vehicleDTO);
+            Vehicle newVehicle = mapper.Map<Vehicle>(vehicleDTO);
 
-            return Results.Created($"/vehicles/{result.VehicleId}", result);
+            await vehicleChangeRepository.CreateAsync(newVehicle);
+
+            return Results.Created($"/vehicles/{newVehicle.VehicleId}", mapper.Map<VehicleViewModel>(newVehicle));
         }
         catch (VehicleBrandNotFoundException)
         {
@@ -106,11 +110,15 @@ public static class VehicleEndpoints
         }
     }
 
-    private static async Task<IResult> Update(VehicleActionService vehicleActionService, VehicleDTO vehicleDTO, int vehicleId)
+    private static async Task<IResult> Update(VehicleChangeRepository vehicleChangeRepository, VehicleQueryRepository vehicleQueryRepository, IMapper mapper, VehicleDTO vehicleDTO, int vehicleId)
     {
         try
         {
-            await vehicleActionService.UpdateAsync(vehicleDTO, vehicleId);
+            Vehicle? toUpdate = await vehicleQueryRepository.GetByIdAsync(vehicleId);
+
+            if (toUpdate is null) return Results.NotFound();
+
+            await vehicleChangeRepository.UpdateAsync(mapper.Map(vehicleDTO, toUpdate));
 
             return Results.NoContent();
         }
@@ -124,9 +132,9 @@ public static class VehicleEndpoints
         }
     }
 
-    private static async Task<IResult> Delete(VehicleActionService vehicleActionService, int vehicleId)
+    private static async Task<IResult> Delete(VehicleChangeRepository vehicleChangeRepository, int vehicleId)
     {
-        await vehicleActionService.DeleteAsync(vehicleId);
+        await vehicleChangeRepository.DeleteAsync(vehicleId);
 
         return Results.NoContent();
     }

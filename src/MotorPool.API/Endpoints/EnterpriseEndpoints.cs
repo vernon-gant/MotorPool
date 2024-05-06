@@ -1,9 +1,10 @@
 ﻿using System.Security.Claims;
-
+using AutoMapper;
 using MotorPool.API.EndpointFilters;
+using MotorPool.Domain;
+using MotorPool.Repository.Enterprise;
 using MotorPool.Services.Enterprise.Exceptions;
 using MotorPool.Services.Enterprise.Models;
-using MotorPool.Services.Enterprise.Services;
 using MotorPool.Services.Manager;
 
 namespace MotorPool.API.Endpoints;
@@ -53,13 +54,13 @@ public static class EnterpriseEndpoints
                                .Produces(StatusCodes.Status403Forbidden);
     }
 
-    private static async Task<IResult> GetAll(EnterpriseQueryService enterpriseService, ClaimsPrincipal user)
+    private static async Task<IResult> GetAll(EnterpriseQueryRepository enterpriseQueryRepository, ClaimsPrincipal user, IMapper mapper)
     {
         int managerId = user.GetManagerId();
 
-        List<FullEnterpriseViewModel> allEnterprises = await enterpriseService.GetAllAsync(managerId);
+        List<Enterprise> allEnterprises = await enterpriseQueryRepository.GetAllAsync(managerId);
 
-        return Results.Ok(allEnterprises);
+        return Results.Ok(mapper.Map<List<FullEnterpriseViewModel>>(allEnterprises));
     }
 
     private static Task<IResult> GetById(int enterpriseId, HttpContext context)
@@ -69,13 +70,18 @@ public static class EnterpriseEndpoints
         return Task.FromResult(Results.Ok(fullEnterprise));
     }
 
-    private static async Task<IResult> Create(EnterpriseActionService enterpriseActionService, EnterpriseDTO enterpriseDto, HttpContext httpContext)
+    private static async Task<IResult> Create(EnterpriseChangeRepository enterpriseChangeRepository, IMapper mapper, EnterpriseDTO enterpriseDto, HttpContext httpContext)
     {
         try
         {
-            FullEnterpriseViewModel result = await enterpriseActionService.CreateAsync(enterpriseDto, httpContext.User.GetManagerId());
+            Enterprise newEnterprise = mapper.Map<Enterprise>(enterpriseDto);
+            newEnterprise.ManagerLinks.Add(new EnterpriseManager
+            {
+                ManagerId = httpContext.User.GetManagerId()
+            });
+            await enterpriseChangeRepository.CreateAsync(newEnterprise);
 
-            return Results.Created($"/enterprises/{result.EnterpriseId}", result);
+            return Results.Created($"/enterprises/{newEnterprise.EnterpriseId}", mapper.Map<FullEnterpriseViewModel>(newEnterprise));
         }
         catch (NameIsTakenException)
         {
@@ -87,11 +93,15 @@ public static class EnterpriseEndpoints
         }
     }
 
-    private static async Task<IResult> Update(EnterpriseActionService enterpriseActionService, EnterpriseDTO enterpriseDto, int enterpriseId)
+    private static async Task<IResult> Update(EnterpriseChangeRepository enterpriseChangeRepository, EnterpriseQueryRepository enterpriseQueryRepository, IMapper mapper, EnterpriseDTO enterpriseDto, int enterpriseId)
     {
         try
         {
-            await enterpriseActionService.UpdateAsync(enterpriseDto, enterpriseId);
+            Enterprise? toUpdate = await enterpriseQueryRepository.GetByIdAsync(enterpriseDto.EnterpriseId);
+
+            if (toUpdate is null) return Results.NotFound();
+
+            await enterpriseChangeRepository.UpdateAsync(mapper.Map(enterpriseDto,toUpdate));
 
             return Results.NoContent();
         }
@@ -109,11 +119,11 @@ public static class EnterpriseEndpoints
         }
     }
 
-    private static async Task<IResult> Delete(EnterpriseActionService enterpriseActionService, int enterpriseId)
+    private static async Task<IResult> Delete(EnterpriseChangeRepository enterpriseChangeRepository, int enterpriseId)
     {
         try
         {
-            await enterpriseActionService.DeleteAsync(enterpriseId);
+            await enterpriseChangeRepository.DeleteAsync(enterpriseId);
 
             return Results.NoContent();
         }

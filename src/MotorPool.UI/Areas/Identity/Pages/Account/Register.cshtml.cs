@@ -1,24 +1,19 @@
 using System.ComponentModel.DataAnnotations;
-
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
-using MotorPool.Auth;
+using MotorPool.Auth.User;
 
 namespace MotorPool.UI.Areas.Identity.Pages.Account;
 
 public class RegisterModel(
     UserManager<ApplicationUser> userManager,
-    IUserStore<ApplicationUser> userStore,
     SignInManager<ApplicationUser> signInManager,
     ILogger<RegisterModel> logger)
     : PageModel
 {
-
-    [BindProperty]
-    public InputModel Input { get; set; } = default!;
+    [BindProperty] public InputModel Input { get; set; } = default!;
 
 
     public string? ReturnUrl { get; set; }
@@ -74,28 +69,26 @@ public class RegisterModel(
 
     public class InputModel
     {
-
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
-        public string Email { get; set; }
+        public string Email { get; set; } = string.Empty;
 
         [Required]
         [Display(Name = "User Name")]
-        public string UserName { get; set; }
+        public string UserName { get; set; } = string.Empty;
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
+            MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
-        public string Password { get; set; }
+        public string Password { get; set; } = string.Empty;
 
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
-
+        public string ConfirmPassword { get; set; } = string.Empty;
     }
-
 }

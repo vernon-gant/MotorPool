@@ -1,11 +1,9 @@
 using System.ComponentModel.DataAnnotations;
-
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
-using MotorPool.Auth;
+using MotorPool.Auth.User;
 
 namespace MotorPool.UI.Areas.Identity.Pages.Account;
 
@@ -72,14 +70,12 @@ public class LoginModel(SignInManager<ApplicationUser> signInManager, UserManage
     public class InputModel
     {
 
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Required] [EmailAddress] public string Email { get; set; } = string.Empty;
 
 
         [Required]
         [DataType(DataType.Password)]
-        public string Password { get; set; }
+        public string Password { get; set; } = string.Empty;
 
 
         [Display(Name = "Remember me?")]

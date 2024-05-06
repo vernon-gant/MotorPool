@@ -1,22 +1,23 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-
+using MotorPool.Domain;
+using MotorPool.Persistence;
+using MotorPool.Persistence.QueryObjects;
+using MotorPool.Repository.Vehicle;
 using MotorPool.Services.Manager;
-using MotorPool.Services.Utils;
-using MotorPool.Services.Vehicles;
 using MotorPool.Services.Vehicles.Models;
-using MotorPool.Services.Vehicles.Services;
 using MotorPool.UI.Pages.Shared;
 
 namespace MotorPool.UI.Pages.Vehicles;
 
-public class IndexModel(VehicleQueryService vehicleQueryService, ManagerPermissionService permissionService) : PagedModel
+public class IndexModel(VehicleQueryRepository vehicleQueryRepository, IMapper mapper, ManagerPermissionService permissionService) : PagedModel
 {
 
     public override int ELEMENTS_PER_PAGE => 10;
 
     public override int PAGES_DISPLAY_RANGE => 5;
 
-    public IList<VehicleViewModel> Vehicles { get; set; } = default!;
+    public List<VehicleViewModel> Vehicles { get; set; } = default!;
 
     public string? EnterpriseName { get; set; }
 
@@ -32,10 +33,10 @@ public class IndexModel(VehicleQueryService vehicleQueryService, ManagerPermissi
 
         if (queryOptions.EnterpriseId.HasValue && !await permissionService.IsManagerAccessibleEnterprise(User.GetManagerId(), queryOptions.EnterpriseId.Value)) return Forbid();
 
-        PagedViewModel<VehicleViewModel> enterpriseVehicles = await vehicleQueryService.GetAllAsync(pageOptions.ToPageOptions(ELEMENTS_PER_PAGE), queryOptions);
+        PagedResult<Vehicle> enterpriseVehiclesPagedResult = await vehicleQueryRepository.GetAllAsync(pageOptions.ToPageOptions(ELEMENTS_PER_PAGE), queryOptions);
 
-        TotalPages = enterpriseVehicles.TotalPages;
-        Vehicles = enterpriseVehicles.Elements;
+        TotalPages = enterpriseVehiclesPagedResult.TotalPages;
+        Vehicles = mapper.Map<List<VehicleViewModel>>(enterpriseVehiclesPagedResult.Elements);
 
         VehicleBrandSignature = queryOptions.VehicleBrandId.HasValue ? Vehicles.First().CompanyName + " " + Vehicles.First().ModelName : null;
 

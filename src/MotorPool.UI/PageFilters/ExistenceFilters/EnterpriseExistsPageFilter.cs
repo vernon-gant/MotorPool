@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using MotorPool.Domain;
+using MotorPool.Repository.Enterprise;
 
-using MotorPool.Services.Enterprise.Models;
-using MotorPool.Services.Enterprise.Services;
+namespace MotorPool.UI.PageFilters.ExistenceFilters;
 
-namespace MotorPool.UI.PageFilters;
-
-public class EnterpriseExistsPageFilter(EnterpriseQueryService enterpriseQueryService) : IAsyncPageFilter
+public class EnterpriseExistsPageFilter(EnterpriseQueryRepository enterpriseQueryService) : IAsyncPageFilter
 {
 
     public Task OnPageHandlerSelectionAsync(PageHandlerSelectedContext context)
@@ -26,12 +25,11 @@ public class EnterpriseExistsPageFilter(EnterpriseQueryService enterpriseQuerySe
 
         int enterpriseId = int.Parse(enterpriseIdString);
 
-        FullEnterpriseViewModel? enterprise = await enterpriseQueryService.GetByIdAsync(enterpriseId);
+        Enterprise? enterprise = await enterpriseQueryService.GetByIdAsync(enterpriseId);
 
         if (enterprise == null)
         {
             context.Result = new RedirectToPageResult("/Error/NotFound");
-
             return;
         }
 

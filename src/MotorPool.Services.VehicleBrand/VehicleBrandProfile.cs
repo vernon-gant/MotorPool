@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-
 using MotorPool.Services.VehicleBrand.Models;
-using MotorPool.Utils;
 
 namespace MotorPool.Services.VehicleBrand;
 

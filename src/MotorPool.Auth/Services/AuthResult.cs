@@ -1,8 +1,7 @@
-﻿namespace MotorPool.Auth;
+﻿namespace MotorPool.Auth.Services;
 
 public class AuthResult
 {
-
     public bool IsSuccess { get; set; }
 
     public string? Token { get; set; }
@@ -23,5 +22,4 @@ public class AuthResult
     {
         return new AuthResult { IsSuccess = false, Error = error };
     }
-
 }

@@ -1,14 +1,12 @@
-﻿using MotorPool.Domain;
-
-namespace MotorPool.Services.Manager;
+﻿namespace MotorPool.Repository.Manager;
 
 public static class ManagerLINQExtension
 {
 
-    public static IQueryable<Vehicle> ForManager(this IQueryable<Vehicle> vehicles, int managerId) =>
+    public static IQueryable<Domain.Vehicle> ForManager(this IQueryable<Domain.Vehicle> vehicles, int managerId) =>
         vehicles.Where(vehicle => vehicle.Enterprise != null && vehicle.Enterprise.ManagerLinks.Any(managerLink => managerLink.ManagerId == managerId));
 
-    public static IQueryable<Driver> ForManager(this IQueryable<Driver> drivers, int managerId) =>
+    public static IQueryable<Domain.Driver> ForManager(this IQueryable<Domain.Driver> drivers, int managerId) =>
         drivers.Where(driver => driver.Enterprise != null && driver.Enterprise.ManagerLinks.Any(managerLink => managerLink.ManagerId == managerId));
 
     public static IQueryable<Domain.Enterprise> ForManager(this IQueryable<Domain.Enterprise> enterprises, int managerId) =>

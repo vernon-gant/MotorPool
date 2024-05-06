@@ -1,12 +1,15 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-
+using MotorPool.Domain;
+using MotorPool.Repository.Vehicle;
 using MotorPool.Services.VehicleBrand.Services;
 using MotorPool.Services.Vehicles.Models;
-using MotorPool.Services.Vehicles.Services;
 
 namespace MotorPool.UI.Pages.Vehicles;
 
-public class EditModel(VehicleActionService vehicleActionService, VehicleBrandService vehicleBrandService) : VehicleBrandsSelectListPageModel
+public class EditModel(VehicleChangeRepository vehicleChangeRepository,
+    VehicleQueryRepository vehicleQueryRepository,
+    VehicleBrandService vehicleBrandService, IMapper mapper) : VehicleBrandsSelectListPageModel
 {
 
     [BindProperty]
@@ -16,7 +19,9 @@ public class EditModel(VehicleActionService vehicleActionService, VehicleBrandSe
     {
         await PopulateVehicleBrandsDropDownList(vehicleBrandService);
 
-        VehicleViewModel = HttpContext.Items["Vehicle"] as VehicleViewModel ?? throw new InvalidOperationException();
+        Vehicle requestVehicle = HttpContext.Items["Vehicle"] as Vehicle ?? throw new InvalidOperationException();
+
+        VehicleViewModel = mapper.Map<VehicleViewModel>(requestVehicle);
 
         return Page();
     }
@@ -25,7 +30,13 @@ public class EditModel(VehicleActionService vehicleActionService, VehicleBrandSe
     {
         if (!ModelState.IsValid) return Page();
 
-        await vehicleActionService.UpdateAsync(VehicleViewModel, VehicleViewModel.VehicleId);
+        Vehicle? foundVehicle = await vehicleQueryRepository.GetByIdAsync(VehicleViewModel.VehicleId);
+
+        if (foundVehicle is null) return NotFound();
+
+        foundVehicle = mapper.Map(VehicleViewModel, foundVehicle);
+
+        await vehicleChangeRepository.UpdateAsync(foundVehicle);
 
         return RedirectToPage("./Index");
     }

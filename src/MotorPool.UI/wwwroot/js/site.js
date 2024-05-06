@@ -15,10 +15,10 @@
 
 }
 
-$('input[data-filter-property]').on('input', function() {
+$('input[data-filter-property]').on('input', function () {
     const triggeredInput = $(this);
     const entityRowsSelector = `tr[data-entity="${triggeredInput.data('filter-entity')}"]`;
-    $(entityRowsSelector).each(function() {
+    $(entityRowsSelector).each(function () {
         const currentRow = $(this);
 
         if (triggeredInput.val().length === 0) {
@@ -30,7 +30,6 @@ $('input[data-filter-property]').on('input', function() {
         if (!filteredPropertyValue.startsWith(triggeredInput.val())) currentRow.hide();
     });
 });
-
 
 
 document.addEventListener("DOMContentLoaded", () => {

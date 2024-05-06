@@ -4,7 +4,6 @@ namespace MotorPool.Utils.ValidationAttributes;
 
 public class ExistingCountyAttribute : ValidationAttribute
 {
-
     private static readonly HashSet<string> ValidCountries =
     [
         "Afghanistan",
@@ -209,9 +208,8 @@ public class ExistingCountyAttribute : ValidationAttribute
     {
         if (value is not string countryName) return new ValidationResult("The country name must be a string.");
 
-        if (ValidCountries.Contains(countryName)) return ValidationResult.Success;
+        if (ValidCountries.Contains(countryName)) return ValidationResult.Success!;
 
         return new ValidationResult($"The country '{countryName}' is not a valid country.");
     }
-
 }

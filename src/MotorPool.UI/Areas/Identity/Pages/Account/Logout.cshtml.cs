@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
-using MotorPool.Auth;
+using MotorPool.Auth.User;
 
 namespace MotorPool.UI.Areas.Identity.Pages.Account;
 

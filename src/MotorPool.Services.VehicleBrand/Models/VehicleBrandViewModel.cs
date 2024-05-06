@@ -2,7 +2,5 @@
 
 public class VehicleBrandViewModel : VehicleBrandDTO
 {
-
     public int VehicleBrandId { get; set; }
-
 }

@@ -1,6 +1,6 @@
 ﻿using MotorPool.Utils.ValidationAttributes;
 
-namespace MotorPool.Services.Utils;
+namespace MotorPool.Persistence.QueryObjects;
 
 public class PageOptionsDTO
 {

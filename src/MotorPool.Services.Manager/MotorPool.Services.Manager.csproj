@@ -7,8 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MotorPool.Domain\MotorPool.Domain.csproj" />
-      <ProjectReference Include="..\MotorPool.Persistence\MotorPool.Persistence.csproj" />
+        <ProjectReference Include="..\MotorPool.Domain\MotorPool.Domain.csproj"/>
+        <ProjectReference Include="..\MotorPool.Persistence\MotorPool.Persistence.csproj"/>
     </ItemGroup>
 
 </Project>

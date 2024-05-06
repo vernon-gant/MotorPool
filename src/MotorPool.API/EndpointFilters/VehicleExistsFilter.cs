@@ -1,9 +1,9 @@
-﻿using MotorPool.Services.Vehicles.Models;
-using MotorPool.Services.Vehicles.Services;
+﻿using MotorPool.Domain;
+using MotorPool.Repository.Vehicle;
 
 namespace MotorPool.API.EndpointFilters;
 
-public class VehicleExistsFilter(VehicleQueryService vehicleQueryService) : IEndpointFilter
+public class VehicleExistsFilter(VehicleQueryRepository vehicleQueryRepository) : IEndpointFilter
 {
 
     public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
@@ -11,7 +11,7 @@ public class VehicleExistsFilter(VehicleQueryService vehicleQueryService) : IEnd
         string vehicleIdString = context.HttpContext.Request.RouteValues["vehicleId"]?.ToString() ?? throw new InvalidOperationException("VehicleId is not found in route data");
         int vehicleId = int.Parse(vehicleIdString);
 
-        VehicleViewModel? vehicle = await vehicleQueryService.GetByIdAsync(vehicleId);
+        Vehicle? vehicle = await vehicleQueryRepository.GetByIdAsync(vehicleId);
 
         if (vehicle is not null)
         {

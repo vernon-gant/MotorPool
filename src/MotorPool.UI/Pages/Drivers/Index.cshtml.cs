@@ -1,12 +1,14 @@
+using AutoMapper;
+using MotorPool.Domain;
+using MotorPool.Persistence;
+using MotorPool.Repository.Driver;
 using MotorPool.Services.Drivers.Models;
-using MotorPool.Services.Drivers.Services;
 using MotorPool.Services.Manager;
-using MotorPool.Services.Utils;
 using MotorPool.UI.Pages.Shared;
 
 namespace MotorPool.UI.Pages.Drivers;
 
-public class IndexModel(DriverQueryService driverQueryService) : PagedModel
+public class IndexModel(DriverQueryRepository driverQueryRepository, IMapper mapper) : PagedModel
 {
 
     public IList<DriverViewModel> Drivers { get; set; } = default!;
@@ -15,14 +17,14 @@ public class IndexModel(DriverQueryService driverQueryService) : PagedModel
     {
         CurrentPage = currentPage ?? 1;
 
-        PagedViewModel<DriverViewModel> pagedViewModel = await driverQueryService.GetAllAsync(User.GetManagerId(), new ()
+        PagedResult<Driver> pagedResult = await driverQueryRepository.GetAllAsync(User.GetManagerId(), new ()
         {
             ElementsPerPage = ELEMENTS_PER_PAGE,
             CurrentPage = CurrentPage
         });
 
-        TotalPages = pagedViewModel.TotalPages;
-        Drivers = pagedViewModel.Elements;
+        TotalPages = pagedResult.TotalPages;
+        Drivers = mapper.Map<List<DriverViewModel>>(pagedResult.Elements);
     }
 
 }

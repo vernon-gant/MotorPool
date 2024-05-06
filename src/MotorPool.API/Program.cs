@@ -1,18 +1,16 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-
 using MotorPool.API.EndpointFilters;
 using MotorPool.API.Endpoints;
 using MotorPool.Auth;
-using MotorPool.Auth.Middleware;
 using MotorPool.Auth.Middleware.API;
 using MotorPool.Auth.Services;
 using MotorPool.Persistence;
+using MotorPool.Repository;
 using MotorPool.Services.Drivers;
 using MotorPool.Services.Enterprise;
 using MotorPool.Services.Geo;
@@ -42,6 +40,7 @@ builder.Services.AddEnterpriseServices();
 builder.Services.AddDriverServices();
 builder.Services.AddGeoServices();
 builder.Services.AddReporting();
+builder.Services.AddRepository();
 
 builder.Services.AddAppIdentity(connectionString);
 builder.Services

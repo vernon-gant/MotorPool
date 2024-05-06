@@ -8,13 +8,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MotorPool.Persistence\MotorPool.Persistence.csproj" />
+        <ProjectReference Include="..\MotorPool.Persistence\MotorPool.Persistence.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Bogus" Version="35.5.0" />
-      <PackageReference Include="CommandLineParser" Version="2.9.1" />
-      <PackageReference Include="MathNet.Numerics" Version="6.0.0-beta1" />
+        <PackageReference Include="Bogus" Version="35.5.0"/>
+        <PackageReference Include="CommandLineParser" Version="2.9.1"/>
+        <PackageReference Include="MathNet.Numerics" Version="6.0.0-beta1"/>
     </ItemGroup>
 
 </Project>

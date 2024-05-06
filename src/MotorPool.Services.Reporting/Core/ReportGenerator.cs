@@ -1,6 +1,6 @@
 ﻿using MotorPool.Domain.Reports;
 
-namespace MotorPool.Services.Reporting;
+namespace MotorPool.Services.Reporting.Core;
 
 public interface ReportGenerator<in T> where T : AbstractReport
 {

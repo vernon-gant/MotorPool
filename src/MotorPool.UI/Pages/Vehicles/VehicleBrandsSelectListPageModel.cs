@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
+using MotorPool.Services.VehicleBrand.Models;
 using MotorPool.Services.VehicleBrand.Services;
-using MotorPool.Services.VehicleBrand.ViewModels;
 
 namespace MotorPool.UI.Pages.Vehicles;
 

@@ -74,12 +74,12 @@ footer {
 
 .list-group-item-action:hover {
     transform: scale(1.02);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .btn-success {
     font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .text-primary {
@@ -108,6 +108,7 @@ footer {
 .mapboxgl-popup {
     max-width: 200px;
 }
+
 .mapboxgl-popup-content {
     text-align: center;
     font-family: 'Open Sans', sans-serif;

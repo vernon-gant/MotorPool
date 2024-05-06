@@ -1,36 +1,38 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using MotorPool.Auth.User;
 
 namespace MotorPool.Auth.Services;
 
-public class DefaultApiAuthService(UserManager<ApplicationUser> userManager, JWTConfiguration jwtConfiguration) : ApiAuthService
+public class DefaultApiAuthService(UserManager<ApplicationUser> userManager, JWTConfiguration jwtConfiguration)
+    : ApiAuthService
 {
-
     public async ValueTask<AuthResult> LoginAsync(LoginDTO loginDTO)
     {
-        ApplicationUser? user = await userManager.FindByEmailAsync(loginDTO.Email);
+        var user = await userManager.FindByEmailAsync(loginDTO.Email);
 
         if (user == null) return AuthResult.Failure("User not found.");
 
-        if (!await userManager.CheckPasswordAsync(user, loginDTO.Password)) return AuthResult.Failure("Invalid password.");
+        if (!await userManager.CheckPasswordAsync(user, loginDTO.Password))
+            return AuthResult.Failure("Invalid password.");
 
-        List<Claim> claims = new ()
+        List<Claim> claims = new()
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id),
             new Claim(ClaimTypes.Name, user.UserName!),
             new Claim(ClaimTypes.Email, user.Email!)
         };
-        IList<Claim> userClaims = await userManager.GetClaimsAsync(user);
+        var userClaims = await userManager.GetClaimsAsync(user);
         claims.AddRange(userClaims);
 
-        SymmetricSecurityKey key = new (Encoding.UTF8.GetBytes(jwtConfiguration.Key));
-        SigningCredentials signingCredentials = new (key, SecurityAlgorithms.HmacSha256);
+        SymmetricSecurityKey key = new(Encoding.UTF8.GetBytes(jwtConfiguration.Key));
+        SigningCredentials signingCredentials = new(key, SecurityAlgorithms.HmacSha256);
 
-        JwtSecurityToken token = new (jwtConfiguration.Issuer, jwtConfiguration.Audience, claims, expires: DateTime.Now.AddHours(2), signingCredentials: signingCredentials);
+        JwtSecurityToken token = new(jwtConfiguration.Issuer, jwtConfiguration.Audience, claims,
+            expires: DateTime.Now.AddHours(2), signingCredentials: signingCredentials);
 
         return AuthResult.Success(new JwtSecurityTokenHandler().WriteToken(token));
     }
@@ -39,26 +41,27 @@ public class DefaultApiAuthService(UserManager<ApplicationUser> userManager, JWT
     {
         if (registerDTO.Password != registerDTO.ConfirmPassword) return AuthResult.Failure("Passwords do not match.");
 
-        ApplicationUser user = new ApplicationUser
+        var user = new ApplicationUser
         {
             Email = registerDTO.Email,
             UserName = registerDTO.UserName
         };
 
-        IdentityResult result = await userManager.CreateAsync(user, registerDTO.Password);
+        var result = await userManager.CreateAsync(user, registerDTO.Password);
 
-        if (!result.Succeeded) return AuthResult.Failure(result.Errors.Select(identityError => identityError.Description).First());
+        if (!result.Succeeded)
+            return AuthResult.Failure(result.Errors.Select(identityError => identityError.Description).First());
 
         return await LoginAsync(new LoginDTO { Email = registerDTO.Email, Password = registerDTO.Password });
     }
 
     public async ValueTask<UserViewModel> GetUserAsync(string userId)
     {
-        ApplicationUser user = (await userManager.FindByIdAsync(userId))!;
+        var user = (await userManager.FindByIdAsync(userId))!;
 
-        IList<Claim> claims = await userManager.GetClaimsAsync(user);
+        var claims = await userManager.GetClaimsAsync(user);
 
-        string? managerId = claims.FirstOrDefault(claim => claim.Type == "ManagerId")?.Value;
+        var managerId = claims.FirstOrDefault(claim => claim.Type == "ManagerId")?.Value;
 
         return new UserViewModel
         {
@@ -67,5 +70,4 @@ public class DefaultApiAuthService(UserManager<ApplicationUser> userManager, JWT
             ManagerId = managerId == null ? null : int.Parse(managerId)
         };
     }
-
 }

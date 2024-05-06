@@ -26,30 +26,30 @@
     <div class="col-sm-8 col-md-6 mx-auto">
         <div class="card p-3 shadow-lg rounded-3">
             <div class="card-header">
-                <h2 class="card-title">@Html.DisplayFor(model => model.Vehicle.CompanyName) - @Html.DisplayFor(model => model.Vehicle.ModelName)</h2>
+                <h2 class="card-title">@Html.DisplayFor(model => model.VehicleViewModel.CompanyName) - @Html.DisplayFor(model => model.VehicleViewModel.ModelName)</h2>
             </div>
             <div class="card-body">
                 <dl class="row">
-                    <dt class="col-sm-6">@Html.DisplayNameFor(model => model.Vehicle.MotorVIN):</dt>
-                    <dd class="col-sm-6">@Html.DisplayFor(model => model.Vehicle.MotorVIN)</dd>
+                    <dt class="col-sm-6">@Html.DisplayNameFor(model => model.VehicleViewModel.MotorVIN):</dt>
+                    <dd class="col-sm-6">@Html.DisplayFor(model => model.VehicleViewModel.MotorVIN)</dd>
 
-                    <dt class="col-sm-6">@Html.DisplayNameFor(model => model.Vehicle.Cost):</dt>
-                    <dd class="col-sm-6">@Html.DisplayFor(model => model.Vehicle.Cost)</dd>
+                    <dt class="col-sm-6">@Html.DisplayNameFor(model => model.VehicleViewModel.Cost):</dt>
+                    <dd class="col-sm-6">@Html.DisplayFor(model => model.VehicleViewModel.Cost)</dd>
 
-                    <dt class="col-sm-6">@Html.DisplayNameFor(model => model.Vehicle.ManufactureYear):</dt>
-                    <dd class="col-sm-6">@Html.DisplayFor(model => model.Vehicle.ManufactureYear)</dd>
+                    <dt class="col-sm-6">@Html.DisplayNameFor(model => model.VehicleViewModel.ManufactureYear):</dt>
+                    <dd class="col-sm-6">@Html.DisplayFor(model => model.VehicleViewModel.ManufactureYear)</dd>
 
-                    <dt class="col-sm-6">@Html.DisplayNameFor(model => model.Vehicle.ManufactureLand):</dt>
-                    <dd class="col-sm-6">@Html.DisplayFor(model => model.Vehicle.ManufactureLand)</dd>
+                    <dt class="col-sm-6">@Html.DisplayNameFor(model => model.VehicleViewModel.ManufactureLand):</dt>
+                    <dd class="col-sm-6">@Html.DisplayFor(model => model.VehicleViewModel.ManufactureLand)</dd>
 
-                    <dt class="col-sm-6">@Html.DisplayNameFor(model => model.Vehicle.Mileage):</dt>
-                    <dd class="col-sm-6">@Html.DisplayFor(model => model.Vehicle.Mileage)</dd>
+                    <dt class="col-sm-6">@Html.DisplayNameFor(model => model.VehicleViewModel.Mileage):</dt>
+                    <dd class="col-sm-6">@Html.DisplayFor(model => model.VehicleViewModel.Mileage)</dd>
 
-                    <dt class="col-sm-6">@Html.DisplayNameFor(model => model.Vehicle.CompanyName):</dt>
-                    <dd class="col-sm-6">@Html.DisplayFor(model => model.Vehicle.CompanyName)</dd>
+                    <dt class="col-sm-6">@Html.DisplayNameFor(model => model.VehicleViewModel.CompanyName):</dt>
+                    <dd class="col-sm-6">@Html.DisplayFor(model => model.VehicleViewModel.CompanyName)</dd>
 
-                    <dt class="col-sm-6">@Html.DisplayNameFor(model => model.Vehicle.AcquiredOn):</dt>
-                    <dd class="col-sm-6 enterprise-entity-date">@Html.DisplayFor(model => model.Vehicle.AcquiredOn)</dd>
+                    <dt class="col-sm-6">@Html.DisplayNameFor(model => model.VehicleViewModel.AcquiredOn):</dt>
+                    <dd class="col-sm-6 enterprise-entity-date">@Html.DisplayFor(model => model.VehicleViewModel.AcquiredOn)</dd>
                 </dl>
             </div>
 
@@ -106,7 +106,7 @@
                                         </label>
                                     }
                                 </div>
-                                <input hidden="hidden" name="vehicleId" value="@Model.Vehicle.VehicleId"/>
+                                <input hidden="hidden" name="vehicleId" value="@Model.VehicleViewModel.VehicleId"/>
                                 <div id="errorMessage" class="alert alert-danger d-none text-center mx-auto my-4 p-3 rounded shadow-sm" role="alert" style="max-width: 80%;">
                                     Please select at least one trip!
                                 </div>
@@ -124,13 +124,13 @@
             </section>
 
             <div class="card-footer text-muted d-flex justify-content-between">
-                <a href="@Url.Page("./Edit", new { vehicleId = Model.Vehicle.VehicleId })" class="btn btn-primary d-flex align-items-center">
+                <a href="@Url.Page("./Edit", new { vehicleId = Model.VehicleViewModel.VehicleId })" class="btn btn-primary d-flex align-items-center">
                     <i class="fas fa-edit me-2"></i> Edit
                 </a>
                 <a href="@(HttpContext.Session.GetString("VehicleIndexReturnUrl") ?? "/Vehicles")" class="btn btn-secondary d-flex align-items-center">
                     <i class="fas fa-list me-2"></i> Back to List
                 </a>
-                <a href="@Url.Page("./Delete", new { vehicleId = Model.Vehicle.VehicleId })" class="btn btn-danger d-flex align-items-center">
+                <a href="@Url.Page("./Delete", new { vehicleId = Model.VehicleViewModel.VehicleId })" class="btn btn-danger d-flex align-items-center">
                     <i class="fas fa-trash me-2"></i> Delete
                 </a>
             </div>

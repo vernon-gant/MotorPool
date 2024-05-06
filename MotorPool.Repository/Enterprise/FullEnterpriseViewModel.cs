@@ -1,4 +1,6 @@
-﻿namespace MotorPool.Services.Enterprise.Models;
+﻿using MotorPool.Repository.Enterprise;
+
+namespace MotorPool.Services.Enterprise.Models;
 
 public class FullEnterpriseViewModel : SimpleEnterpriseViewModel
 {

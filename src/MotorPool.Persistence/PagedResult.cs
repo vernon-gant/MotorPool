@@ -1,21 +1,22 @@
-﻿using MotorPool.Utils.Exceptions;
+﻿using MotorPool.Persistence.QueryObjects;
+using MotorPool.Utils.Exceptions;
 
-namespace MotorPool.Services.Utils;
+namespace MotorPool.Persistence;
 
-public class PagedViewModel<T> where T : class
+public class PagedResult<T> where T : class
 {
 
     public int TotalPages { get; private set; }
 
-    public IList<T> Elements { get; private set; }
+    public List<T> Elements { get; private set; } = new();
 
-    public static PagedViewModel<T> FromOptionsAndElements(PageOptions pageOptions, IList<T> pagedElements, int allElementsCount)
+    public static PagedResult<T> FromOptionsAndElements(PageOptions pageOptions, List<T> pagedElements, int allElementsCount)
     {
         int lastPossiblePage = pageOptions.TotalPages(allElementsCount);
 
         if (pagedElements.Count == 0 && pageOptions.CurrentPage > 1) throw new ExceededPageLimitException(pageOptions.CurrentPage, lastPossiblePage);
 
-        return new PagedViewModel<T>
+        return new PagedResult<T>
         {
             TotalPages = lastPossiblePage,
             Elements = pagedElements

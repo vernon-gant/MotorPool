@@ -15,27 +15,27 @@
                 </div>
                 <div class="card-body">
                     <dl class="row">
-                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Vehicle.MotorVIN)</dt>
-                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Vehicle.MotorVIN)</dd>
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.VehicleViewModel.MotorVIN)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.VehicleViewModel.MotorVIN)</dd>
 
-                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Vehicle.Cost)</dt>
-                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Vehicle.Cost)</dd>
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.VehicleViewModel.Cost)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.VehicleViewModel.Cost)</dd>
 
-                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Vehicle.ManufactureYear)</dt>
-                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Vehicle.ManufactureYear)</dd>
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.VehicleViewModel.ManufactureYear)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.VehicleViewModel.ManufactureYear)</dd>
 
-                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Vehicle.ManufactureLand)</dt>
-                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Vehicle.ManufactureLand)</dd>
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.VehicleViewModel.ManufactureLand)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.VehicleViewModel.ManufactureLand)</dd>
 
-                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Vehicle.Mileage)</dt>
-                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Vehicle.Mileage)</dd>
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.VehicleViewModel.Mileage)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.VehicleViewModel.Mileage)</dd>
 
-                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.Vehicle.CompanyName)</dt>
-                        <dd class="col-sm-8">@Html.DisplayFor(model => model.Vehicle.CompanyName)</dd>
+                        <dt class="col-sm-4">@Html.DisplayNameFor(model => model.VehicleViewModel.CompanyName)</dt>
+                        <dd class="col-sm-8">@Html.DisplayFor(model => model.VehicleViewModel.CompanyName)</dd>
                     </dl>
                 </div>
                 <div class="card-footer d-flex justify-content-between">
-                    <form asp-page="./Delete" asp-route-vehicleId="@Model.Vehicle.VehicleId" method="post">
+                    <form asp-page="./Delete" asp-route-vehicleId="@Model.VehicleViewModel.VehicleId" method="post">
                         <button type="submit" class="btn btn-danger">Confirm Delete</button>
                     </form>
                     <a href="@(HttpContext.Session.GetString("VehicleIndexReturnUrl") ?? "/Vehicles")" class="btn btn-secondary">

@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using MotorPool.Domain;
+using MotorPool.Repository.Vehicle;
 
-using MotorPool.Services.Vehicles.Models;
-using MotorPool.Services.Vehicles.Services;
+namespace MotorPool.UI.PageFilters.ExistenceFilters;
 
-namespace MotorPool.UI.PageFilters;
-
-public class VehicleExistsPageFilter(VehicleQueryService vehicleQueryService) : IAsyncPageFilter
+public class VehicleExistsPageFilter(VehicleQueryRepository vehicleQueryRepository) : IAsyncPageFilter
 {
 
     public Task OnPageHandlerSelectionAsync(PageHandlerSelectedContext context)
@@ -26,12 +25,11 @@ public class VehicleExistsPageFilter(VehicleQueryService vehicleQueryService) : 
 
         int vehicleId = int.Parse(vehicleIdString);
 
-        VehicleViewModel? vehicle = await vehicleQueryService.GetByIdAsync(vehicleId);
+        Vehicle? vehicle = await vehicleQueryRepository.GetByIdAsync(vehicleId);
 
         if (vehicle == null)
         {
             context.Result = new RedirectToPageResult("/Error/NotFound");
-
             return;
         }
 

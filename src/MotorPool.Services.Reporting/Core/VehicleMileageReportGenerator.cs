@@ -1,7 +1,4 @@
-﻿using AutoMapper.QueryableExtensions.Impl;
-
-using Microsoft.EntityFrameworkCore;
-
+﻿using Microsoft.EntityFrameworkCore;
 using MotorPool.Domain;
 using MotorPool.Domain.Reports;
 using MotorPool.Persistence;

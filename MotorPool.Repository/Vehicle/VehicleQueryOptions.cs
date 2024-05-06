@@ -1,6 +1,4 @@
-﻿using MotorPool.Domain;
-
-namespace MotorPool.Services.Vehicles;
+﻿namespace MotorPool.Repository.Vehicle;
 
 public class VehicleQueryOptions
 {
@@ -16,7 +14,7 @@ public class VehicleQueryOptions
 public static class VehicleQueryBuilder
 {
 
-    public static IQueryable<Vehicle> WithQueryOptions(this IQueryable<Vehicle> query, VehicleQueryOptions? queryOptions)
+    public static IQueryable<Domain.Vehicle> WithQueryOptions(this IQueryable<Domain.Vehicle> query, VehicleQueryOptions? queryOptions)
     {
         if (queryOptions?.VehicleBrandId != null) query = query.Where(vehicle => vehicle.VehicleBrandId == queryOptions.VehicleBrandId);
 

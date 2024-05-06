@@ -1,8 +1,7 @@
 ﻿using System.Security.Claims;
-
 using Microsoft.AspNetCore.Mvc;
-
-using MotorPool.Auth;
+using MotorPool.Auth.Services;
+using MotorPool.Auth.User;
 
 namespace MotorPool.API.Endpoints;
 

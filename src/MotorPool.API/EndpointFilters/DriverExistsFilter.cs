@@ -1,16 +1,16 @@
-﻿using MotorPool.Services.Drivers.Models;
-using MotorPool.Services.Drivers.Services;
+﻿using MotorPool.Domain;
+using MotorPool.Repository.Driver;
 
 namespace MotorPool.API.EndpointFilters;
 
-public class DriverExistsFilter(DriverQueryService driverQueryService) : IEndpointFilter
+public class DriverExistsFilter(DriverQueryRepository driverQueryRepository) : IEndpointFilter
 {
 
     public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
     {
-        int driverId = int.Parse(context.HttpContext.Request.RouteValues["driverId"]!.ToString());
+        int driverId = int.Parse(context.HttpContext.Request.RouteValues["driverId"]!.ToString()!);
 
-        DriverViewModel? driver = await driverQueryService.GetByIdAsync(driverId);
+        Driver? driver = await driverQueryRepository.GetByIdAsync(driverId);
 
         if (driver is not null)
         {

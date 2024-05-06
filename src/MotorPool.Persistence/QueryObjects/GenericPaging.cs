@@ -1,6 +1,4 @@
-﻿using MotorPool.Services.Utils;
-
-namespace MotorPool.Persistence.QueryObjects;
+﻿namespace MotorPool.Persistence.QueryObjects;
 
 public static class GenericPaging
 {

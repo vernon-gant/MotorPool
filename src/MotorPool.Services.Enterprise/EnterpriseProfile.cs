@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-
+using MotorPool.Repository.Enterprise;
 using MotorPool.Services.Enterprise.Models;
 
 namespace MotorPool.Services.Enterprise;

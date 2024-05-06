@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
-
 using MotorPool.Utils.Exceptions;
 
 namespace MotorPool.Utils.Middleware.UI;
 
 public class ExceededPageLimitExceptionUIMiddleware(RequestDelegate next)
 {
-
     public async Task InvokeAsync(HttpContext context)
     {
         try
@@ -15,8 +13,8 @@ public class ExceededPageLimitExceptionUIMiddleware(RequestDelegate next)
         }
         catch (ExceededPageLimitException ex)
         {
-            ITempDataDictionaryFactory factory = context.RequestServices.GetRequiredService<ITempDataDictionaryFactory>();
-            ITempDataDictionary tempData = factory.GetTempData(context);
+            var factory = context.RequestServices.GetRequiredService<ITempDataDictionaryFactory>();
+            var tempData = factory.GetTempData(context);
 
             tempData["ErrorMessage"] = ex.Message;
             tempData["ErrorType"] = "Page limit exceeded";
@@ -27,5 +25,4 @@ public class ExceededPageLimitExceptionUIMiddleware(RequestDelegate next)
             context.Response.Redirect("/Error");
         }
     }
-
 }

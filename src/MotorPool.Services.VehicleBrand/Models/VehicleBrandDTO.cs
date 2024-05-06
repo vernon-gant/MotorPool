@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
 using MotorPool.Domain;
 
 namespace MotorPool.Services.VehicleBrand.Models;
 
 public class VehicleBrandDTO
 {
-
     [Required]
     [StringLength(50, MinimumLength = 2)]
     [Display(Name = "Company name")]
@@ -39,5 +37,4 @@ public class VehicleBrandDTO
     [Range(1900, 2100)]
     [Display(Name = "Release year")]
     public int ReleaseYear { get; set; }
-
 }

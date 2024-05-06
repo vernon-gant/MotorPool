@@ -13,8 +13,7 @@ public class VehicleViewModel : VehicleDTO
     [Display(Name = "Model name")]
     public required string ModelName { get; set; }
 
-    [Display(Name = "Acquired on")]
-    public string AcquiredOn { get; set; }
+    [Display(Name = "Acquired on")] public new string AcquiredOn { get; set; } = string.Empty;
 
     [Display(Name = "All trips amount")]
     public int TotalTripsCount { get; set; }
