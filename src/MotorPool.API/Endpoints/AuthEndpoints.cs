@@ -29,7 +29,7 @@ public static class AuthEndpoints
                         .Produces<UserViewModel>();
     }
 
-    private static async Task<IResult> Login(ApiAuthService authService, LoginDTO loginDTO)
+    private static async Task<IResult> Login(AuthService authService, LoginDTO loginDTO)
     {
         AuthResult result = await authService.LoginAsync(loginDTO);
 
@@ -43,7 +43,7 @@ public static class AuthEndpoints
             });
     }
 
-    private static async Task<IResult> Register(ApiAuthService authService, RegisterDTO registerDTO)
+    private static async Task<IResult> Register(AuthService authService, RegisterDTO registerDTO)
     {
         AuthResult result = await authService.RegisterAsync(registerDTO);
 
@@ -57,7 +57,7 @@ public static class AuthEndpoints
             });
     }
 
-    private static async Task<IResult> Me(ApiAuthService authService, ClaimsPrincipal principal)
+    private static async Task<IResult> Me(AuthService authService, ClaimsPrincipal principal)
     {
         string? userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
 

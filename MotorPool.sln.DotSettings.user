@@ -4,4 +4,6 @@
 	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
   &lt;Assembly Path="C:\Users\aleks\.nuget\packages\mathnet.numerics\6.0.0-beta1\lib\net8.0\MathNet.Numerics.dll" /&gt;&#xD;
   &lt;PhysicalFolder Path="C:\Users\aleks\.nuget\packages\serilog.extensions.hosting\8.0.0" Loaded="True" /&gt;&#xD;
+  &lt;PhysicalFolder Path="C:\Users\aleks\.nuget\packages\microsoft.extensions.http\8.0.0" Loaded="True" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\aleks\.nuget\packages\oneof\3.0.263\lib\netstandard2.0\OneOf.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String></wpf:ResourceDictionary>

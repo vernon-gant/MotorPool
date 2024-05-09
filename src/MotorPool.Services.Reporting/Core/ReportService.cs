@@ -5,7 +5,7 @@ using MotorPool.Services.Reporting.DTO;
 
 namespace MotorPool.Services.Reporting.Core;
 
-public class ReportService<TReport, TDto>(IMapper mapper, IEnumerable<ReportPeriodResolver<TReport>> reportResolvers) where TReport : AbstractReport where TDto : AbstractReportDTO
+public class ReportService<TReport, TDto>(IMapper mapper, IEnumerable<ReportPeriodResolver<TReport>> reportResolvers) where TReport : AbstractReport where TDto : ReportDTO
 {
     private Func<TReport, ValueTask> Get(Period period) => reportResolvers.FirstOrDefault(reportPeriodResolver => reportPeriodResolver.CanResolve(period))?.Resolve(period) ??
                                                            throw new NotSupportedException("Not supported period...");

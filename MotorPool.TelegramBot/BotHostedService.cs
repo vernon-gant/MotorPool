@@ -27,16 +27,16 @@ public class BotHostedService(ITelegramBotClient telegramBotClient, IServiceScop
     {
         logger.LogInformation("Received a new update {UpdateId}", update.Id);
         using var scope = serviceScopeFactory.CreateScope();
-        var handler = scope.ServiceProvider.GetRequiredService<BotHandler>();
-        await handler.HandleUpdateAsync(botClient, update, cancellationToken);
+        var handler = scope.ServiceProvider.GetRequiredService<UpdateHandler>();
+        await handler.HandleUpdateAsync(update, cancellationToken);
     }
 
     private Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
     {
         logger.LogInformation("Error occured {Message}", exception.Message);
         using var scope = serviceScopeFactory.CreateScope();
-        var handler = scope.ServiceProvider.GetRequiredService<BotHandler>();
-        return handler.HandleErrorAsync(botClient, exception, cancellationToken);
+        var handler = scope.ServiceProvider.GetRequiredService<UpdateHandler>();
+        return handler.HandleErrorAsync(exception);
     }
 
     public Task StopAsync(CancellationToken cancellationToken)

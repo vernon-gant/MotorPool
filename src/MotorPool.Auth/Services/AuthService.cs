@@ -2,7 +2,7 @@
 
 namespace MotorPool.Auth.Services;
 
-public interface ApiAuthService
+public interface AuthService
 {
     ValueTask<AuthResult> LoginAsync(LoginDTO loginDTO);
 

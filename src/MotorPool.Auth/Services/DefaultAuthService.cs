@@ -7,8 +7,7 @@ using MotorPool.Auth.User;
 
 namespace MotorPool.Auth.Services;
 
-public class DefaultApiAuthService(UserManager<ApplicationUser> userManager, JWTConfiguration jwtConfiguration)
-    : ApiAuthService
+public class DefaultAuthService(UserManager<ApplicationUser> userManager, JWTConfiguration jwtConfiguration) : AuthService
 {
     public async ValueTask<AuthResult> LoginAsync(LoginDTO loginDTO)
     {

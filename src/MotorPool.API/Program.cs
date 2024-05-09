@@ -32,7 +32,7 @@ GraphHopperConfiguration graphHopperConfiguration = new ();
 builder.Configuration.GetSection("GraphHopper").Bind(graphHopperConfiguration);
 builder.Services.AddSingleton(graphHopperConfiguration);
 
-builder.Services.AddScoped<ApiAuthService, DefaultApiAuthService>();
+builder.Services.AddScoped<AuthService, DefaultAuthService>();
 builder.Services.AddPersistenceServices(connectionString);
 builder.Services.AddVehicleServices();
 builder.Services.AddVehicleBrandServices();
