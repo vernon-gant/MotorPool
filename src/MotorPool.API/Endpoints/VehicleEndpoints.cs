@@ -1,7 +1,9 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
+using MotorPool.API.Cache;
 using MotorPool.API.EndpointFilters;
 using MotorPool.Domain;
+using MotorPool.Persistence;
 using MotorPool.Persistence.QueryObjects;
 using MotorPool.Repository.Vehicle;
 using MotorPool.Services.Geo;
@@ -15,12 +17,10 @@ namespace MotorPool.API.Endpoints;
 
 public static class VehicleEndpoints
 {
-
     public static void MapVehicleEndpoints(this IEndpointRouteBuilder managerResourcesGroupBuilder)
     {
-        RouteGroupBuilder vehiclesGroupBuilder = managerResourcesGroupBuilder
-                                                 .MapGroup("vehicles")
-                                                 .WithParameterValidation();
+        RouteGroupBuilder vehiclesGroupBuilder = managerResourcesGroupBuilder.MapGroup("vehicles")
+                                                                             .WithParameterValidation();
 
         RouteGroupBuilder vehicleWithIdGroupBuilder = vehiclesGroupBuilder.MapGroup("{vehicleId:int}")
                                                                           .AddEndpointFilter<VehicleExistsFilter>()
@@ -28,66 +28,92 @@ public static class VehicleEndpoints
 
         vehiclesGroupBuilder.MapGet("", GetAll)
                             .WithName("GetAllVehicles")
-                            .Produces<List<VehicleViewModel>>();
+                            .Produces<List<VehicleViewModel>>()
+                            .CacheOutput(policyBuilder =>
+                             {
+                                 policyBuilder.AddPolicy<AllowAuthorizationCachePolicy>()
+                                              .SetVaryByHeader("Authorization")
+                                              .SetVaryByQuery("currentPage", "elementsPerPage")
+                                              .Expire(TimeSpan.FromMinutes(5));
+                             });
 
         vehiclesGroupBuilder.MapPost("", Create)
-                            .WithName("CreateVehicle")
+                            .WithName("Create a new vehicle")
                             .Produces<VehicleViewModel>()
                             .Produces(StatusCodes.Status400BadRequest)
                             .Produces(StatusCodes.Status201Created);
 
         vehicleWithIdGroupBuilder.MapGet("", GetById)
-                                 .WithName("GetVehicleById")
+                                 .WithName("Get vehicle by id")
                                  .Produces<VehicleViewModel>()
                                  .Produces(StatusCodes.Status404NotFound)
-                                 .Produces(StatusCodes.Status403Forbidden);
+                                 .Produces(StatusCodes.Status403Forbidden)
+                                 .CacheOutput("SharedAccess");
 
         vehicleWithIdGroupBuilder.MapPut("", Update)
-                                 .WithName("UpdateVehicle")
+                                 .WithName("Update vehicle")
                                  .Produces(StatusCodes.Status400BadRequest)
                                  .Produces(StatusCodes.Status204NoContent)
                                  .Produces(StatusCodes.Status404NotFound)
                                  .Produces(StatusCodes.Status403Forbidden);
 
         vehicleWithIdGroupBuilder.MapDelete("", Delete)
-                                 .WithName("DeleteVehicle")
+                                 .WithName("Delete vehicle")
                                  .Produces(StatusCodes.Status204NoContent)
                                  .Produces(StatusCodes.Status404NotFound)
                                  .Produces(StatusCodes.Status403Forbidden);
 
-        vehicleWithIdGroupBuilder.MapGet("trips/{startDateTime:datetime}/{endDateTime:datetime}", GetTripsInDateRange)
-                                 .WithName("GetTripsInDateRange")
+        vehicleWithIdGroupBuilder.MapGet("trips/{startDateTime:datetime}/{endDateTime:datetime}", GetTrips)
+                                 .WithName("Get trips")
                                  .Produces<List<TripViewModel>>()
                                  .Produces(StatusCodes.Status404NotFound)
-                                 .Produces(StatusCodes.Status403Forbidden);
+                                 .Produces(StatusCodes.Status403Forbidden)
+                                 .CacheOutput(policyBuilder =>
+                                  {
+                                      policyBuilder.AddPolicy<AllowAuthorizationCachePolicy>()
+                                                   .SetVaryByRouteValue("startDateTime", "endDateTime")
+                                                   .Expire(TimeSpan.FromMinutes(5));
+                                  });
 
-        vehicleWithIdGroupBuilder.MapGet("trips/{startDateTime:datetime}/{endDateTime:datetime}/points", GetFullTripsInDateRange)
-                                 .WithName("GetFullTripsInDateRange")
+        vehicleWithIdGroupBuilder.MapGet("trips/{startDateTime:datetime}/{endDateTime:datetime}/points", GetTripPoints)
+                                 .WithName("Get trip points")
                                  .Produces<List<GeoPointViewModel>>()
                                  .Produces(StatusCodes.Status404NotFound)
-                                 .Produces(StatusCodes.Status403Forbidden);
+                                 .Produces(StatusCodes.Status403Forbidden)
+                                 .CacheOutput(policyBuilder =>
+                                 {
+                                     policyBuilder.AddPolicy<AllowAuthorizationCachePolicy>()
+                                                  .SetVaryByRouteValue("startDateTime", "endDateTime")
+                                                  .Expire(TimeSpan.FromMinutes(5));
+                                 });
 
         vehicleWithIdGroupBuilder.MapGet("geoPoints/{startDateTime:datetime}/{endDateTime:datetime}", GetGeoPoints)
-                                 .WithName("GetGeoPoints")
+                                 .WithName("Get geo points")
                                  .Produces<List<GeoPointViewModel>>()
                                  .Produces(StatusCodes.Status404NotFound)
-                                 .Produces(StatusCodes.Status403Forbidden);
+                                 .Produces(StatusCodes.Status403Forbidden)
+                                 .CacheOutput(policyBuilder =>
+                                  {
+                                      policyBuilder.AddPolicy<AllowAuthorizationCachePolicy>()
+                                                   .SetVaryByRouteValue("startDateTime", "endDateTime")
+                                                   .Expire(TimeSpan.FromMinutes(5));
+                                  });
     }
 
     private static async Task<IResult> GetAll(VehicleQueryRepository vehicleQueryRepository, IMapper mapper, ClaimsPrincipal user, [AsParameters] PageOptionsDTO pageOptionsDto)
     {
         int managerId = user.GetManagerId();
 
-        var vehicles = await vehicleQueryRepository.GetAllAsync(pageOptionsDto.ToPageOptions(), new VehicleQueryOptions { ManagerId = managerId });
+        PagedResult<Vehicle> vehicles = await vehicleQueryRepository.GetAllAsync(pageOptionsDto.ToPageOptions(), new VehicleQueryOptions { ManagerId = managerId });
 
-        return Results.Ok(mapper.Map<List<VehicleViewModel>>(vehicles));
+        return Results.Ok(mapper.Map<List<VehicleViewModel>>(vehicles.Elements));
     }
 
-    private static Task<IResult> GetById(int vehicleId, HttpContext httpContext)
+    private static Task<IResult> GetById(int vehicleId, HttpContext httpContext, IMapper mapper)
     {
-        VehicleViewModel vehicle = httpContext.Items["Vehicle"] as VehicleViewModel ?? throw new InvalidOperationException("Vehicle not found in the request context.");
+        Vehicle vehicle = httpContext.Items["Vehicle"] as Vehicle ?? throw new InvalidOperationException("Vehicle not found in the request context.");
 
-        return Task.FromResult(Results.Ok(vehicle));
+        return Task.FromResult(Results.Ok(mapper.Map<VehicleViewModel>(vehicle)));
     }
 
     private static async Task<IResult> Create(VehicleChangeRepository vehicleChangeRepository, IMapper mapper, VehicleDTO vehicleDTO)
@@ -139,7 +165,7 @@ public static class VehicleEndpoints
         return Results.NoContent();
     }
 
-    private static async Task<IResult> GetTripsInDateRange(TripQueryService tripQueryService, [AsParameters] GetTripsInDateRangeParameters parameters)
+    private static async Task<IResult> GetTrips(TripQueryService tripQueryService, [AsParameters] TripOptions parameters)
     {
         if (!parameters.IsValid) return Results.BadRequest("Invalid date range");
 
@@ -148,7 +174,7 @@ public static class VehicleEndpoints
         return Results.Ok(vehicleTrips);
     }
 
-    private static async Task<IResult> GetFullTripsInDateRange(TripQueryService tripQueryService, [AsParameters] GetTripsInDateRangeParameters parameters)
+    private static async Task<IResult> GetTripPoints(TripQueryService tripQueryService, [AsParameters] TripOptions parameters)
     {
         if (!parameters.IsValid) return Results.BadRequest("Invalid date range");
 
@@ -157,7 +183,7 @@ public static class VehicleEndpoints
         return Results.Ok(geoPoints);
     }
 
-    private static async Task<IResult> GetGeoPoints(TripQueryService tripQueryService, [AsParameters] GetGeoPointsParameters parameters)
+    private static async Task<IResult> GetGeoPoints(TripQueryService tripQueryService, [AsParameters] GeoPointOptions parameters)
     {
         if (!parameters.IsValid) return Results.BadRequest("Invalid date range");
 
@@ -166,9 +192,8 @@ public static class VehicleEndpoints
         return parameters.ReturnGeoJSON.HasValue && parameters.ReturnGeoJSON.Value ? Results.Ok(geoPoints.ToGeoJSON()) : Results.Ok(geoPoints);
     }
 
-    private class GetTripsInDateRangeParameters
+    private class TripOptions
     {
-
         public int VehicleId { get; set; }
 
         public DateTime StartDateTime { get; set; }
@@ -176,14 +201,10 @@ public static class VehicleEndpoints
         public DateTime EndDateTime { get; set; }
 
         public bool IsValid => StartDateTime < EndDateTime;
-
     }
 
-    private class GetGeoPointsParameters : GetTripsInDateRangeParameters
+    private class GeoPointOptions : TripOptions
     {
-
         public bool? ReturnGeoJSON { get; set; }
-
     }
-
 }

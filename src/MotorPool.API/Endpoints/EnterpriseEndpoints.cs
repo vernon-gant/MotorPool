@@ -1,5 +1,7 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
+using Microsoft.Extensions.Caching.Memory;
+using MotorPool.API.Cache;
 using MotorPool.API.EndpointFilters;
 using MotorPool.Domain;
 using MotorPool.Repository.Enterprise;
@@ -11,14 +13,14 @@ namespace MotorPool.API.Endpoints;
 
 public static class EnterpriseEndpoints
 {
-
     public static void MapEnterpriseEndpoints(this IEndpointRouteBuilder managerResourcesGroupBuilder)
     {
         RouteGroupBuilder enterprisesGroupBuilder = managerResourcesGroupBuilder.MapGroup("enterprises");
 
         enterprisesGroupBuilder.MapGet("", GetAll)
                                .WithName("GetAllEnterprises")
-                               .Produces<List<FullEnterpriseViewModel>>();
+                               .Produces<List<FullEnterpriseViewModel>>()
+                               .CacheOutput("IndividualAccess");
 
         enterprisesGroupBuilder.MapGet("{enterpriseId:int}", GetById)
                                .AddEndpointFilter<EnterpriseExistsFilter>()
@@ -26,7 +28,8 @@ public static class EnterpriseEndpoints
                                .WithName("GetEnterpriseById")
                                .Produces<FullEnterpriseViewModel>()
                                .Produces(StatusCodes.Status404NotFound)
-                               .Produces(StatusCodes.Status403Forbidden);
+                               .Produces(StatusCodes.Status403Forbidden)
+                               .CacheOutput("SharedAccess");
 
         enterprisesGroupBuilder.MapPost("", Create)
                                .WithParameterValidation()
@@ -54,7 +57,7 @@ public static class EnterpriseEndpoints
                                .Produces(StatusCodes.Status403Forbidden);
     }
 
-    private static async Task<IResult> GetAll(EnterpriseQueryRepository enterpriseQueryRepository, ClaimsPrincipal user, IMapper mapper)
+    private static async Task<IResult> GetAll(EnterpriseQueryRepository enterpriseQueryRepository, ClaimsPrincipal user, IMapper mapper, IMemoryCache memoryCache)
     {
         int managerId = user.GetManagerId();
 
@@ -63,11 +66,11 @@ public static class EnterpriseEndpoints
         return Results.Ok(mapper.Map<List<FullEnterpriseViewModel>>(allEnterprises));
     }
 
-    private static Task<IResult> GetById(int enterpriseId, HttpContext context)
+    private static Task<IResult> GetById(int enterpriseId, HttpContext context, IMapper mapper)
     {
-        FullEnterpriseViewModel fullEnterprise = context.Items["Enterprise"] as FullEnterpriseViewModel ?? throw new InvalidOperationException("No enterprise found in the request.");
+        Enterprise enterprise = context.Items["Enterprise"] as Enterprise ?? throw new InvalidOperationException("No enterprise found in the request.");
 
-        return Task.FromResult(Results.Ok(fullEnterprise));
+        return Task.FromResult(Results.Ok(mapper.Map<FullEnterpriseViewModel>(enterprise)));
     }
 
     private static async Task<IResult> Create(EnterpriseChangeRepository enterpriseChangeRepository, IMapper mapper, EnterpriseDTO enterpriseDto, HttpContext httpContext)
@@ -76,9 +79,9 @@ public static class EnterpriseEndpoints
         {
             Enterprise newEnterprise = mapper.Map<Enterprise>(enterpriseDto);
             newEnterprise.ManagerLinks.Add(new EnterpriseManager
-            {
-                ManagerId = httpContext.User.GetManagerId()
-            });
+                                           {
+                                               ManagerId = httpContext.User.GetManagerId()
+                                           });
             await enterpriseChangeRepository.CreateAsync(newEnterprise);
 
             return Results.Created($"/enterprises/{newEnterprise.EnterpriseId}", mapper.Map<FullEnterpriseViewModel>(newEnterprise));
@@ -101,7 +104,7 @@ public static class EnterpriseEndpoints
 
             if (toUpdate is null) return Results.NotFound();
 
-            await enterpriseChangeRepository.UpdateAsync(mapper.Map(enterpriseDto,toUpdate));
+            await enterpriseChangeRepository.UpdateAsync(mapper.Map(enterpriseDto, toUpdate));
 
             return Results.NoContent();
         }
@@ -132,5 +135,4 @@ public static class EnterpriseEndpoints
             return Results.Problem(statusCode: 404, title: "Enterprise not found.");
         }
     }
-
 }

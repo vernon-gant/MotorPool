@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
+﻿using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using MotorPool.Domain.Reports;
 using MotorPool.Services.Reporting.Core;
 using MotorPool.Services.Reporting.DTO;
@@ -12,13 +13,19 @@ public static class ReportEndpoints
     {
         RouteGroupBuilder enterprisesGroupBuilder = managerResourcesGroupBuilder.MapGroup("reports");
 
-        enterprisesGroupBuilder.MapPost("vehicle-mileage", VehicleMileage);
+        enterprisesGroupBuilder.MapGet("vehicle-mileage", VehicleMileage);
     }
 
-    private static async ValueTask<IResult> VehicleMileage(
-        [FromBody] VehicleMileageReportDTO reportDto,
-        [FromServices] ReportService<VehicleMileageReport,VehicleMileageReportDTO> reportService)
+    private static async ValueTask<IResult> VehicleMileage([FromBody] VehicleMileageReportDTO reportDto, [FromServices] ReportService<VehicleMileageReport, VehicleMileageReportDTO> reportService, IMemoryCache memoryCache)
     {
-        return Results.Ok(await reportService.Generate(reportDto));
+        string key = $"vehicle-mileage-report-{JsonSerializer.Serialize(reportDto)}";
+
+        if (memoryCache.TryGetValue<VehicleMileageReport>(key, out var report)) return Results.Ok(report);
+
+        VehicleMileageReport freshReport = await reportService.Generate(reportDto);
+
+        memoryCache.Set(key, freshReport);
+
+        return Results.Ok(freshReport);
     }
 }

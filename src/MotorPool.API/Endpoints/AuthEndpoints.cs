@@ -7,8 +7,7 @@ namespace MotorPool.API.Endpoints;
 
 public static class AuthEndpoints
 {
-
-    public static void MapAuthEndpoints(this WebApplication app)
+    public static void MapAuthEndpoints(this IEndpointRouteBuilder app)
     {
         RouteGroupBuilder authGroupBuilder = app.MapGroup("auth");
 
@@ -36,11 +35,11 @@ public static class AuthEndpoints
         return result.IsSuccess
             ? Results.Ok(new { result.Token })
             : Results.Problem(new ProblemDetails
-            {
-                Title = "Login failed",
-                Status = 400,
-                Detail = result.Error
-            });
+                              {
+                                  Title = "Login failed",
+                                  Status = 400,
+                                  Detail = result.Error
+                              });
     }
 
     private static async Task<IResult> Register(AuthService authService, RegisterDTO registerDTO)
@@ -50,11 +49,11 @@ public static class AuthEndpoints
         return result.IsSuccess
             ? Results.Ok(new { result.Token })
             : Results.Problem(new ProblemDetails
-            {
-                Title = "Registration failed",
-                Status = 400,
-                Detail = result.Error
-            });
+                              {
+                                  Title = "Registration failed",
+                                  Status = 400,
+                                  Detail = result.Error
+                              });
     }
 
     private static async Task<IResult> Me(AuthService authService, ClaimsPrincipal principal)
@@ -65,5 +64,4 @@ public static class AuthEndpoints
 
         return Results.Ok(await authService.GetUserAsync(userId));
     }
-
 }

@@ -31,4 +31,6 @@ public class Enterprise
 
     public List<EnterpriseManager> ManagerLinks { get; set; } = new ();
 
+    public bool IsManagerAccessible(int managerId) => ManagerLinks.Any(managerLink => managerLink.ManagerId == managerId);
+
 }
