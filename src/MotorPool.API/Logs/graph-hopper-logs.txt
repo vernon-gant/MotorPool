@@ -1,0 +1,24 @@
+2024-06-19 11:23:42.380 +02:00 [INF] Started reverse geocoding
+2024-06-19 11:23:42.396 +02:00 [INF] Start processing HTTP request GET https://graphhopper.com/api/1/geocode?reverse=true&point=50.042519,19.952156&key=8ed062e0-43fd-4919-a783-baf689239cce
+2024-06-19 11:23:42.399 +02:00 [INF] Sending HTTP request GET https://graphhopper.com/api/1/geocode?reverse=true&point=50.042519,19.952156&key=8ed062e0-43fd-4919-a783-baf689239cce
+2024-06-19 11:23:42.442 +02:00 [INF] Started reverse geocoding
+2024-06-19 11:23:42.443 +02:00 [INF] Start processing HTTP request GET https://graphhopper.com/api/1/geocode?reverse=true&point=53.414104,14.539195&key=8ed062e0-43fd-4919-a783-baf689239cce
+2024-06-19 11:23:42.445 +02:00 [INF] Sending HTTP request GET https://graphhopper.com/api/1/geocode?reverse=true&point=53.414104,14.539195&key=8ed062e0-43fd-4919-a783-baf689239cce
+2024-06-19 11:23:42.604 +02:00 [INF] Received HTTP response headers after 202.1197ms - 200
+2024-06-19 11:23:42.604 +02:00 [INF] Received HTTP response headers after 156.2325ms - 200
+2024-06-19 11:23:42.606 +02:00 [INF] End processing HTTP request after 163.2406ms - 200
+2024-06-19 11:23:42.606 +02:00 [INF] End processing HTTP request after 214.0489ms - 200
+2024-06-19 11:23:42.625 +02:00 [INF] Reverse geocoding successful
+2024-06-19 11:23:42.625 +02:00 [INF] Reverse geocoding successful
+2024-06-19 11:23:42.627 +02:00 [INF] Started reverse geocoding
+2024-06-19 11:23:42.627 +02:00 [INF] Started reverse geocoding
+2024-06-19 11:23:42.627 +02:00 [INF] Start processing HTTP request GET https://graphhopper.com/api/1/geocode?reverse=true&point=52.264309,8.059897&key=8ed062e0-43fd-4919-a783-baf689239cce
+2024-06-19 11:23:42.627 +02:00 [INF] Start processing HTTP request GET https://graphhopper.com/api/1/geocode?reverse=true&point=38.872463,-6.967657&key=8ed062e0-43fd-4919-a783-baf689239cce
+2024-06-19 11:23:42.628 +02:00 [INF] Sending HTTP request GET https://graphhopper.com/api/1/geocode?reverse=true&point=52.264309,8.059897&key=8ed062e0-43fd-4919-a783-baf689239cce
+2024-06-19 11:23:42.628 +02:00 [INF] Sending HTTP request GET https://graphhopper.com/api/1/geocode?reverse=true&point=38.872463,-6.967657&key=8ed062e0-43fd-4919-a783-baf689239cce
+2024-06-19 11:23:42.649 +02:00 [INF] Received HTTP response headers after 21.0656ms - 200
+2024-06-19 11:23:42.650 +02:00 [INF] End processing HTTP request after 22.892ms - 200
+2024-06-19 11:23:42.651 +02:00 [INF] Reverse geocoding successful
+2024-06-19 11:23:42.651 +02:00 [INF] Received HTTP response headers after 22.6934ms - 200
+2024-06-19 11:23:42.651 +02:00 [INF] End processing HTTP request after 23.9209ms - 200
+2024-06-19 11:23:42.652 +02:00 [INF] Reverse geocoding successful

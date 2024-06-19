@@ -10,13 +10,24 @@ public class GraphHopperClient(HttpClient httpClient, GraphHopperConfiguration g
     {
         try
         {
+            using var geocodingScope = logger.BeginScope(new Dictionary<string, object>
+                                                {
+                                                    ["GeoPoint"] = geoPoint
+                                                });
+
+            logger.LogInformation("Started reverse geocoding");
             HttpResponseMessage response = await httpClient.GetAsync($"geocode?reverse=true&point={geoPoint.Coordinates}&key={graphHopperConfiguration.ApiKey}");
             response.EnsureSuccessStatusCode();
             ReverseGeocodingResponse? responseBody = await response.Content.ReadFromJsonAsync<ReverseGeocodingResponse>();
 
-            if (responseBody is null) return "Address not found";
+            if (responseBody is not null)
+            {
+                logger.LogInformation("Reverse geocoding successful");
+                return responseBody.Hits.First().ToString();
+            }
 
-            return responseBody.Hits.First().ToString();
+            logger.LogWarning("Reverse geocoding not found");
+            return "Address not found";
         }
         catch (Exception e)
         {
@@ -55,7 +66,7 @@ internal struct PointsInfo
 
 internal class ReverseGeocodingResponse
 {
-    public List<AddressHit> Hits { get; set; } = new ();
+    public List<AddressHit> Hits { get; set; } = new();
 }
 
 internal class AddressHit

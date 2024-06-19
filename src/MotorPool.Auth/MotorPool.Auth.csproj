@@ -23,6 +23,8 @@
         </PackageReference>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1"/>
         <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.1"/>
+        <PackageReference Include="Serilog" Version="4.0.0" />
+        <PackageReference Include="Serilog.Enrichers.Sensitive" Version="1.7.3" />
     </ItemGroup>
 
     <ItemGroup>

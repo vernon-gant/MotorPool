@@ -10,7 +10,6 @@ using MotorPool.API.Endpoints;
 using MotorPool.Auth;
 using MotorPool.Auth.Middleware.API;
 using MotorPool.Auth.Services;
-using MotorPool.Domain;
 using MotorPool.Persistence;
 using MotorPool.Repository;
 using MotorPool.Services.Drivers;
@@ -21,6 +20,9 @@ using MotorPool.Services.Reporting;
 using MotorPool.Services.VehicleBrand;
 using MotorPool.Services.Vehicles;
 using MotorPool.Utils;
+using Serilog;
+using Serilog.Events;
+using Serilog.Filters;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -66,6 +68,11 @@ builder.Services.AddAuthentication(options =>
         });
 builder.Services.AddAppAuthorization();
 
+Log.Logger = new LoggerConfiguration().MinimumLevel.Information()
+                                      .WriteTo.Console()
+                                      .CreateBootstrapLogger();
+builder.Services.AddSerilog((provider, config) => config.ReadFrom.Configuration(builder.Configuration)
+                                                        .ReadFrom.Services(provider));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -122,6 +129,7 @@ builder.Services.AddOutputCache(options =>
 
 WebApplication app = builder.Build();
 
+app.UseSerilogRequestLogging();
 app.UseCustomExceptionAPIMiddleware();
 
 if (app.Environment.IsDevelopment())
