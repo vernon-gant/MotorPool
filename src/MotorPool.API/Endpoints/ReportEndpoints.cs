@@ -13,7 +13,7 @@ public static class ReportEndpoints
     {
         RouteGroupBuilder enterprisesGroupBuilder = managerResourcesGroupBuilder.MapGroup("reports");
 
-        enterprisesGroupBuilder.MapGet("vehicle-mileage", VehicleMileage);
+        enterprisesGroupBuilder.MapPost("vehicle-mileage", VehicleMileage);
     }
 
     private static async ValueTask<IResult> VehicleMileage([FromBody] VehicleMileageReportDTO reportDto, [FromServices] ReportService<VehicleMileageReport, VehicleMileageReportDTO> reportService, IMemoryCache memoryCache)

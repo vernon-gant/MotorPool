@@ -45,13 +45,15 @@ public static class AuthorizationServiceCollectionExtension
         using var freshScope = webHost.Services.CreateScope();
         var appDbContext = freshScope.ServiceProvider.GetRequiredService<AuthDbContext>();
         var loggerFactory = freshScope.ServiceProvider.GetRequiredService<ILoggerFactory>();
-        var logger = loggerFactory.CreateLogger("test");
+        var logger = loggerFactory.CreateLogger("Migration");
 
         try
         {
-            logger.LogInformation("Migrating the user database");
             await appDbContext.Database.EnsureCreatedAsync();
-            if ((await appDbContext.Database.GetPendingMigrationsAsync()).Any()) await appDbContext.Database.MigrateAsync();
+            if (!(await appDbContext.Database.GetPendingMigrationsAsync()).Any()) return;
+
+            logger.LogInformation("Migrating the user database");
+            await appDbContext.Database.MigrateAsync();
         }
         catch (Exception e)
         {

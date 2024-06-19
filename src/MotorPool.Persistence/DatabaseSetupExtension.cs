@@ -7,20 +7,21 @@ namespace MotorPool.Persistence;
 
 public static class DatabaseSetupExtension
 {
-
     public static async Task SetupDatabaseAsync(this IHost webHost)
     {
         using IServiceScope freshScope = webHost.Services.CreateScope();
         AppDbContext appDbContext = freshScope.ServiceProvider.GetRequiredService<AppDbContext>();
         ILoggerFactory loggerFactory = freshScope.ServiceProvider.GetRequiredService<ILoggerFactory>();
-        ILogger logger = loggerFactory.CreateLogger("test");
+        ILogger logger = loggerFactory.CreateLogger("Migration");
 
         try
         {
-            logger.LogInformation("Migrating the database");
             await appDbContext.Database.EnsureCreatedAsync();
-            if ((await appDbContext.Database.GetPendingMigrationsAsync()).Any())
-                await appDbContext.Database.MigrateAsync();
+
+            if (!(await appDbContext.Database.GetPendingMigrationsAsync()).Any()) return;
+
+            logger.LogInformation("Migrating the database");
+            await appDbContext.Database.MigrateAsync();
         }
         catch (Exception e)
         {
@@ -28,5 +29,4 @@ public static class DatabaseSetupExtension
             throw;
         }
     }
-
 }

@@ -1,18 +1,34 @@
-﻿using MotorPool.Persistence;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using MotorPool.Persistence;
 
 namespace MotorPool.Repository.Vehicle;
 
 using Vehicle = Domain.Vehicle;
 
-public class EfCoreVehicleChangeRepository(AppDbContext dbContext) : VehicleChangeRepository
+public class EfCoreVehicleChangeRepository(AppDbContext dbContext, ILogger<EfCoreVehicleChangeRepository> logger) : VehicleChangeRepository
 {
     public async ValueTask<Vehicle> CreateAsync(Vehicle newVehicle)
     {
-        await dbContext.Vehicles.AddAsync(newVehicle);
+        try
+        {
+            await dbContext.Vehicles.AddAsync(newVehicle);
 
-        await dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
 
-        return newVehicle;
+            logger.LogInformation("Created new vehicle {@Vehicle}", newVehicle);
+
+            await dbContext.Entry(newVehicle)
+                     .Reference<Domain.Enterprise>(vehicle => vehicle.Enterprise)
+                     .LoadAsync();
+
+            return newVehicle;
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e,"Failed to create new vehicle");
+            throw;
+        }
     }
 
     public async ValueTask DeleteAsync(int vehicleId)
@@ -24,16 +40,16 @@ public class EfCoreVehicleChangeRepository(AppDbContext dbContext) : VehicleChan
         dbContext.Vehicles.Remove(vehicle);
 
         await dbContext.SaveChangesAsync();
+
+        logger.LogInformation("Deleted vehicle {@Vehicle}", vehicle);
     }
 
     public async ValueTask UpdateAsync(Vehicle updatedVehicle)
     {
-        bool foundVehicle = await dbContext.Vehicles.FindAsync(updatedVehicle.VehicleId) is not null;
-
-        if (!foundVehicle) return;
-
         dbContext.Vehicles.Update(updatedVehicle);
 
         await dbContext.SaveChangesAsync();
+
+        logger.LogInformation("Updated vehicle {@Vehicle}", updatedVehicle);
     }
 }

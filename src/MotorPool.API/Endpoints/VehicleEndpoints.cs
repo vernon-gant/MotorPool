@@ -116,7 +116,7 @@ public static class VehicleEndpoints
         return Task.FromResult(Results.Ok(mapper.Map<VehicleViewModel>(vehicle)));
     }
 
-    private static async Task<IResult> Create(VehicleChangeRepository vehicleChangeRepository, IMapper mapper, VehicleDTO vehicleDTO)
+    private static async Task<IResult> Create(VehicleChangeRepository vehicleChangeRepository, IMapper mapper, ClaimsPrincipal user, VehicleDTO vehicleDTO)
     {
         try
         {

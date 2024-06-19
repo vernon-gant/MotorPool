@@ -39,4 +39,7 @@ public class VehicleDTO
     [Required]
     public int VehicleBrandId { get; set; }
 
+    [Required]
+    public int EnterpriseId { get; set; }
+
 }

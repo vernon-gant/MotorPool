@@ -5,7 +5,6 @@ namespace MotorPool.Domain;
 
 public class GeoPoint
 {
-
     [Key]
     public int GeoPointId { get; set; }
 
@@ -22,5 +21,4 @@ public class GeoPoint
     public string Coordinates => $"{Latitude.ToString("F6", CultureInfo.InvariantCulture)},{Longitude.ToString("F6", CultureInfo.InvariantCulture)}";
 
     public override string ToString() => $"GeoPointId: {GeoPointId}, Latitude: {Latitude}, Longitude: {Longitude}, VehicleId: {VehicleId}, RecordedAt: {RecordedAt}";
-
 }
