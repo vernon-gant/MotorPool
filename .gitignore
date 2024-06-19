@@ -3,4 +3,4 @@ obj
 .idea
 .env
 .fleet
-Logs
+Logs/
