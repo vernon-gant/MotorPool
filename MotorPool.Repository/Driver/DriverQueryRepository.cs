@@ -1,4 +1,5 @@
-﻿using MotorPool.Persistence;
+﻿using MotorPool.Domain;
+using MotorPool.Persistence;
 using MotorPool.Persistence.QueryObjects;
 
 namespace MotorPool.Repository.Driver;
@@ -12,4 +13,6 @@ public interface DriverQueryRepository
     ValueTask<PagedResult<Driver>> GetAllAsync(int managerId, PageOptions pageOptions);
 
     ValueTask<Driver?> GetByIdAsync(int driverId);
+
+    ValueTask<bool> AddVehicleAssignmentAsync(DriverVehicle driverVehicle);
 }

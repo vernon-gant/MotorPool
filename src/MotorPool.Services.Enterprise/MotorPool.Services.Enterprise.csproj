@@ -17,8 +17,4 @@
         <ProjectReference Include="..\MotorPool.Services.Manager\MotorPool.Services.Manager.csproj"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="Services\Concrete\"/>
-    </ItemGroup>
-
 </Project>
