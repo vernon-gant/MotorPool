@@ -1,14 +1,11 @@
 ﻿using System.Text;
-
 using MathNet.Numerics;
 using MathNet.Numerics.Distributions;
-using MathNet.Numerics.Random;
 
 namespace MotorPool.DatabaseSeeder;
 
 public interface MotorPoolRandomizer
 {
-
     int FromRange(int min, int max);
 
     string MotorVIN();
@@ -16,22 +13,18 @@ public interface MotorPoolRandomizer
     List<T> GetSample<T>(List<T> collection);
 
     List<T> GetSample<T>(List<T> collection, double successProbability);
-
 }
 
 public class PseudoMotorPoolRandomizer : MotorPoolRandomizer
 {
-
-    private readonly Random random = new MersenneTwister();
-
-    public int FromRange(int min, int max) => min + random.Next() % (max - min + 1);
+    public int FromRange(int min, int max) => min + Random.Shared.Next() % (max - min + 1);
 
     public string MotorVIN()
     {
         const string possibleChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        ContinuousUniform possibleCharsUniform = new (0, possibleChars.Length - 1);
+        ContinuousUniform possibleCharsUniform = new(0, possibleChars.Length - 1);
 
-        StringBuilder stringBuilder = new ();
+        StringBuilder stringBuilder = new();
 
         for (int i = 0; i < 17; i++) stringBuilder.Append(possibleChars[(int)possibleCharsUniform.Sample()]);
 
@@ -51,7 +44,7 @@ public class PseudoMotorPoolRandomizer : MotorPoolRandomizer
 
     public List<T> GetSample<T>(List<T> collection, double successProbability)
     {
-        Bernoulli bernoulli = new (successProbability);
+        Bernoulli bernoulli = new(successProbability);
 
         return bernoulli.Samples()
                         .Take(collection.Count)
@@ -60,5 +53,4 @@ public class PseudoMotorPoolRandomizer : MotorPoolRandomizer
                         .Select(resultIndexTuple => collection[resultIndexTuple.index])
                         .ToList();
     }
-
 }

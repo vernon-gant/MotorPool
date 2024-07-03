@@ -4,66 +4,38 @@ namespace MotorPool.DatabaseSeeder;
 
 public interface RelationsGenerator
 {
+    List<DriverVehicle> GenerateDriverVehicles();
 
-    void BetweenVehiclesAndDrivers(List<Driver> drivers, List<Vehicle> vehicles);
-
-    void AddActiveDrivers(List<Vehicle> vehicles, List<Driver> drivers);
-
+    void GenerateActiveDrivers();
 }
 
-public class RandomRelationsGenerator(MotorPoolRandomizer randomizer) : RelationsGenerator
+public class RandomRelationsGenerator(MotorPoolRandomizer randomizer, List<Vehicle> vehicles, List<Driver> drivers) : RelationsGenerator
 {
+    public List<DriverVehicle> GenerateDriverVehicles() => randomizer.GetSample(vehicles)
+                                                                     .AsParallel()
+                                                                     .SelectMany(vehicle => randomizer.GetSample(drivers)
+                                                                                                      .Select(driver => new DriverVehicle
+                                                                                                                        {
+                                                                                                                            VehicleId = vehicle.VehicleId,
+                                                                                                                            DriverId = driver.DriverId
+                                                                                                                        })
+                                                                                                      .ToList())
+                                                                     .ToList();
 
-    public void BetweenVehiclesAndDrivers(List<Driver> drivers, List<Vehicle> vehicles)
-    {
-        Console.WriteLine("-".PadRight(50, '-'));
-        Console.WriteLine("Generating relations between vehicles and drivers...\n");
-        int relationsCount = 0;
-
-        foreach (Vehicle vehicle in randomizer.GetSample(vehicles))
-        {
-            foreach (Driver driver in randomizer.GetSample(drivers))
-            {
-                DriverVehicle newRelation = new ()
-                {
-                    VehicleId = vehicle.VehicleId,
-                    DriverId = driver.DriverId
-                };
-                vehicle.DriverVehicles.Add(newRelation);
-                driver.DriverVehicles.Add(newRelation);
-                relationsCount++;
-            }
-        }
-
-        Console.WriteLine($"\n{relationsCount} relations between vehicles and drivers have been generated successfully!");
-        Console.WriteLine("-".PadRight(50, '-') + "\n\n");
-    }
-
-    public void AddActiveDrivers(List<Vehicle> vehicles, List<Driver> drivers)
+    public void GenerateActiveDrivers()
     {
         const double VEHICLE_WITH_ACTIVE_DRIVER_PROBABILITY = 0.12;
 
         List<Vehicle> vehiclesWithDrivers = vehicles.Where(vehicle => vehicle.DriverVehicles.Count != 0).ToList();
-        HashSet<Driver> activeDrivers = new ();
 
-        Console.WriteLine("-".PadRight(50, '-'));
-        Console.WriteLine("Adding active drivers to vehicles...\n");
+        HashSet<Driver> activeDrivers = new();
 
-        foreach (Vehicle vehicle in randomizer.GetSample(vehiclesWithDrivers, VEHICLE_WITH_ACTIVE_DRIVER_PROBABILITY))
+        randomizer.GetSample(vehiclesWithDrivers, VEHICLE_WITH_ACTIVE_DRIVER_PROBABILITY).ForEach(vehicle =>
         {
-            List<Driver> potentialActiveDrivers = drivers
-                                                  .Where(driver => driver.DriverVehicles.Any(driverVehicle => driverVehicle.VehicleId == vehicle.VehicleId) &&
-                                                                   !activeDrivers.Contains(driver))
-                                                  .ToList();
+            List<Driver> potentialActiveDrivers = drivers.Where(driver => driver.DriverVehicles.AsParallel().Any(driverVehicle => driverVehicle.VehicleId == vehicle.VehicleId) && !activeDrivers.Contains(driver)).ToList();
             Driver newActiveDriver = potentialActiveDrivers[randomizer.FromRange(0, potentialActiveDrivers.Count - 1)];
             activeDrivers.Add(newActiveDriver);
             newActiveDriver.ActiveVehicleId = vehicle.VehicleId;
-        }
-
-        if (activeDrivers.Count == 0) Console.WriteLine("No active drivers added to vehicles.");
-
-        Console.WriteLine($"\n{activeDrivers.Count} active drivers have been added to vehicles successfully!");
-        Console.WriteLine("-".PadRight(50, '-') + "\n\n");
+        });
     }
-
 }
