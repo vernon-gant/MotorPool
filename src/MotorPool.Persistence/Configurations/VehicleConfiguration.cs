@@ -13,6 +13,11 @@ public class VehicleConfiguration : IEntityTypeConfiguration<Vehicle>
         builder.HasIndex(vehicle => vehicle.MotorVIN).IsUnique();
         builder.Property(vehicle => vehicle.Mileage).HasPrecision(13, 3);
         builder.Property(vehicle => vehicle.Cost).HasPrecision(15, 5);
+
+        builder.HasMany(vehicle => vehicle.GeoPoints)
+            .WithOne(geoPoint => geoPoint.Vehicle)
+            .HasForeignKey(geoPoint => geoPoint.VehicleId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 
 }

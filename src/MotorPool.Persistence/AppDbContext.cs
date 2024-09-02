@@ -1,14 +1,13 @@
 ﻿using System.Reflection;
 
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Extensions.Configuration;
 using MotorPool.Domain;
 
 namespace MotorPool.Persistence;
 
-public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+public class AppDbContext(DbContextOptions<AppDbContext> options, IConfiguration configuration) : DbContext(options)
 {
-
     public DbSet<Vehicle> Vehicles { get; set; }
 
     public DbSet<VehicleBrand> VehicleBrands { get; set; }
@@ -38,4 +37,12 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.Entity<EnterpriseManager>().HasData(SeedingData.EnterpriseManagers);
     }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (EF.IsDesignTime)
+        {
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), opt => opt.CommandTimeout(600));
+        }
+        base.OnConfiguring(optionsBuilder);
+    }
 }

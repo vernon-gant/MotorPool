@@ -1,23 +1,44 @@
-using Microsoft.AspNetCore.SignalR.Client;
+using System.Text.Json;
+using Confluent.Kafka;
 
 namespace MotorPool.TelemetryService;
 
-public class Worker(ILogger<Worker> logger) : BackgroundService
+public class Worker(ILogger<Worker> logger, IConfiguration configuration) : BackgroundService
 {
-    private HubConnection _hubConnection;
+    private readonly IConsumer<string, string> _kafkaConsumer = new ConsumerBuilder<string, string>(new ConsumerConfig
+                                                                                                    {
+                                                                                                        BootstrapServers = configuration.GetValue<string>("Kafka:BootstrapServers"),
+                                                                                                        AutoOffsetReset = AutoOffsetReset.Earliest
+                                                                                                    }).Build();
+    private readonly string _vehicleTelemetryTopic = configuration.GetValue<string>("Kafka:VehicleTelemetryTopic")!;
 
-    public override async Task StartAsync(CancellationToken cancellationToken)
+    public override Task StartAsync(CancellationToken cancellationToken)
     {
-        _hubConnection = new HubConnectionBuilder()
-                        .WithUrl("http://localhost:5000/telemetryHub")
-                        .Build();
+        _kafkaConsumer.Subscribe(_vehicleTelemetryTopic);
 
-        _hubConnection.On<CANTelemetry>("ReceiveTelemetry", TelemetryProcessor.Process);
+        while (!cancellationToken.IsCancellationRequested)
+        {
+            try
+            {
+                ConsumeResult<string, string> consumeResult = _kafkaConsumer.Consume(cancellationToken);
 
-        await _hubConnection.StartAsync(cancellationToken);
-        TelemetryProcessor.SpeedFilter();
+                CANTelemetry canTelemetry = JsonSerializer.Deserialize<CANTelemetry>(consumeResult.Message.Value) ?? throw new InvalidOperationException();
 
-        await base.StartAsync(cancellationToken);
+                logger.LogInformation("Telemetry consumed: {Telemetry}", canTelemetry);
+
+                if (consumeResult.IsPartitionEOF) continue;
+            }
+            catch (OperationCanceledException)
+            {
+                break;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error consuming message from Kafka");
+            }
+        }
+
+        return Task.CompletedTask;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -29,10 +50,10 @@ public class Worker(ILogger<Worker> logger) : BackgroundService
         }
     }
 
-    public override async Task StopAsync(CancellationToken cancellationToken)
+    public override Task StopAsync(CancellationToken cancellationToken)
     {
-        await _hubConnection.StopAsync(cancellationToken);
-        await _hubConnection.DisposeAsync();
-        await base.StopAsync(cancellationToken);
+        _kafkaConsumer.Close();
+        _kafkaConsumer.Dispose();
+        return Task.CompletedTask;
     }
 }

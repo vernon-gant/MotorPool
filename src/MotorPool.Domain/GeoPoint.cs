@@ -16,6 +16,10 @@ public class GeoPoint
 
     public Vehicle? Vehicle { get; set; }
 
+    public int? TripId { get; set; }
+
+    public Trip? Trip { get; set; }
+
     public DateTime RecordedAt { get; set; }
 
     public string Coordinates => $"{Latitude.ToString("F6", CultureInfo.InvariantCulture)},{Longitude.ToString("F6", CultureInfo.InvariantCulture)}";

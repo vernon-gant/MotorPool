@@ -51,5 +51,7 @@ public class Vehicle
 
     public List<Trip> Trips { get; set; } = new();
 
+    public List<GeoPoint> GeoPoints { get; set; } = new();
+
     public bool IsManagerAccessible(int managerId) => Enterprise!.IsManagerAccessible(managerId);
 }

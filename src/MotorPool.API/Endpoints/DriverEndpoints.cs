@@ -10,12 +10,10 @@ namespace MotorPool.API.Endpoints;
 
 public static class DriverEndpoints
 {
-
     public static void MapDriverEndpoints(this IEndpointRouteBuilder managerResourcesGroupBuilder)
     {
-        RouteGroupBuilder driversGroupBuilder = managerResourcesGroupBuilder
-                                                .MapGroup("drivers")
-                                                .WithParameterValidation();
+        RouteGroupBuilder driversGroupBuilder = managerResourcesGroupBuilder.MapGroup("drivers")
+                                                                            .WithParameterValidation();
 
         driversGroupBuilder.MapGet("", GetAll)
                            .WithName("GetAllDrivers")
@@ -36,10 +34,10 @@ public static class DriverEndpoints
     private static async Task<IResult> Assign(AssignmentTransactionHandler transactionHandler, ClaimsPrincipal principal, int driverId, int vehicleId)
     {
         DriverVehicle assignment = new DriverVehicle
-        {
-            DriverId = driverId,
-            VehicleId = vehicleId,
-        };
+                                   {
+                                       DriverId = driverId,
+                                       VehicleId = vehicleId,
+                                   };
 
         return await transactionHandler.AssignVehicleAsync(assignment) switch
         {
@@ -48,5 +46,4 @@ public static class DriverEndpoints
             _ => Results.NotFound()
         };
     }
-
 }

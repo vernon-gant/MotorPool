@@ -4,12 +4,13 @@ using Microsoft.Extensions.Logging;
 using MotorPool.Domain;
 using MotorPool.Persistence;
 using MotorPool.Persistence.QueryObjects;
+using MotorPool.Repository.Geo;
 using MotorPool.Services.Geo.GraphHopper;
 using MotorPool.Services.Geo.Models;
 
 namespace MotorPool.Services.Geo.Services.Concrete;
 
-public class DefaultTripQueryService(AppDbContext dbContext, IMapper mapper, GraphHopperClient graphHopperClient, ILogger<DefaultTripQueryService> logger) : TripQueryService
+public class DefaultTripQueryService(AppDbContext dbContext, IMapper mapper, GraphHopperClient graphHopperClient, ILogger<DefaultTripQueryService> logger, GeoQueryRepository queryRepository) : TripQueryService
 {
     public async ValueTask<IEnumerable<GeoPointViewModel>> GetVehicleGeoPoints(int vehicleId, DateTime startTime, DateTime endTime)
     {
@@ -17,11 +18,16 @@ public class DefaultTripQueryService(AppDbContext dbContext, IMapper mapper, Gra
 
         TimeZoneInfo enterpriseTimeZone = dbContext.Vehicles.GetVehicleTimeZoneInfo(vehicleId);
 
-        List<GeoPoint> rawGeoPoints = await dbContext.GeoPoints.Include(geoPoint => geoPoint.Vehicle)
-                                                     .Include(geoPoint => geoPoint.Vehicle!.Enterprise)
-                                                     .Where(geoPoint => geoPoint.RecordedAt > TimeZoneInfo.ConvertTimeToUtc(startTime, enterpriseTimeZone) &&
-                                                                        geoPoint.RecordedAt < TimeZoneInfo.ConvertTimeToUtc(endTime, enterpriseTimeZone))
-                                                     .ToListAsync();
+        var test = await dbContext.Vehicles.Include(vehicle => vehicle.GeoPoints)
+                                  .Take(10)
+                                  .Select(vehicle => new
+                                                     {
+                                                         Vehicle = vehicle,
+                                                         GeoPoints = vehicle.GeoPoints.Select(geoPoint => geoPoint.GeoPointId).Take(10)
+                                                     })
+                                  .ToListAsync();
+
+        List<GeoPoint> rawGeoPoints = await queryRepository.GetVehicleGeoPoints(vehicleId, TimeZoneInfo.ConvertTimeToUtc(startTime, enterpriseTimeZone), TimeZoneInfo.ConvertTimeToUtc(endTime, enterpriseTimeZone));
 
         logger.LogInformation("Returned geopoints for vehicle {VehicleId}", vehicleId);
         return rawGeoPoints.Select(geoPoint => mapper.Map<GeoPointViewModel>(geoPoint, options => { options.Items["EnterpriseTimeZone"] = enterpriseTimeZone; }));
@@ -33,45 +39,52 @@ public class DefaultTripQueryService(AppDbContext dbContext, IMapper mapper, Gra
 
         TimeZoneInfo enterpriseTimeZone = dbContext.Vehicles.GetVehicleTimeZoneInfo(vehicleId);
 
-        List<GeoPoint> rawGeoPoints = await dbContext.Trips.Where(trip => trip.StartTime >= TimeZoneInfo.ConvertTimeToUtc(startTime, enterpriseTimeZone) &&
-                                                                          trip.EndTime <= TimeZoneInfo.ConvertTimeToUtc(endTime, enterpriseTimeZone) && trip.VehicleId == vehicleId)
-                                                     .OrderBy(trip => trip.StartTime)
-                                                     .SelectMany(trip => dbContext.GeoPoints.Include(geoPoint => geoPoint.Vehicle)
-                                                                                  .Include(geoPoint => geoPoint.Vehicle!.Enterprise)
-                                                                                  .Where(geoPoint => geoPoint.VehicleId == trip.VehicleId && geoPoint.RecordedAt >= trip.StartTime && geoPoint.RecordedAt <= trip.EndTime)
-                                                                                  .OrderBy(geoPoint => geoPoint.RecordedAt))
-                                                     .ToListAsync();
+        List<GeoPoint> rawGeoPoints = await queryRepository.GetVehicleTripsInGeoPoints(vehicleId, TimeZoneInfo.ConvertTimeToUtc(startTime, enterpriseTimeZone), TimeZoneInfo.ConvertTimeToUtc(endTime, enterpriseTimeZone));
 
         logger.LogInformation("Returned trips in geopoints for vehicle {VehicleId}", vehicleId);
         return rawGeoPoints.Select(geoPoint => mapper.Map<GeoPointViewModel>(geoPoint, options => { options.Items["EnterpriseTimeZone"] = enterpriseTimeZone; }));
     }
 
+    // N + 1 problem
+    // public async ValueTask<IEnumerable<TripViewModel>> GetVehicleTrips(int vehicleId, DateTime startTime, DateTime endTime)
+    // {
+    //     TimeZoneInfo enterpriseTimeZone = dbContext.Vehicles.GetVehicleTimeZoneInfo(vehicleId);
+    //
+    //     List<Trip> vehicleTrips = await dbContext.Trips.Where(trip => trip.StartTime >= TimeZoneInfo.ConvertTimeToUtc(startTime, enterpriseTimeZone) &&
+    //                                                                   trip.EndTime <= TimeZoneInfo.ConvertTimeToUtc(endTime, enterpriseTimeZone) && trip.VehicleId == vehicleId)
+    //                                              .OrderBy(trip => trip.StartTime)
+    //                                              .ToListAsync();
+    //
+    //     List<GeoPoint> allTripsGeoPoints = vehicleTrips.SelectMany(trip => dbContext
+    //                                                                       .GeoPoints.Where(geoPoint => geoPoint.VehicleId == trip.VehicleId && geoPoint.RecordedAt >= trip.StartTime && geoPoint.RecordedAt <= trip.EndTime)
+    //                                                                       .OrderBy(geoPoint => geoPoint.RecordedAt))
+    //                                                    .ToList();
+    //
+    //     List<Task<TripViewModel>> tripToViewModelTasks = vehicleTrips.Select(async trip =>
+    //                                                                   {
+    //                                                                       List<GeoPoint> tripGeoPoints = allTripsGeoPoints.Where(geoPoint => geoPoint.RecordedAt >= trip.StartTime && geoPoint.RecordedAt <= trip.EndTime)
+    //                                                                                                                       .ToList();
+    //                                                                       GeoPoint startPoint = tripGeoPoints.First();
+    //                                                                       GeoPoint endPoint = tripGeoPoints.Last();
+    //
+    //                                                                       return await TripToViewModel(trip, enterpriseTimeZone, startPoint, endPoint);
+    //                                                                   })
+    //                                                                  .ToList();
+    //
+    //     logger.LogInformation("Returned trips for vehicle {VehicleId}", vehicleId);
+    //     return await Task.WhenAll(tripToViewModelTasks);
+    // }
+
     public async ValueTask<IEnumerable<TripViewModel>> GetVehicleTrips(int vehicleId, DateTime startTime, DateTime endTime)
     {
         TimeZoneInfo enterpriseTimeZone = dbContext.Vehicles.GetVehicleTimeZoneInfo(vehicleId);
 
-        List<Trip> vehicleTrips = await dbContext.Trips.Where(trip => trip.StartTime >= TimeZoneInfo.ConvertTimeToUtc(startTime, enterpriseTimeZone) &&
-                                                                      trip.EndTime <= TimeZoneInfo.ConvertTimeToUtc(endTime, enterpriseTimeZone) && trip.VehicleId == vehicleId)
-                                                 .OrderBy(trip => trip.StartTime)
-                                                 .ToListAsync();
+        List<Trip> vehicleTrips = await queryRepository.GetVehicleTrips(vehicleId, TimeZoneInfo.ConvertTimeToUtc(startTime, enterpriseTimeZone), TimeZoneInfo.ConvertTimeToUtc(endTime, enterpriseTimeZone));
 
-        List<GeoPoint> allTripsGeoPoints = vehicleTrips.SelectMany(trip => dbContext
-                                                                          .GeoPoints.Where(geoPoint => geoPoint.VehicleId == trip.VehicleId && geoPoint.RecordedAt >= trip.StartTime && geoPoint.RecordedAt <= trip.EndTime)
-                                                                          .OrderBy(geoPoint => geoPoint.RecordedAt))
-                                                       .ToList();
-
-        List<Task<TripViewModel>> tripToViewModelTasks = vehicleTrips.Select(async trip =>
-                                                                      {
-                                                                          List<GeoPoint> tripGeoPoints = allTripsGeoPoints.Where(geoPoint => geoPoint.RecordedAt >= trip.StartTime && geoPoint.RecordedAt <= trip.EndTime)
-                                                                                                                          .ToList();
-                                                                          GeoPoint startPoint = tripGeoPoints.First();
-                                                                          GeoPoint endPoint = tripGeoPoints.Last();
-
-                                                                          return await TripToViewModel(trip, enterpriseTimeZone, startPoint, endPoint);
-                                                                      })
-                                                                     .ToList();
+        List<Task<TripViewModel>> tripToViewModelTasks = vehicleTrips.Select(async trip => await TripToViewModel(trip, enterpriseTimeZone, trip.StartGeoPoint!, trip.EndGeoPoint!)).ToList();
 
         logger.LogInformation("Returned trips for vehicle {VehicleId}", vehicleId);
+
         return await Task.WhenAll(tripToViewModelTasks);
     }
 

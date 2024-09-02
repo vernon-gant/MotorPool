@@ -264,10 +264,15 @@ namespace MotorPool.Persistence.Migrations
                     b.Property<DateTime>("RecordedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("TripId")
+                        .HasColumnType("int");
+
                     b.Property<int>("VehicleId")
                         .HasColumnType("int");
 
                     b.HasKey("GeoPointId");
+
+                    b.HasIndex("TripId");
 
                     b.HasIndex("VehicleId");
 
@@ -309,8 +314,14 @@ namespace MotorPool.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TripId"));
 
+                    b.Property<int?>("EndGeoPointId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("StartGeoPointId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
@@ -319,6 +330,14 @@ namespace MotorPool.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("TripId");
+
+                    b.HasIndex("EndGeoPointId")
+                        .IsUnique()
+                        .HasFilter("[EndGeoPointId] IS NOT NULL");
+
+                    b.HasIndex("StartGeoPointId")
+                        .IsUnique()
+                        .HasFilter("[StartGeoPointId] IS NOT NULL");
 
                     b.HasIndex("VehicleId");
 
@@ -528,22 +547,40 @@ namespace MotorPool.Persistence.Migrations
 
             modelBuilder.Entity("MotorPool.Domain.GeoPoint", b =>
                 {
+                    b.HasOne("MotorPool.Domain.Trip", "Trip")
+                        .WithMany("GeoPoints")
+                        .HasForeignKey("TripId");
+
                     b.HasOne("MotorPool.Domain.Vehicle", "Vehicle")
-                        .WithMany()
+                        .WithMany("GeoPoints")
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Trip");
 
                     b.Navigation("Vehicle");
                 });
 
             modelBuilder.Entity("MotorPool.Domain.Trip", b =>
                 {
+                    b.HasOne("MotorPool.Domain.GeoPoint", "EndGeoPoint")
+                        .WithOne()
+                        .HasForeignKey("MotorPool.Domain.Trip", "EndGeoPointId");
+
+                    b.HasOne("MotorPool.Domain.GeoPoint", "StartGeoPoint")
+                        .WithOne()
+                        .HasForeignKey("MotorPool.Domain.Trip", "StartGeoPointId");
+
                     b.HasOne("MotorPool.Domain.Vehicle", "Vehicle")
                         .WithMany("Trips")
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("EndGeoPoint");
+
+                    b.Navigation("StartGeoPoint");
 
                     b.Navigation("Vehicle");
                 });
@@ -586,9 +623,16 @@ namespace MotorPool.Persistence.Migrations
                     b.Navigation("EnterpriseLinks");
                 });
 
+            modelBuilder.Entity("MotorPool.Domain.Trip", b =>
+                {
+                    b.Navigation("GeoPoints");
+                });
+
             modelBuilder.Entity("MotorPool.Domain.Vehicle", b =>
                 {
                     b.Navigation("DriverVehicles");
+
+                    b.Navigation("GeoPoints");
 
                     b.Navigation("Trips");
                 });

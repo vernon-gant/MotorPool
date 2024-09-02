@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using MotorPool.API.Cache;
 using MotorPool.API.EndpointFilters;
 using MotorPool.API.Endpoints;
+using MotorPool.API.Producers;
 using MotorPool.Auth;
 using MotorPool.Auth.Middleware.API;
 using MotorPool.Auth.Services;
@@ -21,8 +22,6 @@ using MotorPool.Services.VehicleBrand;
 using MotorPool.Services.Vehicles;
 using MotorPool.Utils;
 using Serilog;
-using Serilog.Events;
-using Serilog.Filters;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +37,7 @@ builder.Configuration.GetSection("GraphHopper")
        .Bind(graphHopperConfiguration);
 builder.Services.AddSingleton(graphHopperConfiguration);
 
+builder.Services.AddSingleton<TelemetryProducer>();
 builder.Services.AddScoped<AuthService, DefaultAuthService>();
 builder.Services.AddPersistenceServices(connectionString);
 builder.Services.AddVehicleServices();
@@ -143,7 +143,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseUnauthorizedOnNotManagerAccess();
 app.UseAuthorization();
-app.UseOutputCache();
+//app.UseOutputCache();
 
 app.MapVehicleBrandEndpoints();
 app.MapAuthEndpoints();
@@ -156,6 +156,7 @@ managerResourcesGroupBuilder.MapVehicleEndpoints();
 managerResourcesGroupBuilder.MapDriverEndpoints();
 managerResourcesGroupBuilder.MapEnterpriseEndpoints();
 managerResourcesGroupBuilder.MapReportEndpoints();
+managerResourcesGroupBuilder.MapTelemetryEndpoints();
 
 await app.SetupDatabaseAsync();
 await app.SetupAuthDatabaseAsync();

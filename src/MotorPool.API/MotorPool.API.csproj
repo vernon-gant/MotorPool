@@ -6,9 +6,12 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <InvariantGlobalization>false</InvariantGlobalization>
         <UserSecretsId>67be0772-e61b-4b2a-945e-4847269814cb</UserSecretsId>
+        <RootNamespace>MotorPool.API</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Confluent.Kafka" Version="2.5.2" />
+        <PackageReference Include="Confluent.Kafka.DependencyInjection" Version="3.1.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.1"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.1">
             <PrivateAssets>all</PrivateAssets>
