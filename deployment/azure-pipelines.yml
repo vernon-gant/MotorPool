@@ -6,6 +6,8 @@ trigger:
     exclude:
       - /src/Utilities/*
 
+pool: localhost
+
 stages:
 - stage: Building
   jobs:
