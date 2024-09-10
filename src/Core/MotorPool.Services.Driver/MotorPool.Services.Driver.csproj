@@ -15,6 +15,7 @@
     <ItemGroup>
         <ProjectReference Include="..\..\MotorPool.Repository\MotorPool.Repository.csproj" />
         <ProjectReference Include="..\MotorPool.Persistence\MotorPool.Persistence.csproj"/>
+        <ProjectReference Include="..\MotorPool.Repository\MotorPool.Repository.csproj" />
         <ProjectReference Include="..\MotorPool.Services.Manager\MotorPool.Services.Manager.csproj"/>
         <ProjectReference Include="..\MotorPool.Utils\MotorPool.Utils.csproj"/>
     </ItemGroup>

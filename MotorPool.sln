@@ -1,34 +1,34 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Domain", "src\MotorPool.Domain\MotorPool.Domain.csproj", "{1ACABA88-792D-4F22-A8D4-2F5FFD345BD0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Domain", "src\Core\MotorPool.Domain\MotorPool.Domain.csproj", "{1ACABA88-792D-4F22-A8D4-2F5FFD345BD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Persistence", "src\MotorPool.Persistence\MotorPool.Persistence.csproj", "{ED6B9032-5D4D-448A-B197-8D6B7DE06573}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Persistence", "src\Core\MotorPool.Persistence\MotorPool.Persistence.csproj", "{ED6B9032-5D4D-448A-B197-8D6B7DE06573}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.UI", "src\MotorPool.UI\MotorPool.UI.csproj", "{94018A1C-BB6F-49AF-9611-1CC13011C01B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.UI", "src\Core\MotorPool.UI\MotorPool.UI.csproj", "{94018A1C-BB6F-49AF-9611-1CC13011C01B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Utils", "src\MotorPool.Utils\MotorPool.Utils.csproj", "{A55E10DE-2F87-4C17-B8DB-1D3A74683F2A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Utils", "src\Core\MotorPool.Utils\MotorPool.Utils.csproj", "{A55E10DE-2F87-4C17-B8DB-1D3A74683F2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.Vehicle", "src\MotorPool.Services.Vehicle\MotorPool.Services.Vehicle.csproj", "{8AB725DD-9910-46A0-A060-E0CC160B2753}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.Vehicle", "src\Core\MotorPool.Services.Vehicle\MotorPool.Services.Vehicle.csproj", "{8AB725DD-9910-46A0-A060-E0CC160B2753}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.API", "src\MotorPool.API\MotorPool.API.csproj", "{D9251B5C-46E7-4662-81A2-2E4BC429424E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.API", "src\Core\MotorPool.API\MotorPool.API.csproj", "{D9251B5C-46E7-4662-81A2-2E4BC429424E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.VehicleBrand", "src\MotorPool.Services.VehicleBrand\MotorPool.Services.VehicleBrand.csproj", "{7106771C-2D2E-4941-BF15-218DCFE1B23F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.VehicleBrand", "src\Core\MotorPool.Services.VehicleBrand\MotorPool.Services.VehicleBrand.csproj", "{7106771C-2D2E-4941-BF15-218DCFE1B23F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.Enterprise", "src\MotorPool.Services.Enterprise\MotorPool.Services.Enterprise.csproj", "{610A0F1B-67EC-4717-BAD7-DB0D2D010B8A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.Enterprise", "src\Core\MotorPool.Services.Enterprise\MotorPool.Services.Enterprise.csproj", "{610A0F1B-67EC-4717-BAD7-DB0D2D010B8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.Driver", "src\MotorPool.Services.Driver\MotorPool.Services.Driver.csproj", "{F0B9E959-2D3E-4152-B679-83444DA8DE7D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.Driver", "src\Core\MotorPool.Services.Driver\MotorPool.Services.Driver.csproj", "{F0B9E959-2D3E-4152-B679-83444DA8DE7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Auth", "src\MotorPool.Auth\MotorPool.Auth.csproj", "{05B37CD0-1900-4EA6-AF8F-046033C42C4B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Auth", "src\Core\MotorPool.Auth\MotorPool.Auth.csproj", "{05B37CD0-1900-4EA6-AF8F-046033C42C4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.Manager", "src\MotorPool.Services.Manager\MotorPool.Services.Manager.csproj", "{1FD8699F-D9D7-40AD-8645-C6A3A1295939}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.Manager", "src\Core\MotorPool.Services.Manager\MotorPool.Services.Manager.csproj", "{1FD8699F-D9D7-40AD-8645-C6A3A1295939}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.DatabaseSeeder", "src\MotorPool.DatabaseSeeder\MotorPool.DatabaseSeeder.csproj", "{49512614-3B36-41AB-8DC2-064166948C0E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.DatabaseSeeder", "src\Utilities\MotorPool.DatabaseSeeder\MotorPool.DatabaseSeeder.csproj", "{49512614-3B36-41AB-8DC2-064166948C0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.Geo", "src\MotorPool.Services.Geo\MotorPool.Services.Geo.csproj", "{3C94B63D-A5EF-4CD8-BD4C-A9ABFF09A767}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.Geo", "src\Core\MotorPool.Services.Geo\MotorPool.Services.Geo.csproj", "{3C94B63D-A5EF-4CD8-BD4C-A9ABFF09A767}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.TrackGenerator", "src\MotorPool.TrackGenerator\MotorPool.TrackGenerator.csproj", "{3C94B63D-A5EF-4CD8-BD4C-A9ABFF09A757}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.TrackGenerator", "src\Utilities\MotorPool.TrackGenerator\MotorPool.TrackGenerator.csproj", "{3C94B63D-A5EF-4CD8-BD4C-A9ABFF09A757}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.Reporting", "src\MotorPool.Services.Reporting\MotorPool.Services.Reporting.csproj", "{9354B71B-9B3F-42F8-8CDD-AD600AA01EF6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.Reporting", "src\Core\MotorPool.Services.Reporting\MotorPool.Services.Reporting.csproj", "{9354B71B-9B3F-42F8-8CDD-AD600AA01EF6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utility", "Utility", "{D6BF8C22-9FDD-4E9F-885C-A92D856B16B9}"
 EndProject
@@ -38,19 +38,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{5ACE07
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{670512BA-C27A-415E-B02A-6F00028491E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Repository", "MotorPool.Repository\MotorPool.Repository.csproj", "{071EFE03-9551-483F-9CBF-C390BFBB799C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Repository", "src\Core\MotorPool.Repository\MotorPool.Repository.csproj", "{071EFE03-9551-483F-9CBF-C390BFBB799C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.TelegramBot", "MotorPool.TelegramBot\MotorPool.TelegramBot.csproj", "{92939EE4-4EC2-4E54-B391-C850FCEDF551}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.TelegramBot", "src\Utilities\MotorPool.TelegramBot\MotorPool.TelegramBot.csproj", "{92939EE4-4EC2-4E54-B391-C850FCEDF551}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Telemetry", "Telemetry", "{94BD3728-2396-49A8-B5CD-E64E5E5EC96A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.TelemetryService", "MotorPool.TelemetryService\MotorPool.TelemetryService.csproj", "{ACA54BDD-C7BC-458A-9659-CB968E4B1379}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.TelemetryService", "src\Core\MotorPool.TelemetryService\MotorPool.TelemetryService.csproj", "{ACA54BDD-C7BC-458A-9659-CB968E4B1379}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.SingalRHub", "MotorPool.SingalRHub\MotorPool.SingalRHub.csproj", "{123AA62E-E510-4CED-BEB6-288DADA7FFB2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.SingalRHub", "src\Core\MotorPool.SingalRHub\MotorPool.SingalRHub.csproj", "{123AA62E-E510-4CED-BEB6-288DADA7FFB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.TelemetryStorage", "MotorPool.TelemetryStorage\MotorPool.TelemetryStorage.csproj", "{1820D6E6-1B74-461F-9BAC-FFD727823EF1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.TelemetryStorage", "src\Core\MotorPool.TelemetryStorage\MotorPool.TelemetryStorage.csproj", "{1820D6E6-1B74-461F-9BAC-FFD727823EF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.SpeedAlertService", "MotorPool.SpeedAlertService\MotorPool.SpeedAlertService.csproj", "{E4B0586B-3093-4D56-9022-4C15DC68736D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.SpeedAlertService", "src\Core\MotorPool.SpeedAlertService\MotorPool.SpeedAlertService.csproj", "{E4B0586B-3093-4D56-9022-4C15DC68736D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

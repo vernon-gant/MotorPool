@@ -35,8 +35,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\MotorPool.Repository\MotorPool.Repository.csproj"/>
         <ProjectReference Include="..\MotorPool.Auth\MotorPool.Auth.csproj"/>
+        <ProjectReference Include="..\MotorPool.Repository\MotorPool.Repository.csproj" />
         <ProjectReference Include="..\MotorPool.Services.Driver\MotorPool.Services.Driver.csproj"/>
         <ProjectReference Include="..\MotorPool.Services.Enterprise\MotorPool.Services.Enterprise.csproj"/>
         <ProjectReference Include="..\MotorPool.Services.Geo\MotorPool.Services.Geo.csproj"/>

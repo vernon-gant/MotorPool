@@ -1,7 +1,6 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
 using Microsoft.Extensions.Caching.Memory;
-using MotorPool.API.Cache;
 using MotorPool.API.EndpointFilters;
 using MotorPool.Domain;
 using MotorPool.Repository.Enterprise;

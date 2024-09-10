@@ -1,6 +1,4 @@
-﻿using System.Collections.Concurrent;
-using MotorPool.Domain;
-using MotorPool.Persistence;
+﻿using MotorPool.Persistence;
 
 namespace MotorPool.DatabaseSeeder;
 

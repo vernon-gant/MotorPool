@@ -16,6 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\Core\MotorPool.Persistence\MotorPool.Persistence.csproj" />
         <ProjectReference Include="..\MotorPool.Persistence\MotorPool.Persistence.csproj"/>
     </ItemGroup>
 

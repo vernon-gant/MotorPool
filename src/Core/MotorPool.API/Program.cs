@@ -158,7 +158,4 @@ managerResourcesGroupBuilder.MapEnterpriseEndpoints();
 managerResourcesGroupBuilder.MapReportEndpoints();
 managerResourcesGroupBuilder.MapTelemetryEndpoints();
 
-await app.SetupDatabaseAsync();
-await app.SetupAuthDatabaseAsync();
-
 app.Run();

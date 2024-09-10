@@ -37,6 +37,12 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Core\MotorPool.Auth\MotorPool.Auth.csproj" />
+      <ProjectReference Include="..\..\Core\MotorPool.Domain\MotorPool.Domain.csproj" />
+      <ProjectReference Include="..\..\Core\MotorPool.Persistence\MotorPool.Persistence.csproj" />
+      <ProjectReference Include="..\..\Core\MotorPool.Services.Reporting\MotorPool.Services.Reporting.csproj" />
+      <ProjectReference Include="..\MotorPool.Auth\MotorPool.Auth.csproj" />
+      <ProjectReference Include="..\MotorPool.Services.Reporting\MotorPool.Services.Reporting.csproj" />
       <ProjectReference Include="..\src\MotorPool.Auth\MotorPool.Auth.csproj" />
       <ProjectReference Include="..\src\MotorPool.Services.Reporting\MotorPool.Services.Reporting.csproj" />
     </ItemGroup>

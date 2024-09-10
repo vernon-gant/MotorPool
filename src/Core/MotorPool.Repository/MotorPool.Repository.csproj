@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\src\MotorPool.Persistence\MotorPool.Persistence.csproj"/>
+      <ProjectReference Include="..\MotorPool.Persistence\MotorPool.Persistence.csproj" />
     </ItemGroup>
 
 </Project>
