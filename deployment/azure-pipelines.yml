@@ -30,10 +30,16 @@ stages:
           displayName: Restore nuget packages
           inputs:
             command: 'restore'
-            projects: 'src/Core/MotorPool.API.csproj'
+            projects: 'src/Core/MotorPool.API/MotorPool.API.csproj'
         - task: DotNetCoreCLI@2
           displayName: Build solution
           inputs:
             command: 'build'
             projects: '$(rootApiDir)/MotorPool.API.csproj'
+            arguments: '--configuration Release'
+        - task: DotNetCoreCLI@2
+          displayName: Testing
+          inputs:
+            command: 'test'
+            projects: 'tests/Core/*.csproj'
             arguments: '--configuration Release'
