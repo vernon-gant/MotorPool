@@ -37,3 +37,9 @@ stages:
             command: 'build'
             projects: '$(rootApiDir)/MotorPool.API.csproj'
             arguments: '--configuration Release'
+        - task: DotNetCoreCLI@2
+          displayName: Testing
+          inputs:
+            command: 'test'
+            projects: 'tests/Core/*.csproj'
+            arguments: '--configuration Release'
