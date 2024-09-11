@@ -1,6 +1,5 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
-using MotorPool.Auth.Services;
 using MotorPool.Auth.User;
 using MotorPool.Domain;
 using MotorPool.Domain.Reports;
