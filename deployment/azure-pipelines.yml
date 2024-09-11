@@ -12,7 +12,7 @@ stages:
 - stage: Building
   jobs:
     - job: Building
-      displayName: Motor Pool
+      displayName: Motor Pool API
       variables:
         rootApiDir : src/Core/MotorPool.API
       steps:
@@ -52,4 +52,4 @@ stages:
         - task: Docker@2
           inputs:
             command: 'build'
-            Dockerfile: '**/Dockerfile'
+            Dockerfile: '$(rootApiDir)/Dockerfile'
