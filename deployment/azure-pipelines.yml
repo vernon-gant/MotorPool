@@ -8,13 +8,14 @@ trigger:
 
 pool: localhost
 
+variables:
+  rootApiDir : src/Core/MotorPool.API
+
 stages:
 - stage: Building
   jobs:
     - job: Building
-      displayName: Motor Pool
-      variables:
-        rootApiDir : src/Core/MotorPool.API
+      displayName: Motor Pool API
       steps:
         - task: NuGetToolInstaller@0
           displayName: Install nuget
@@ -43,3 +44,13 @@ stages:
             command: 'test'
             projects: 'tests/Core/*.csproj'
             arguments: '--configuration Release'
+    - job: Docker
+      displayName: Creating docker
+      dependsOn:
+      - Building
+      condition: in(dependencies.Building.result, 'Succeeded', 'SucceededWithIssues')
+      steps:
+        - task: Docker@2
+          inputs:
+            command: 'build'
+            Dockerfile: '$(rootApiDir)/Dockerfile'
