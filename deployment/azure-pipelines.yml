@@ -43,3 +43,10 @@ stages:
             command: 'test'
             projects: 'tests/Core/*.csproj'
             arguments: '--configuration Release'
+    - job: Docker
+      displayName: Creating docker
+      dependsOn:
+      - Building
+      condition: in(dependencies.Building.result, 'Succeeded', 'SucceededWithIssues')
+      pool:
+        vmImage: ubuntu-latest
