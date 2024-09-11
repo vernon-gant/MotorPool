@@ -8,13 +8,14 @@ trigger:
 
 pool: localhost
 
+variables:
+  rootApiDir : src/Core/MotorPool.API
+
 stages:
 - stage: Building
   jobs:
     - job: Building
       displayName: Motor Pool API
-      variables:
-        rootApiDir : src/Core/MotorPool.API
       steps:
         - task: NuGetToolInstaller@0
           displayName: Install nuget
