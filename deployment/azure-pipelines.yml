@@ -50,7 +50,9 @@ stages:
       - Building
       condition: in(dependencies.Building.result, 'Succeeded', 'SucceededWithIssues')
       steps:
-        - task: Docker@2
-          inputs:
-            command: 'build'
-            Dockerfile: '$(rootApiDir)/Dockerfile'
+      - task: Docker@2
+        displayName: Building and pushing
+        inputs:
+          command: 'buildAndPush'
+          Dockerfile: '$(rootApiDir)/Dockerfile'
+          buildContext: 'src/Core'
