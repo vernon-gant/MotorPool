@@ -56,3 +56,5 @@ stages:
           command: 'buildAndPush'
           Dockerfile: '$(rootApiDir)/Dockerfile'
           buildContext: 'src/Core'
+          addPipelineData: false
+          addBaseImageData: false
