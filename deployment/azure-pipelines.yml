@@ -53,6 +53,7 @@ stages:
       - task: Docker@2
         displayName: Building and pushing
         inputs:
+          containerRegistry: 'motor-pool-registry'
           command: 'buildAndPush'
           Dockerfile: '$(rootApiDir)/Dockerfile'
           buildContext: 'src/Core'
