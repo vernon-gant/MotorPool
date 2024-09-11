@@ -57,6 +57,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{0884A24B-4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.Driver.Tests", "tests\Core\MotorPool.Services.Driver.Tests\MotorPool.Services.Driver.Tests.csproj", "{C2CEBB4C-1874-40E9-9EFC-830114442D1D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotorPool.Services.Vehicle.Tests", "tests\Core\MotorPool.Services.Vehicle.Tests\MotorPool.Services.Vehicle.Tests.csproj", "{11CB622D-CBE4-40AA-BC3B-90C36295268D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -154,6 +156,10 @@ Global
 		{C2CEBB4C-1874-40E9-9EFC-830114442D1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2CEBB4C-1874-40E9-9EFC-830114442D1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2CEBB4C-1874-40E9-9EFC-830114442D1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11CB622D-CBE4-40AA-BC3B-90C36295268D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11CB622D-CBE4-40AA-BC3B-90C36295268D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11CB622D-CBE4-40AA-BC3B-90C36295268D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11CB622D-CBE4-40AA-BC3B-90C36295268D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{827C8974-4A98-44FA-B47D-7FC98BEC1A67} = {AD380FCA-56A8-4E3F-8BE4-BA26B1FA28AC}
@@ -181,5 +187,6 @@ Global
 		{E9E1203B-230C-45C4-8610-2E0C37370178} = {847B33AB-31FA-4C94-89E3-BCADB6BF94B7}
 		{0884A24B-4F23-4FC8-912A-71BB27E1E78B} = {8315CBA4-C96F-4412-9E79-CE1A2B317843}
 		{C2CEBB4C-1874-40E9-9EFC-830114442D1D} = {0884A24B-4F23-4FC8-912A-71BB27E1E78B}
+		{11CB622D-CBE4-40AA-BC3B-90C36295268D} = {0884A24B-4F23-4FC8-912A-71BB27E1E78B}
 	EndGlobalSection
 EndGlobal

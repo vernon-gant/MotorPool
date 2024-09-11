@@ -12,4 +12,12 @@
   &lt;PhysicalFolder Path="C:\Users\aleks\.nuget\packages\serilog.extensions.hosting\8.0.0" Loaded="True" /&gt;&#xD;
   &lt;PhysicalFolder Path="C:\Users\aleks\.nuget\packages\microsoft.extensions.http\8.0.0" Loaded="True" /&gt;&#xD;
   &lt;Assembly Path="C:\Users\aleks\.nuget\packages\oneof\3.0.263\lib\netstandard2.0\OneOf.dll" /&gt;&#xD;
-&lt;/AssemblyExplorer&gt;</s:String></wpf:ResourceDictionary>
+&lt;/AssemblyExplorer&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2391174a_002Da660_002D4d51_002Db587_002D5722b11b32e8/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="VehicleTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Or&gt;&#xD;
+    &lt;TestAncestor&gt;&#xD;
+      &lt;TestId&gt;NUnit3x::11CB622D-CBE4-40AA-BC3B-90C36295268D::net8.0::MotorPool.Services.Vehicle.Tests.VehicleTests&lt;/TestId&gt;&#xD;
+    &lt;/TestAncestor&gt;&#xD;
+    &lt;Project Location="C:\Users\aleks\RiderProjects\MotorPool\tests\Core\MotorPool.Services.Driver.Tests" Presentation="&amp;lt;tests&amp;gt;\&amp;lt;Core&amp;gt;\&amp;lt;MotorPool.Services.Driver.Tests&amp;gt;" /&gt;&#xD;
+  &lt;/Or&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

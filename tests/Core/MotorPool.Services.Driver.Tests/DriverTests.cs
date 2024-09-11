@@ -2,7 +2,7 @@ using MotorPool.Services.Drivers.Models;
 
 namespace MotorPool.Services.Driver.Tests;
 
-public class Tests
+public class DriverTests
 {
     [SetUp]
     public void Setup()

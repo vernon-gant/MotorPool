@@ -6,7 +6,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY . .
-RUN dotnet publish "MotorPool.API/MotorPool.UI.csproj" -c Release -o /app/publish
+RUN dotnet publish "MotorPool.API/MotorPool.API.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
