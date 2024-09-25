@@ -1,5 +1,7 @@
 ﻿using System.Security.Claims;
+using AutoMapper;
 using MotorPool.Domain;
+using MotorPool.Persistence;
 using MotorPool.Persistence.QueryObjects;
 using MotorPool.Repository.Driver;
 using MotorPool.Services.Drivers;
@@ -24,11 +26,13 @@ public static class DriverEndpoints
                            .Produces<DriverViewModel>();
     }
 
-    private static async Task<IResult> GetAll(DriverQueryRepository driverQueryRepository, ClaimsPrincipal principal, [AsParameters] PageOptionsDTO pageOptions)
+    private static async Task<IResult> GetAll(DriverQueryRepository driverQueryRepository, ClaimsPrincipal principal, [AsParameters] Options options, IMapper mapper)
     {
         int managerId = principal.GetManagerId();
 
-        return Results.Ok(await driverQueryRepository.GetAllAsync(managerId, pageOptions.ToPageOptions()));
+        PagedResult<Driver> drivers = await driverQueryRepository.GetAllAsync(managerId, options.ToPageOptions());
+
+        return Results.Ok(mapper.Map<List<DriverViewModel>>(drivers.Elements));
     }
 
     private static async Task<IResult> Assign(AssignmentTransactionHandler transactionHandler, ClaimsPrincipal principal, int driverId, int vehicleId)

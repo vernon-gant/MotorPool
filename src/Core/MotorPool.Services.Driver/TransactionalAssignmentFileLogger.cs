@@ -41,7 +41,7 @@ public class TransactionalAssignmentFileLogger(string filePath, ILogger<Transact
         {
             string json = SerializeLog(log);
             File.AppendAllText(FilePath, json + Environment.NewLine);
-            _lastAppendResult = new IOError();
+            _lastAppendResult = new Success();
         }
         catch (Exception)
         {

@@ -40,7 +40,7 @@ public class Worker : BackgroundService
 
             CANTelemetryPayload payload = telemetry.ToPayload;
 
-            if (telemetry.Speed <= 80) continue;
+            if (telemetry.Speed <= 99) continue;
 
             await _notificationClient.PushAlert(payload);
 

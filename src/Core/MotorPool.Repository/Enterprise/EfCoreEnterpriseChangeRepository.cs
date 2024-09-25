@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MotorPool.Domain;
 using MotorPool.Persistence;
-using MotorPool.Services.Enterprise.Models;
 
 namespace MotorPool.Repository.Enterprise;
 

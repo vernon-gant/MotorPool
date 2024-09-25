@@ -23,9 +23,9 @@ public class IndexModel(VehicleQueryRepository vehicleQueryRepository, IMapper m
 
     public string? VehicleBrandSignature { get; set; }
 
-    public async Task<IActionResult> OnGetAsync(VehicleQueryOptions queryOptions, PageOptionsDTO pageOptions, string? enterpriseName)
+    public async Task<IActionResult> OnGetAsync(VehicleQueryOptions queryOptions, Options options, string? enterpriseName)
     {
-        CurrentPage = pageOptions.CurrentPage ?? PageOptions.DEFAULT_PAGE_NUMBER;
+        CurrentPage = options.CurrentPage!.Value;
 
         queryOptions.ManagerId = queryOptions.EnterpriseId.HasValue ? null : User.GetManagerId();
 
@@ -33,7 +33,7 @@ public class IndexModel(VehicleQueryRepository vehicleQueryRepository, IMapper m
 
         if (queryOptions.EnterpriseId.HasValue && !await permissionService.IsManagerAccessibleEnterprise(User.GetManagerId(), queryOptions.EnterpriseId.Value)) return Forbid();
 
-        PagedResult<Vehicle> enterpriseVehiclesPagedResult = await vehicleQueryRepository.GetAllAsync(pageOptions.ToPageOptions(ELEMENTS_PER_PAGE), queryOptions);
+        PagedResult<Vehicle> enterpriseVehiclesPagedResult = await vehicleQueryRepository.GetAllAsync(options.ToPageOptions(ELEMENTS_PER_PAGE), queryOptions);
 
         TotalPages = enterpriseVehiclesPagedResult.TotalPages;
         Vehicles = mapper.Map<List<VehicleViewModel>>(enterpriseVehiclesPagedResult.Elements);

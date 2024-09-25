@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
 using MotorPool.Utils.ValidationAttributes;
 
 namespace MotorPool.Services.Vehicles.Models;
 
 public class VehicleDTO
 {
-
     [MinLength(17)]
     [MaxLength(17)]
     [Display(Name = "VIN")]
@@ -41,5 +39,4 @@ public class VehicleDTO
 
     [Required]
     public int EnterpriseId { get; set; }
-
 }

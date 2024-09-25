@@ -143,7 +143,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseUnauthorizedOnNotManagerAccess();
 app.UseAuthorization();
-//app.UseOutputCache();
+app.UseOutputCache();
 
 app.MapVehicleBrandEndpoints();
 app.MapAuthEndpoints();
@@ -157,5 +157,8 @@ managerResourcesGroupBuilder.MapDriverEndpoints();
 managerResourcesGroupBuilder.MapEnterpriseEndpoints();
 managerResourcesGroupBuilder.MapReportEndpoints();
 managerResourcesGroupBuilder.MapTelemetryEndpoints();
+
+await app.SetupDatabaseAsync();
+await app.SetupAuthDatabaseAsync();
 
 app.Run();

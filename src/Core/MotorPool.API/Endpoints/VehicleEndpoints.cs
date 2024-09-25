@@ -100,11 +100,20 @@ public static class VehicleEndpoints
                                   });
     }
 
-    private static async Task<IResult> GetAll(VehicleQueryRepository vehicleQueryRepository, IMapper mapper, ClaimsPrincipal user, [AsParameters] PageOptionsDTO pageOptionsDto)
+    private static async Task<IResult> GetAll(VehicleQueryRepository vehicleQueryRepository, IMapper mapper, ClaimsPrincipal user, [AsParameters] Options options)
     {
         int managerId = user.GetManagerId();
 
-        PagedResult<Vehicle> vehicles = await vehicleQueryRepository.GetAllAsync(pageOptionsDto.ToPageOptions(), new VehicleQueryOptions { ManagerId = managerId });
+        PagedResult<Vehicle> vehicles = await vehicleQueryRepository.GetAllAsync(options.ToPageOptions(), new VehicleQueryOptions { ManagerId = managerId, OnlyWithTrips = options.WithTrips});
+
+        return Results.Ok(mapper.Map<List<VehicleViewModel>>(vehicles.Elements));
+    }
+
+    private static async Task<IResult> GetAllWithTrips(VehicleQueryRepository vehicleQueryRepository, IMapper mapper, ClaimsPrincipal user, [AsParameters] Options options)
+    {
+        int managerId = user.GetManagerId();
+
+        PagedResult<Vehicle> vehicles = await vehicleQueryRepository.GetAllAsync(options.ToPageOptions(), new VehicleQueryOptions { ManagerId = managerId });
 
         return Results.Ok(mapper.Map<List<VehicleViewModel>>(vehicles.Elements));
     }

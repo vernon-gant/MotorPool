@@ -8,10 +8,10 @@ public class VehicleViewModel : VehicleDTO
     public int VehicleId { get; set; }
 
     [Display(Name = "Company name")]
-    public required string CompanyName { get; set; }
+    public string CompanyName { get; set; } = string.Empty;
 
     [Display(Name = "Model name")]
-    public required string ModelName { get; set; }
+    public string ModelName { get; set; } = string.Empty;
 
     [Display(Name = "Acquired on")] public new string AcquiredOn { get; set; } = string.Empty;
 
@@ -19,6 +19,8 @@ public class VehicleViewModel : VehicleDTO
     public int TotalTripsCount { get; set; }
 
     public List<int> DriverIds { get; set; } = new ();
+
+    public List<int> TripIds { get; set; } = new ();
 
     [JsonIgnore]
     public List<int> ManagerIds { get; set; } = new ();
