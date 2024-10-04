@@ -2,7 +2,6 @@
 using CommandLine;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using MotorPool.DatabaseSeeder;
 using MotorPool.Domain;
 using MotorPool.Persistence;
@@ -26,7 +25,7 @@ if (options.DriversPerEnterprise < 1 || options.VehiclesPerEnterprise < 1)
 
 const string connectionString = "Server=localhost,1433;Database=motorpool;User Id=sa;Password=SuperSecret123321;Encrypt=Yes;TrustServerCertificate=Yes;Trusted_Connection=False;";
 
-AppDbContext dbContext = new (new DbContextOptionsBuilder<AppDbContext>().UseSqlServer(connectionString).Options, new ConfigurationManager());
+AppDbContext dbContext = new (new DbContextOptionsBuilder<AppDbContext>().UseSqlServer(connectionString).Options);
 
 Repository repository = new EfCoreRepository(dbContext);
 

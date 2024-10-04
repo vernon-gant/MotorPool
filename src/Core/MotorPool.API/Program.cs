@@ -28,13 +28,11 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 JWTConfiguration jwtConfiguration = new();
-builder.Configuration.GetSection("JWTConfig")
-       .Bind(jwtConfiguration);
+builder.Configuration.GetSection("JWTConfig").Bind(jwtConfiguration);
 builder.Services.AddSingleton(jwtConfiguration);
 
 GraphHopperConfiguration graphHopperConfiguration = new();
-builder.Configuration.GetSection("GraphHopper")
-       .Bind(graphHopperConfiguration);
+builder.Configuration.GetSection("GraphHopper").Bind(graphHopperConfiguration);
 builder.Services.AddSingleton(graphHopperConfiguration);
 
 builder.Services.AddSingleton<TelemetryProducer>();
@@ -68,9 +66,7 @@ builder.Services.AddAuthentication(options =>
         });
 builder.Services.AddAppAuthorization();
 
-Log.Logger = new LoggerConfiguration().MinimumLevel.Information()
-                                      .WriteTo.Console()
-                                      .CreateBootstrapLogger();
+
 builder.Services.AddSerilog((provider, config) => config.ReadFrom.Configuration(builder.Configuration)
                                                         .ReadFrom.Services(provider));
 
@@ -113,18 +109,9 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 builder.Services.AddMemoryCache();
 builder.Services.AddOutputCache(options =>
 {
-    options.AddPolicy("IndividualAccess", policyBuilder =>
-    {
-        policyBuilder.AddPolicy<AllowAuthorizationCachePolicy>()
-                     .Expire(TimeSpan.FromMinutes(10))
-                     .SetVaryByHeader("Authorization");
-    }, excludeDefaultPolicy: true);
+    options.AddPolicy("IndividualAccess", policyBuilder => { policyBuilder.AddPolicy<AllowAuthorizationCachePolicy>().Expire(TimeSpan.FromMinutes(10)).SetVaryByHeader("Authorization"); }, excludeDefaultPolicy: true);
 
-    options.AddPolicy("SharedAccess", policyBuilder =>
-    {
-        policyBuilder.AddPolicy<AllowAuthorizationCachePolicy>()
-                     .Expire(TimeSpan.FromMinutes(10));
-    }, excludeDefaultPolicy: true);
+    options.AddPolicy("SharedAccess", policyBuilder => { policyBuilder.AddPolicy<AllowAuthorizationCachePolicy>().Expire(TimeSpan.FromMinutes(10)); }, excludeDefaultPolicy: true);
 });
 
 WebApplication app = builder.Build();
@@ -148,9 +135,7 @@ app.UseOutputCache();
 app.MapVehicleBrandEndpoints();
 app.MapAuthEndpoints();
 
-RouteGroupBuilder managerResourcesGroupBuilder = app.MapGroup("/")
-                                                    .RequireAuthorization()
-                                                    .AddEndpointFilter<ManagerExistsFilter>();
+RouteGroupBuilder managerResourcesGroupBuilder = app.MapGroup("/").RequireAuthorization().AddEndpointFilter<ManagerExistsFilter>();
 
 managerResourcesGroupBuilder.MapVehicleEndpoints();
 managerResourcesGroupBuilder.MapDriverEndpoints();
@@ -162,3 +147,7 @@ await app.SetupDatabaseAsync();
 await app.SetupAuthDatabaseAsync();
 
 app.Run();
+
+public partial class Program
+{
+}
