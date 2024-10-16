@@ -1,12 +1,10 @@
 ﻿using System.Globalization;
-
 using CommandLine;
 
 namespace MotorPool.TrackGenerator;
 
 public class TrackOptions
 {
-
     private string _startPointString = string.Empty;
 
     [Option('s', "start", Required = true, HelpText = "The starting point of the track. Must be in format 'lat,long'.")]
@@ -45,5 +43,4 @@ public class TrackOptions
     }
 
     public DateTime StartTime => string.IsNullOrEmpty(_startTimeString) ? DateTime.UtcNow : DateTime.ParseExact(_startTimeString, "yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture);
-
 }

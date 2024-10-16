@@ -3,3 +3,5 @@ obj
 .idea
 .env
 .fleet
+.nx
+node_modules

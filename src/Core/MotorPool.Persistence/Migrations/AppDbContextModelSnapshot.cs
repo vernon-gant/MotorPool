@@ -119,68 +119,6 @@ namespace MotorPool.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("Enterprises");
-
-                    b.HasData(
-                        new
-                        {
-                            EnterpriseId = 1,
-                            City = "New York",
-                            FoundedOn = new DateOnly(2012, 1, 1),
-                            Name = "Garosh industries",
-                            Street = "5th Avenue",
-                            TimeZoneId = "America/New_York",
-                            VAT = "US123456789"
-                        },
-                        new
-                        {
-                            EnterpriseId = 2,
-                            City = "Los Angeles",
-                            FoundedOn = new DateOnly(2004, 4, 1),
-                            Name = "Apple",
-                            Street = "Hollywood Boulevard",
-                            TimeZoneId = "America/Los_Angeles",
-                            VAT = "US987654321"
-                        },
-                        new
-                        {
-                            EnterpriseId = 3,
-                            City = "Chicago",
-                            FoundedOn = new DateOnly(2000, 4, 4),
-                            Name = "Microsoft",
-                            Street = "Michigan Avenue",
-                            TimeZoneId = "America/Chicago",
-                            VAT = "US123789456"
-                        },
-                        new
-                        {
-                            EnterpriseId = 4,
-                            City = "Houston",
-                            FoundedOn = new DateOnly(1994, 7, 5),
-                            Name = "Amazon",
-                            Street = "Texas Avenue",
-                            TimeZoneId = "America/Chicago",
-                            VAT = "US456123789"
-                        },
-                        new
-                        {
-                            EnterpriseId = 5,
-                            City = "Vladimir",
-                            FoundedOn = new DateOnly(1950, 1, 1),
-                            Name = "Tochmash",
-                            Street = "Severnaya Street",
-                            TimeZoneId = "Europe/Moscow",
-                            VAT = "RU789456123"
-                        },
-                        new
-                        {
-                            EnterpriseId = 6,
-                            City = "Berlin",
-                            FoundedOn = new DateOnly(1990, 4, 1),
-                            Name = "SAP",
-                            Street = "Wehlistrasse",
-                            TimeZoneId = "Etc/UTC",
-                            VAT = "DE3242354325"
-                        });
                 });
 
             modelBuilder.Entity("MotorPool.Domain.EnterpriseManager", b =>
@@ -196,53 +134,6 @@ namespace MotorPool.Persistence.Migrations
                     b.HasIndex("EnterpriseId");
 
                     b.ToTable("EnterpriseManagers");
-
-                    b.HasData(
-                        new
-                        {
-                            ManagerId = 1,
-                            EnterpriseId = 1
-                        },
-                        new
-                        {
-                            ManagerId = 2,
-                            EnterpriseId = 1
-                        },
-                        new
-                        {
-                            ManagerId = 1,
-                            EnterpriseId = 2
-                        },
-                        new
-                        {
-                            ManagerId = 2,
-                            EnterpriseId = 2
-                        },
-                        new
-                        {
-                            ManagerId = 1,
-                            EnterpriseId = 3
-                        },
-                        new
-                        {
-                            ManagerId = 3,
-                            EnterpriseId = 3
-                        },
-                        new
-                        {
-                            ManagerId = 1,
-                            EnterpriseId = 4
-                        },
-                        new
-                        {
-                            ManagerId = 1,
-                            EnterpriseId = 5
-                        },
-                        new
-                        {
-                            ManagerId = 3,
-                            EnterpriseId = 6
-                        });
                 });
 
             modelBuilder.Entity("MotorPool.Domain.GeoPoint", b =>
@@ -290,20 +181,6 @@ namespace MotorPool.Persistence.Migrations
                     b.HasKey("ManagerId");
 
                     b.ToTable("Managers");
-
-                    b.HasData(
-                        new
-                        {
-                            ManagerId = 1
-                        },
-                        new
-                        {
-                            ManagerId = 2
-                        },
-                        new
-                        {
-                            ManagerId = 3
-                        });
                 });
 
             modelBuilder.Entity("MotorPool.Domain.Trip", b =>
@@ -433,63 +310,6 @@ namespace MotorPool.Persistence.Migrations
                     b.HasKey("VehicleBrandId");
 
                     b.ToTable("VehicleBrands");
-
-                    b.HasData(
-                        new
-                        {
-                            VehicleBrandId = 1,
-                            CompanyName = "Toyota",
-                            FuelTankCapacityLiters = 50m,
-                            ModelName = "Corolla",
-                            NumberOfSeats = 5,
-                            PayloadCapacityKg = 450m,
-                            ReleaseYear = 2020,
-                            Type = "PassengerCar"
-                        },
-                        new
-                        {
-                            VehicleBrandId = 2,
-                            CompanyName = "Volvo",
-                            FuelTankCapacityLiters = 300m,
-                            ModelName = "B7R",
-                            NumberOfSeats = 50,
-                            PayloadCapacityKg = 7500m,
-                            ReleaseYear = 2019,
-                            Type = "Bus"
-                        },
-                        new
-                        {
-                            VehicleBrandId = 3,
-                            CompanyName = "Scania",
-                            FuelTankCapacityLiters = 400m,
-                            ModelName = "P Series",
-                            NumberOfSeats = 3,
-                            PayloadCapacityKg = 15000m,
-                            ReleaseYear = 2018,
-                            Type = "Truck"
-                        },
-                        new
-                        {
-                            VehicleBrandId = 4,
-                            CompanyName = "Mercedes-Benz",
-                            FuelTankCapacityLiters = 275m,
-                            ModelName = "Citaro",
-                            NumberOfSeats = 45,
-                            PayloadCapacityKg = 18000m,
-                            ReleaseYear = 2021,
-                            Type = "Bus"
-                        },
-                        new
-                        {
-                            VehicleBrandId = 5,
-                            CompanyName = "Ford",
-                            FuelTankCapacityLiters = 80m,
-                            ModelName = "Transit",
-                            NumberOfSeats = 3,
-                            PayloadCapacityKg = 1200m,
-                            ReleaseYear = 2022,
-                            Type = "Truck"
-                        });
                 });
 
             modelBuilder.Entity("MotorPool.Domain.Driver", b =>

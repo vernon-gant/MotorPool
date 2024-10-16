@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-
 using MotorPool.Domain.Reports;
 using MotorPool.Services.Reporting.Core;
 using MotorPool.Services.Reporting.DTO;
@@ -16,7 +15,6 @@ public class VehicleMileageModel(ReportService<VehicleMileageReport, VehicleMile
 
     public void OnGet()
     {
-
     }
 
     public async Task<IActionResult> OnPostAsync()

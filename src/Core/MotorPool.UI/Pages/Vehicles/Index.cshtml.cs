@@ -25,10 +25,9 @@ public class IndexModel(VehicleQueryRepository vehicleQueryRepository, IMapper m
 
     public async Task<IActionResult> OnGetAsync(VehicleQueryOptions queryOptions, Options options, string? enterpriseName)
     {
-        CurrentPage = options.CurrentPage!.Value;
-
-        queryOptions.ManagerId = queryOptions.EnterpriseId.HasValue ? null : User.GetManagerId();
-
+        PageOptions pageOptions = options.ToPageOptions(ELEMENTS_PER_PAGE);
+        CurrentPage = pageOptions.CurrentPage;
+        queryOptions.ManagerId ??= User.GetManagerId();
         EnterpriseName = enterpriseName;
 
         if (queryOptions.EnterpriseId.HasValue && !await permissionService.IsManagerAccessibleEnterprise(User.GetManagerId(), queryOptions.EnterpriseId.Value)) return Forbid();

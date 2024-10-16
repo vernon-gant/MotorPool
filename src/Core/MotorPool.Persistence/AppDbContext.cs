@@ -26,14 +26,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-        modelBuilder.Entity<VehicleBrand>().HasData(SeedingData.VehicleBrands);
-
-        modelBuilder.Entity<Enterprise>().HasData(SeedingData.Enterprises);
-
-        modelBuilder.Entity<Manager>().HasData(SeedingData.Managers);
-
-        modelBuilder.Entity<EnterpriseManager>().HasData(SeedingData.EnterpriseManagers);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

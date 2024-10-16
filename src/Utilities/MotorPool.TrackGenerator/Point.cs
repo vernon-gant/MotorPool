@@ -1,11 +1,10 @@
 ﻿using System.Globalization;
-
 using MotorPool.Domain;
 
 namespace MotorPool.TrackGenerator;
+
 public struct Point(double latitude, double longitude)
 {
-
     public double Latitude { get; set; } = latitude;
 
     public double Longitude { get; set; } = longitude;
@@ -19,14 +18,13 @@ public struct Point(double latitude, double longitude)
     public GeoPoint ToGeoPoint(DateTime recordedAt, int vehicleId)
     {
         return new GeoPoint
-        {
-            Latitude = Latitude,
-            Longitude = Longitude,
-            VehicleId = vehicleId,
-            RecordedAt = recordedAt
-        };
+               {
+                   Latitude = Latitude,
+                   Longitude = Longitude,
+                   VehicleId = vehicleId,
+                   RecordedAt = recordedAt
+               };
     }
 
     public override string ToString() => $"{Latitude.ToString(CultureInfo.InvariantCulture)},{Longitude.ToString(CultureInfo.InvariantCulture)}";
-
 }

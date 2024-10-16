@@ -10,7 +10,6 @@ namespace MotorPool.UI.Pages.Vehicles;
 
 public class DetailsModel(TripQueryService tripQueryService, IMapper mapper) : PageModel
 {
-
     [BindProperty(SupportsGet = true)]
     public DateTime? StartDate { get; set; }
 
@@ -33,13 +32,12 @@ public class DetailsModel(TripQueryService tripQueryService, IMapper mapper) : P
             return;
         }
 
-        DateTime unspecifiedStart = DateTime.SpecifyKind(StartDate ?? DateTime.Now.AddMonths(-1),DateTimeKind.Unspecified);
+        DateTime unspecifiedStart = DateTime.SpecifyKind(StartDate ?? DateTime.Now.AddMonths(-1), DateTimeKind.Unspecified);
 
-        DateTime unspecifiedEnd = DateTime.SpecifyKind(EndDate ?? DateTime.Now,DateTimeKind.Unspecified);
+        DateTime unspecifiedEnd = DateTime.SpecifyKind(EndDate ?? DateTime.Now, DateTimeKind.Unspecified);
 
         VehicleTrips = await tripQueryService.GetVehicleTrips(vehicleId, unspecifiedStart, unspecifiedEnd);
     }
 
-    public bool NoTripsFound() => StartDate != null && EndDate != null && VehicleTrips.Any();
-
+    public bool NoTripsFound() => StartDate != null && EndDate != null && !VehicleTrips.Any();
 }

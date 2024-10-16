@@ -2,6 +2,7 @@
 using CommandLine;
 
 using Microsoft.EntityFrameworkCore;
+using MotorPool.Auth.User;
 using MotorPool.DatabaseSeeder;
 using MotorPool.Domain;
 using MotorPool.Persistence;
@@ -17,24 +18,40 @@ if (parsedResult.Errors.Any())
 
 SeedingOptions options = parsedResult.Value;
 
+const string connectionString = "Server=localhost,1433;Database=motorpool;User Id=sa;Password=SuperSecret123321;Encrypt=Yes;TrustServerCertificate=Yes;Trusted_Connection=False;";
+
+AppDbContext dbContext = new (new DbContextOptionsBuilder<AppDbContext>().UseSqlServer(connectionString).Options);
+AuthDbContext authDbContext = new (new DbContextOptionsBuilder<AuthDbContext>().UseSqlServer(connectionString).Options);
+
+if (options.InitialSeed)
+{
+    dbContext.Database.EnsureDeleted();
+    authDbContext.Database.EnsureDeleted();
+
+    dbContext.Database.Migrate(); // Applies any pending migrations for AppDbContext
+    authDbContext.Database.Migrate();
+
+    SeedingHelper.SeedEntities(dbContext);
+    SeedingHelper.SeedUsers(authDbContext);
+    return;
+}
+
 if (options.DriversPerEnterprise < 1 || options.VehiclesPerEnterprise < 1)
 {
     Console.WriteLine("Invalid arguments. The number of vehicles and drivers per enterprise must be greater than 0.");
     return;
 }
 
-const string connectionString = "Server=localhost,1433;Database=motorpool;User Id=sa;Password=SuperSecret123321;Encrypt=Yes;TrustServerCertificate=Yes;Trusted_Connection=False;";
-
-AppDbContext dbContext = new (new DbContextOptionsBuilder<AppDbContext>().UseSqlServer(connectionString).Options);
-
 Repository repository = new EfCoreRepository(dbContext);
 
-if (!repository.AllEnterprisesExist(options.EnterpriseIds)) return;
-
-List<int> vehicleBrandIds = repository.GetVehicleBrandIds();
+if (!repository.AllEnterprisesExist(options.EnterpriseIds))
+{
+    Console.WriteLine("Invalid arguments. One or more enterprise ids do not exist.");
+    return;
+}
 
 MotorPoolRandomizer randomizer = new PseudoMotorPoolRandomizer();
-
+List<int> vehicleBrandIds = repository.GetVehicleBrandIds();
 VehicleDriversGenerator dataGenerator = new RandomVehicleDriversGenerator(vehicleBrandIds, options.VehiclesPerEnterprise, options.DriversPerEnterprise, randomizer);
 
 ConcurrentBag<List<Vehicle>> vehiclesBag = new ConcurrentBag<List<Vehicle>>();

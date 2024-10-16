@@ -12,7 +12,7 @@ public class EfCoreVehicleQueryRepository(AppDbContext dbContext) : VehicleQuery
 
     public async ValueTask<PagedResult<Vehicle>> GetAllAsync(PageOptions pageOptions, VehicleQueryOptions? queryOptions)
     {
-        IQueryable<Vehicle> allVehiclesQuery = VehicleQueryBase().WithQueryOptions(queryOptions);
+        IQueryable<Vehicle> allVehiclesQuery = VehicleQueryBase().WithQueryOptions(queryOptions).OrderBy(vehicle => vehicle.VehicleId);
 
         int totalVehicles = await allVehiclesQuery.CountAsync();
 

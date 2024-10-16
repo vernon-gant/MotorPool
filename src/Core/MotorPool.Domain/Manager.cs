@@ -2,9 +2,7 @@
 
 public class Manager
 {
-
     public int ManagerId { get; set; }
 
-    public List<EnterpriseManager> EnterpriseLinks { get; set; } = new ();
-
+    public List<EnterpriseManager> EnterpriseLinks { get; set; } = new();
 }
