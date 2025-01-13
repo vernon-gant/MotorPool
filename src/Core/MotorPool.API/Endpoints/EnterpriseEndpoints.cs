@@ -1,5 +1,7 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
+
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using MotorPool.API.EndpointFilters;
 using MotorPool.Domain;
@@ -72,7 +74,7 @@ public static class EnterpriseEndpoints
         return Task.FromResult(Results.Ok(mapper.Map<FullEnterpriseViewModel>(enterprise)));
     }
 
-    private static async Task<IResult> Create(EnterpriseChangeRepository enterpriseChangeRepository, IMapper mapper, EnterpriseDTO enterpriseDto, HttpContext httpContext)
+    private static async Task<IResult> Create(EnterpriseChangeRepository enterpriseChangeRepository, IMapper mapper, [FromBody] EnterpriseDTO enterpriseDto, HttpContext httpContext)
     {
         try
         {
@@ -81,6 +83,7 @@ public static class EnterpriseEndpoints
                                            {
                                                ManagerId = httpContext.User.GetManagerId()
                                            });
+            newEnterprise.FoundedOn = DateOnly.FromDateTime(DateTime.UtcNow);
             await enterpriseChangeRepository.CreateAsync(newEnterprise);
 
             return Results.Created($"/enterprises/{newEnterprise.EnterpriseId}", mapper.Map<FullEnterpriseViewModel>(newEnterprise));
@@ -99,7 +102,7 @@ public static class EnterpriseEndpoints
     {
         try
         {
-            Enterprise? toUpdate = await enterpriseQueryRepository.GetByIdAsync(enterpriseDto.EnterpriseId);
+            Enterprise? toUpdate = await enterpriseQueryRepository.GetByIdAsync(enterpriseId);
 
             if (toUpdate is null) return Results.NotFound();
 

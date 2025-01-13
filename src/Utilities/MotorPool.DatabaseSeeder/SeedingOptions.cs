@@ -15,4 +15,7 @@ public class SeedingOptions
 
     [Option('i', "initial-seed", Required = false, HelpText = "Seed the database with initial data.")]
     public bool InitialSeed { get; set; }
+
+    [Option('c', "connection-string", Required = true, HelpText = "The connection string to the database.")]
+    public string ConnectionString { get; set; } = string.Empty;
 }

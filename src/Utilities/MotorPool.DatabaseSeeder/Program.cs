@@ -18,10 +18,8 @@ if (parsedResult.Errors.Any())
 
 SeedingOptions options = parsedResult.Value;
 
-const string connectionString = "Server=localhost,1433;Database=motorpool;User Id=sa;Password=SuperSecret123321;Encrypt=Yes;TrustServerCertificate=Yes;Trusted_Connection=False;";
-
-AppDbContext dbContext = new (new DbContextOptionsBuilder<AppDbContext>().UseSqlServer(connectionString).Options);
-AuthDbContext authDbContext = new (new DbContextOptionsBuilder<AuthDbContext>().UseSqlServer(connectionString).Options);
+AppDbContext dbContext = new (new DbContextOptionsBuilder<AppDbContext>().UseSqlServer(options.ConnectionString).Options);
+AuthDbContext authDbContext = new (new DbContextOptionsBuilder<AuthDbContext>().UseSqlServer(options.ConnectionString).Options);
 
 if (options.InitialSeed)
 {

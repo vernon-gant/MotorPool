@@ -1,11 +1,10 @@
-﻿namespace MotorPool.TrackGenerator;
+﻿namespace MotorPool.TripGenerator;
 
-public static class Haversine
+public class Haversine : DistanceCalculator
 {
+    public double GetPointsDistance(Point p1, Point p2) => Calculate(p1.Latitude, p1.Longitude, p2.Latitude, p2.Longitude);
 
-    public static double GetPointsDistance(Point p1, Point p2) => Calculate(p1.Latitude, p1.Longitude, p2.Latitude, p2.Longitude);
-
-    private static double Calculate(double lat1, double lon1, double lat2, double lon2)
+    public static double Calculate(double lat1, double lon1, double lat2, double lon2)
     {
         var R = 6376500; // radius of Earth in meters
         var dLat = ToRadians(lat2 - lat1);
@@ -19,9 +18,5 @@ public static class Haversine
         return R * c;
     }
 
-    private static double ToRadians(double angle)
-    {
-        return Math.PI * angle / 180.0;
-    }
-
+    private static double ToRadians(double angle) => Math.PI * angle / 180.0;
 }

@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using MotorPool.Domain;
 
-namespace MotorPool.TrackGenerator;
+namespace MotorPool.TripGenerator;
 
 public struct Point(double latitude, double longitude)
 {

@@ -1,9 +1,9 @@
 version: '3.8'
 services:
-  motorpool-app:
+  motor=pool-app:
     build:
       context: ../src
-      dockerfile: ../src/MotorPool.UI/Dockerfile
+      dockerfile: ../src/Core/MotorPool.UI/Dockerfile
     ports:
       - "80:5000"
     environment:
@@ -15,8 +15,8 @@ services:
     networks:
       - motorpool-network
 
-  motorpool-db:
-    image: alekszakharov/motorpool-db:latest
+  motor-pool-db:
+    image: alekszakharov/motor-pool-prod:latest
     ports:
       - "1433:1433"
     volumes:

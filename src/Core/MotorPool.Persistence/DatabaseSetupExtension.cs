@@ -16,8 +16,6 @@ public static class DatabaseSetupExtension
 
         try
         {
-            await appDbContext.Database.EnsureCreatedAsync();
-
             if (!(await appDbContext.Database.GetPendingMigrationsAsync()).Any()) return;
 
             logger.LogInformation("Migrating the database");
