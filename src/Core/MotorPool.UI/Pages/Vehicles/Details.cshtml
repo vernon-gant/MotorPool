@@ -78,7 +78,7 @@
                     <div class="mt-5">
                         @if (Model.VehicleTrips.Any())
                         {
-                            <form id="tripForm" asp-page="./Map" method="post" asp class="d-flex flex-column align-items-center">
+                            <form id="tripForm" asp-page="/Trips/Map" method="post" asp class="d-flex flex-column align-items-center">
                                 <div class="list-group mb-4 shadow">
                                     @foreach (var trip in Model.VehicleTrips)
                                     {
@@ -106,7 +106,6 @@
                                         </label>
                                     }
                                 </div>
-                                <input hidden="hidden" name="vehicleId" value="@Model.VehicleViewModel.VehicleId"/>
                                 <div id="errorMessage" class="alert alert-danger d-none text-center mx-auto my-4 p-3 rounded shadow-sm" role="alert" style="max-width: 80%;">
                                     Please select at least one trip!
                                 </div>
